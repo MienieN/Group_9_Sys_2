@@ -1,20 +1,20 @@
+# Group_9_Sys_2
+Systemutveckling 2, term 4 group project. Improving an existing project and documentation.
+
 To run the program:
 
-• Open Eclipse
+• Open your IDE of choice
 • Choose "File->Import...->General->Existing projects into workspace"
 • Click "Next >".
 • Click "Browse..." and choose the newly unzipped folder namned "Zenit"
 • Click "Open"
 • Click "Finish"
 
-• change JRE System Library for the project to [Java SE 11.0.2]
-(if not downloaded)
-Download:  https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
+• add following in VM options inside 'run configurations' inside your IDE (Intellij = Next to the run button -> Edit configuration ->
+-> Add new -> Application -> Modify options -> Add VM options):
 
-• add following in VM arguemnts inside 'run configurations' inside Eclipse (Run->Run Configurations->Java Application->TestUI->Arguments) :
-
---module-path lib/javafx-sdk-11.0.2/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web
- --add-opens
+--module-path lib/javafx-sdk-23.0.2/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web
+--add-opens
 javafx.graphics/javafx.scene.text=ALL-UNNAMED
 --add-exports
 javafx.graphics/com.sun.javafx.text=ALL-UNNAMED
@@ -28,10 +28,24 @@ javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED
 javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED
 -Dprism.allowhidpi=true
 
-(If TestUI class doesn't show up in Java Application list, try running 'TestUI' first. You'll get an error but the class will show up in the Java Application list.)
+• Add the project as a module, to do this follow the steps below:
+- Go to Project structure
+- Go to modules
+- Click on the "+"
+- Import module
+- Choose "Group_9_Sys_2" as module to import (you find it where you stored it when downloading the project)
+- Import as Maven project
+- Set language level to 21
+- When imported make sure the "src" folder is the only one marked as source folder
+
+If any folder except for "src" is marked as a source folder right-click on the folder, scroll down to "Mark directory as"
+-> "Unmark as Sources root"
+
+(If TestUI class doesn't show up in Java Application list, try running 'TestUI' first.
+You'll get an error but the class will show up in the Java Application list.)
 
 • Uncheck "Use the -XstartOnFirstThread argument when launching with SWT"
 
-• Run src/zenit/ui/TestUI.java
+• Run src/main/java/zenit/ui/TestUI.java
 
-Github: https://github.com/strazan/zenit
+Github: https://github.com/MienieN/Group_9_Sys_2

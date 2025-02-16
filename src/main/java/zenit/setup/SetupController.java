@@ -124,6 +124,8 @@ public class SetupController extends AnchorPane {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}	
+		} else {
+			WorkspaceHandler.setUpNewWorkspace();
 		}
 		
 		initRadioButtons();

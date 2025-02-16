@@ -167,15 +167,22 @@ public class MainController extends VBox implements ThemeCustomizable {
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/zenit/ui/Main.fxml"));
-			
+
 			File workspace = null;
+
+			//workspace = WorkspaceHandler.setUpNewWorkspace();
 
 			try {
 				workspace = WorkspaceHandler.readWorkspace();
 			} catch (IOException ex) {
+				/*
 				DirectoryChooser directoryChooser = new DirectoryChooser();
 				directoryChooser.setTitle("Select new workspace folder");
 				workspace = directoryChooser.showDialog(stage);
+				 */
+				workspace = WorkspaceHandler.setUpNewWorkspace();
+				this.fileController = new FileController(workspace);
+				File newProject = fileController.createProject("New Project");
 			}
 
 			FileController fileController = new FileController(workspace);

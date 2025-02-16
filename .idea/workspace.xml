@@ -5,15 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsControllerStart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/zenit/ui/JREVersionsStartUp.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/WorkspaceHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/WorkspaceHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/setup/SetupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/setup/SetupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/JDK/DefaultJDK.dat" beforeDir="false" afterPath="$PROJECT_DIR$/res/JDK/DefaultJDK.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/JDK/JDK.dat" beforeDir="false" afterPath="$PROJECT_DIR$/res/JDK/JDK.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 2.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 3.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 4.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 5.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 6.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 7.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 8.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/TestUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/TestUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,9 +62,9 @@
     "Maven.zenit [test].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "modernizeJDK",
+    "git-widget-placeholder": "startPopup",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/jonathanmunther/Documents/GitHub/Group_9_Sys_2",
+    "last_opened_file_path": "/Users/williamstara/Documents/GitHub/Group_9_Sys_2/src/main/resources/zenit/ui",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -60,6 +77,14 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/zenit/ui" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="main.java.zenit.ui" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="TestUI" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
@@ -107,6 +132,7 @@
       <workItem from="1739459614980" duration="6000" />
       <workItem from="1739459871204" duration="306000" />
       <workItem from="1739460695244" duration="5944000" />
+      <workItem from="1739716360399" duration="4699000" />
     </task>
     <servers />
   </component>

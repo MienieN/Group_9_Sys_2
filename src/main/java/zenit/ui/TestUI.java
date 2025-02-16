@@ -4,8 +4,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import java.io.*;
-
 /**
  * Class for testing the UI.
  * @author Pontus Laos, Oskar Molander
@@ -27,7 +25,6 @@ public class TestUI extends Application {
 	public void stop() {
 		controller.quit();
 		Platform.exit();
-
 	}
 	
 	/**

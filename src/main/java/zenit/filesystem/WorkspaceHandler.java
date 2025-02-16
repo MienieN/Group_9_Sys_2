@@ -84,12 +84,7 @@ public class WorkspaceHandler {
 			zenitDir.mkdirs();
 		}
 
-		File newProjectDir = new File(zenitDir, "new Project");
-
-		if (!newProjectDir.exists()) {
-			newProjectDir.mkdirs();
-		}
-		return newProjectDir;
+		return zenitDir;
 	}
 
 }

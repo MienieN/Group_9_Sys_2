@@ -12,22 +12,6 @@ import main.java.zenit.filesystem.RunnableClass;
 import main.java.zenit.filesystem.metadata.Metadata;
 import main.java.zenit.ui.MainController;
 
-/**
- * 
- * JavaSourceCodeCompiler creates commands for compiling and running java files using a java-class
- * with a main-method a metadata-file (if more than one class is used) and can either compile in 
- * the background or compile and run, redirecting process streams.
- * 
- * Uses {@link CommandBuilder} to build commands and runs them using {@link TerminalHelpers}.
- * 
- * Java Virtual Machine needs to be installed on the machine for the compiler to work. 
- * Also the correct compiler and java_home paths must be configured.
- * 
- * TODO Change JRE version before compiling/running
- * 
- * @author Sigge Labor, Alexander Libot
- *
- */
 public class JavaSourceCodeCompiler {
 	
 	protected File file;
@@ -37,23 +21,10 @@ public class JavaSourceCodeCompiler {
 	protected MainController cont;
 	protected ConsoleController consoleController;
 
-	/**
-	 * Creates a new JavaSourceCodeCompiler for single classes without metadata-file.
-	 * @param file The class to be compiled
-	 * @param inBackground {@code true} if only compiled in background, otherwise false.
-	 */
 	public JavaSourceCodeCompiler(File file, boolean inBackground) {
 		this(file, null, inBackground, null, null);
 	}
-	
-	/**
-	 * Creates a new JavaSourceCodeCompiler for multiple classes in a project structure using
-	 * a metadata-file.
-	 * @param file The class containing the main-method to be run.
-	 * @param metadata A file containing metadata about the classes to be run, such as directory
-	 * sourcepath and library buildpaths.
-	 * @param inBackground {@code true} if only compiled in background, otherwise false.
-	 */
+
 	public JavaSourceCodeCompiler(File file, File metadata, boolean inBackground, Buffer<?> buffer, MainController cont) {
 		this.file = file;
 		this.metadataFile = metadata;
@@ -61,24 +32,15 @@ public class JavaSourceCodeCompiler {
 		this.buffer = buffer;
 		this.cont = cont;
 	}
-	
-	/**
-	 * Starts a new thread to compile.
-	 */
+
 	public void startCompile() {
 		new Compile().start();	
 	}
 	
-	/**
-	 * Starts a new thread to compile and run.
-	 */
 	public void startCompileAndRun() {
 		new CompileAndRun().start();
 	}
-	
-	/**
-	 * Class for creating commands for compiling, and redirecting process-streams.
-	 */
+
 	private class Compile extends Thread {
 		protected String JDKPath = null;
 		protected String sourcepath;
@@ -88,11 +50,6 @@ public class JavaSourceCodeCompiler {
 		protected String[] internalLibraries;
 		protected String[] externalLibraries;
 
-		/**
-		 * Only to be called via {@link Thread#start()}.
-		 * Decodes metadata, and runs {@link #compileInPackage()}.
-		 * If no metadata is provided, runs {@link #compile()}.
-		 */
 		public void run() {
 			if (metadataFile != null) {
 				decodeMetadata();
@@ -107,17 +64,11 @@ public class JavaSourceCodeCompiler {
 				cont.errorHandler(deb);
 			}	
 		}
-		
-		/**
-		 * Creates a path to the project file using metadata-file.
-		 */
+	
 		protected void createProjectPath() {
 			projectFile = metadataFile.getParentFile();
 		}
 
-		/**
-		 * Decodes the metadata-file to create directory and sourcepath.
-		 */
 		protected void decodeMetadata() {
 			Metadata metadata = new Metadata(metadataFile);
 			
@@ -128,12 +79,6 @@ public class JavaSourceCodeCompiler {
 			externalLibraries = metadata.getExternalLibraries();	
 		}
 
-		/**
-		 * Builds a command using {@link CommandBuilder} to compile a single file
-		 * and executes command using {@link #executeCommand(String, File)} redirects
-		 * process streams using {@link #redirectStreams(Process)} and returns process.
-		 * @return Executed process.
-		 */
 		protected Process compile() {
 
 			CommandBuilder cb = new CommandBuilder(CommandBuilder.COMPILE);
@@ -146,12 +91,6 @@ public class JavaSourceCodeCompiler {
 			return process;
 		}
 
-		/**
-		 * Builds a command using {@link CommandBuilder} to compile multiple files.
-		 * and executes command using {@link #executeCommand(String, File)} redirects
-		 * process streams using {@link #redirectStreams(Process)} and returns process.
-		 * @return Executed process.
-		 */
 		protected Process compileInPackage() {
 			runPath = new File(createRunPathInProject());
 
@@ -169,12 +108,6 @@ public class JavaSourceCodeCompiler {
 			return process;
 		}
 
-		/**
-		 * Executes a command in a directory using {@link TerminalHelpers}.
-		 * @param command Command to be executed.
-		 * @param projectFile Directory to execute command in.
-		 * @return The process created from executing command.
-		 */
 		protected Process executeCommand(String command, File projectFile) {
 			if (inBackground) {
 				DebugErrorBuffer deb = null;
@@ -187,10 +120,6 @@ public class JavaSourceCodeCompiler {
 			}
 		}
 
-		/**
-		 * Modifies the run path by removing directories before project file.
-		 * @return Modified run path.
-		 */
 		protected String createRunPathInProject() {
 			File projectFile = metadataFile.getParentFile();
 			String runPath = file.getPath();
@@ -201,11 +130,6 @@ public class JavaSourceCodeCompiler {
 			return runPath;
 		}
 
-		/**
-		 * Redirects the input stream and error stream from process to System.out and
-		 * System.error.
-		 * @param process Process to redirect streams from.
-		 */
 		protected void redirectStreams(Process process) {
 			StreamRedirector inStream = new StreamRedirector(process.getInputStream(), System.out::println);
 			StreamRedirector errorStream = new StreamRedirector(process.getErrorStream(), System.err::println);
@@ -214,11 +138,7 @@ public class JavaSourceCodeCompiler {
 			Executors.newSingleThreadExecutor().submit(errorStream);
 		}
 	}
-
-	/**
-	 * Class for creating command for compiling, running compiled code
-	 * and redirecting process-streams.
-	 */
+	
 	private class CompileAndRun extends Compile {
 		
 		@Override

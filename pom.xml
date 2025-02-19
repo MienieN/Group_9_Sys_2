@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -57,22 +57,22 @@
 			<artifactId>antlr4</artifactId>
 			<version>4.7.2</version>
 		</dependency>
-		
+
 		<dependency>
-	        <groupId>org.kordamp.ikonli</groupId>
-	        <artifactId>ikonli-javafx</artifactId>
-	        <version>11.3.3</version>
-	    </dependency>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-javafx</artifactId>
+			<version>11.3.3</version>
+		</dependency>
 		<dependency>
 			<groupId>com.kodedu.terminalfx</groupId>
 			<artifactId>terminalfx</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.kordamp.ikonli</groupId>
-		    <artifactId>ikonli-fontawesome-pack</artifactId>
-		    <version>11.3.3</version>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-fontawesome-pack</artifactId>
+			<version>11.3.3</version>
 		</dependency>
 	</dependencies>
 
@@ -91,7 +91,7 @@
 			<id>terminalfx-repo</id>
 			<url>https://github.com/javaterminal/terminalfx/raw/master/releases</url>
 		</repository>
-    	
+
 	</repositories>
 
 	<build>

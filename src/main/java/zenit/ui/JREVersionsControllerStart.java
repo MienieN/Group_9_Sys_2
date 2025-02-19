@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import main.java.zenit.filesystem.jreversions.JREVersions;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,24 +20,17 @@ public class JREVersionsControllerStart extends AnchorPane {
 	private boolean darkmode;
 	private List<File> JVMs;
 	private boolean projectCreated = false;
-
 	@FXML
 	private ListView<String> JDKList;
 	@FXML
 	private Button createProjectButton;
 
-	public boolean isProjectCreated() {
-		return projectCreated;
-	}
+	public boolean isProjectCreated() { return projectCreated; }
 
-	public JREVersionsControllerStart(boolean darkmode) {
-		this.darkmode = darkmode;
-	}
+	public JREVersionsControllerStart(boolean darkmode) { this.darkmode = darkmode; }
 
 	public void start() {
-		if (stage != null && stage.isShowing()) {
-			return;
-		}
+		if (stage != null && stage.isShowing()) { return; }
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -55,9 +47,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 
 			stage.showAndWait();
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
 	private void initialize() {	
@@ -88,8 +78,6 @@ public class JREVersionsControllerStart extends AnchorPane {
 			return o1.compareTo(o2);
 		});
 	}
-
-
 	
 	@FXML
 	private void addJRE() {
@@ -108,15 +96,12 @@ public class JREVersionsControllerStart extends AnchorPane {
 						+ "contain the needed java or javac executables");
 			}
 		}
-		
 	}
 
 	@FXML
 	private void createProject() {
 		projectCreated = true;
-		if (stage != null) {
-			stage.close();
-		}
+		if (stage != null) { stage.close(); }
 	}
 	
 	@FXML
@@ -158,9 +143,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 		String selected = JDKList.getSelectionModel().getSelectedItem();
 		File selectedFile = null;
 		
-		if (selected != null && selected.endsWith(" [default]")) {
-			return;
-		}
+		if (selected != null && selected.endsWith(" [default]")) { return; }
 		
 		if (selected != null) {
 			for (File JVM : JVMs) {
@@ -176,10 +159,6 @@ public class JREVersionsControllerStart extends AnchorPane {
 		}
 	}
 	
-	/**
-	 * Changes css style depending on set light mode.
-	 * @param isDarkMode true if dark mode is enabled
-	 */
 	public void ifDarkModeChanged(boolean isDarkMode) {
 		var stylesheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();

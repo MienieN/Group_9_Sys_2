@@ -26,24 +26,13 @@ import main.java.zenit.filesystem.WorkspaceHandler;
 import main.java.zenit.filesystem.jreversions.JREVersions;
 import main.java.zenit.ui.DialogBoxes;
 
-/**
- * Controller for the setup window of the application.
- * Let's user choose a workspace, add and remove JDKs and set a default JDK.
- * @author Alexander Libot
- *
- */
 public class SetupController extends AnchorPane {
-	
 	private Stage stage;
-	
 	private File workspaceDat = new File("res/workspace/workspace.dat");
 	private File JDKDat = new File("res/JDK/JDK.dat");
 	private File defaultJDKDat = new File ("res/JDK/DefaultJDK.dat");
-	
 	private File workspaceFile;
-	
 	private final ToggleGroup tgGroup;
-	
 	private RadioButtonListener rbListener;
 	
 	@FXML ListView<String> jdkList;
@@ -51,11 +40,7 @@ public class SetupController extends AnchorPane {
 	@FXML RadioButton rb1;
 	@FXML RadioButton rb2;
 	@FXML ImageView logo;
-	
-	/**
-	 * Creates a new controller for the setup page.
-	 * Start graphics by calling {@link #start()}
-	 */
+
 	public SetupController() {
 		//Init final variable
 		tgGroup = new ToggleGroup();
@@ -65,10 +50,7 @@ public class SetupController extends AnchorPane {
 		JDKDat = new File("res/JDK/JDK.dat");
 		defaultJDKDat = new File ("res/JDK/DefaultJDK.dat");
 	}
-	
-	/**
-	 * Initializes and displays the setup window graphics.
-	 */
+
 	public void start() {
 		try {
 			//setup scene
@@ -94,10 +76,7 @@ public class SetupController extends AnchorPane {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * Initializes graphical components
-	 */
+
 	private void initialize() {
 		
 		//Set dark mode
@@ -132,10 +111,7 @@ public class SetupController extends AnchorPane {
 		
 		updateList();
 	}
-	
-	/**
-	 * Setup the radio buttons and put them in their default state
-	 */
+
 	private void initRadioButtons() {
 		rb1.setToggleGroup(tgGroup);
 		rb2.setToggleGroup(tgGroup);
@@ -149,11 +125,7 @@ public class SetupController extends AnchorPane {
 		rbListener = new RadioButtonListener();
 		tgGroup.selectedToggleProperty().addListener(rbListener);
 	}
-	
-	/**
-	 * Updates the JDK list by reading from file. Add JDK to res/JDK.dat before triggering
-	 * Sorts the list.
-	 */
+
 	private void updateList() {
 		//Init list of JDKs
 		List<String> JDKs = JREVersions.readString();
@@ -351,11 +323,7 @@ public class SetupController extends AnchorPane {
 			}
 		}
 	}
-	
-	/**
-	 * Sets the path to document folder depending on current OS
-	 * @return path from OS.home to documents folder
-	 */
+
 	private String getDocumentsPath() {
 		String OS = Zenit.OS;
 		if (OS.equals("Mac OS X")) {
@@ -368,12 +336,7 @@ public class SetupController extends AnchorPane {
 			return null;
 		}
 	}
-	
-	/**
-	 * Used to toggle a radio button without triggering the changed event
-	 * @param toggleOwn {@code true} if "Own workspace" should be selected,
-	 * otherwise {@code false}
-	 */
+
 	private void toggleRadiobutton(boolean toggleOwn) {
 		tgGroup.selectedToggleProperty().removeListener(rbListener);
 		if (toggleOwn) {

@@ -8,21 +8,8 @@ import java.util.regex.Matcher;
 
 import main.java.zenit.filesystem.metadata.Metadata;
 
-/**
- * Project specific methods for manipulating the file system.
- * Contains method for creating projects in the file system.
- * Only to be accessed through {@link FileController} methods.
- * @author Alexander Libot
- *
- */
 public class ProjectHandler extends FolderHandler {
-		
-	/**
-	 * Creates a new project with a src folder with a default-package and a bin folder.
-	 * @param file File of the project folder.
-	 * @throws IOException Throws {@link java.io.IOException IOException} if project or
-	 * any folder inside project can't be created.
-	 */
+	
 	protected static void createNewProject(File file) throws IOException {
 		
 		boolean success = file.mkdir();
@@ -40,14 +27,7 @@ public class ProjectHandler extends FolderHandler {
 			throw new IOException("Couldn't create project");
 		}
 	}
-	
-	/**
-	 * Imports a project from source folder to target folder
-	 * @param source Folder to copy from
-	 * @param target Folder to copy to
-	 * @return The target File
-	 * @throws IOException if project can't be imported
-	 */
+
 	protected static File importProject(File source, File target) throws IOException {
 		
 		String targetFilepath = target.getPath();
@@ -78,13 +58,7 @@ public class ProjectHandler extends FolderHandler {
 			throw new IOException("Couldn't copy file");
 		}
 	}
-	
-	/**
-	 * Recursively copies folders and files from a source folder to a destination folder.
-	 * @param sourceFolder Folder to copy from
-	 * @param destinationFolder Folder to copy to
-	 * @throws IOException
-	 */
+
 	private static void copyFolder(File sourceFolder, File destinationFolder) throws IOException {
         //Check if sourceFolder is a directory or file
         //If sourceFolder is file; then copy the file directly to new location
@@ -110,17 +84,7 @@ public class ProjectHandler extends FolderHandler {
             Files.copy(sourceFolder.toPath(), destinationFolder.toPath());
         }
     }
-	
-	/**
-	 * Tries to copy libraryFiles parameter to projects lib-folder (creates one if it doesn't 
-	 * exist). Adds all the internal build paths to metadata.
-	 * @param libraryFiles Internal library files to copy. Should contain full file path from root
-	 * @param projectFile Project to copy library files to
-	 * @return {@code true} if added successfully, otherwise {@code false}. Note that files can be
-	 * copied but still return {@code false}
-	 * 
-	 * @throws IOException
-	 */
+
 	protected static boolean addInternalLibraries(List<File> libraryFiles, ProjectFile projectFile)
 			throws IOException {
 		//Setup variables
@@ -165,16 +129,7 @@ public class ProjectHandler extends FolderHandler {
 		metadata.setInternalLibraries(newInternalLibraries);
 		return metadata.encode();
 	}
-	
-	/**
-	 * Tries to remove internalLibraryPathsList parameter from lib-folder and remove their build
-	 * path.
-	 * @param internalLibraryPathsList Internal file paths to remove. Should only contain file path
-	 * within project. Correct: {@code lib/library.jar}
-	 * @param projectFile Project to remove internal libraries from
-	 * @return {@code true} if removed successfully, otherwise {@code false}. Note that files can be
-	 * removed but still return {@code false}
-	 */
+
 	protected static boolean removeInternalLibraries(List<String> internalLibraryPathsList, 
 			ProjectFile projectFile) {
 		//Setup variables
@@ -216,17 +171,7 @@ public class ProjectHandler extends FolderHandler {
 		metadata.setInternalLibraries(newInternalLibraries);
 		return metadata.encode();
 	}
-	
-	/**
-	 * Tries to copy libraryFiles parameter to projects lib-folder (creates one if it doesn't 
-	 * exist).
-	 * @param externalLibraryFiles External library files to add to build path. Should contain 
-	 * full file path from root
-	 * @param projectFile Project to add build paths to
-	 * @return {@code true} if added successfully, otherwise {@code false}.
-	 * 
-	 * @throws IOException
-	 */
+
 	protected static boolean addExternalLibraries(List<File> externalLibraryFiles, 
 			ProjectFile projectFile) {
 		//Setup variables
@@ -261,12 +206,6 @@ public class ProjectHandler extends FolderHandler {
 		return metadata.encode();
 	}
 	
-	/**
-	 * Tries to remove build path to all files with file path in {@code externalLibrariesList}.
-	 * @param externalLibraryPathsList External file paths to remove build path to.
-	 * @param projectFile Project to remove external libraries build path from.
-	 * @return {@code true} if build path removed successfully, otherwise {@code false}.
-	 */
 	protected static boolean removeExternalLibraries(List<String> externalLibraryPathsList, 
 			ProjectFile projectFile) {
 		//Setup variables

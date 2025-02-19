@@ -1,7 +1,6 @@
 package main.java.zenit.javacodecompiler;
 
 public class ProcessTester extends Thread {
-
 	Process process;
 
 	public ProcessTester(Process process) {

@@ -9,17 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-/**
- * Class for handling the workspace.
- * @author Alexander Libot, Pontus Laos
- *
- */
 public class WorkspaceHandler {
-	/**
-	 * Checks if a workspace.dat file exists in the correct folder, and creates it and its
-	 * parent folders if not.
-	 * @author Pontus Laos
-	 */
+	
 	private static void createWorkspaceFile() {
 		File workspaceFile = new File("res/workspace/workspace.dat");
 		
@@ -33,12 +24,7 @@ public class WorkspaceHandler {
 			}
 		}
 	}
-	
-	/**
-	 * Create new or overwrites the res/workspace/workspace.dat file.
-	 * @param file The File-object to the workspace folder
-	 * @return True if created successfully, otherwise false
-	 */
+
 	public static boolean createWorkspace(File file) {
 		boolean success = false;
 				
@@ -54,11 +40,7 @@ public class WorkspaceHandler {
 		}
 		return success;
 	}
-	
-	/**
-	 * Reads the res/workspace/workspace.dat file.
-	 * @return The File-object to the workspace folder if existing, otherwise null.
-	 */
+
 	public static File readWorkspace() throws IOException {
 		File workspace = null;
 		try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(
@@ -70,11 +52,9 @@ public class WorkspaceHandler {
 		return workspace;
 	}
 
-	/*
-	 Creates a new workspace when user starts the program for the first time instead of asking them to choose a workspace.
-	 Uses the users desktop to save a new folder named zenit to store the new project in.
-	 */
-
+	// TODO Creates a new workspace when user starts the program for the first time instead of asking them to choose a workspace.
+	//  Uses the users desktop to save a new folder named zenit to store the new project in.
+	//  Maybe make this a select folder dialog instead?
 	public static File setUpNewWorkspace() {
 		String userHome = System.getProperty("user.home");
 		File desktop = new File(userHome, "Desktop");

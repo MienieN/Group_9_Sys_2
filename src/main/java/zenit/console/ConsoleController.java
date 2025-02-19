@@ -35,22 +35,8 @@ import javafx.scene.text.Text;
 import main.java.zenit.ConsoleRedirect;
 import main.java.zenit.ui.MainController;
 
-/**
- * The controller class for ConsoleArea
- * 
- * @author siggelabor
- *
- */
-/**
- * @author Admin
- *
- */
 public class ConsoleController implements Initializable {
-
-	/*
-	 * These HashMaps are ugly.
-	 */
-//	private HashMap<ConsoleArea, Process> consoleList = new HashMap<ConsoleArea, Process>();
+	
 	private ArrayList<ConsoleArea> consoleList = new ArrayList<ConsoleArea>();
 	private ArrayList<Terminal> terminalList = new ArrayList<Terminal>();
 	
@@ -114,35 +100,33 @@ public class ConsoleController implements Initializable {
 		return rootNode.getStylesheets();
 	}
 	
-	
-	/**
-	 * Shows the choiceBox with console areas, and sets the choiceBox with terminal tabs to not 
-	 * visible. Also sets text color of the labels.
-	 */
-	
-
 	public void showConsoleTabs() {
 		
 		btnTerminal.setStyle("");
 		btnConsole.setStyle("-fx-text-fill:white; -fx-border-color:#666; -fx-border-width: 0 0 2 0;");
 		
-
 		terminalChoiceBox.setVisible(false);
 		terminalChoiceBox.setDisable(true);
+		
 		consoleChoiceBox.setVisible(true);
 		consoleChoiceBox.setDisable(false);
+		
 		btnNewTerminal.setVisible(false);
+		
 		btnNewConsole.setVisible(true);
+		
 		btnClearConsole.setDisable(false);
 		btnClearConsole.setVisible(true);
+		
 		iconTerminateProcess.setVisible(true);
 		iconTerminateProcess.setDisable(false);
+		
 		iconCloseConsoleInstance.setVisible(true);
 		iconCloseConsoleInstance.setDisable(false);
+		
 		iconCloseTerminalInstance.setVisible(false);
 		iconCloseTerminalInstance.setDisable(true);
 		
-			
 		if (consoleAnchorPane != null) {
 				consoleAnchorPane.toFront();
 		}
@@ -150,15 +134,8 @@ public class ConsoleController implements Initializable {
 		if(consoleList.size() == 0) {
 			createEmptyConsolePane();
 		}
-		
-	
-		
 	}
 	
-	
-	/*
-	 * Creates and displays an anchorPane when there is no console to display in the console-window
-	 */
 	private void createEmptyConsolePane() {
 		noConsolePane = new AnchorPane();
 		fillAnchor(noConsolePane);
@@ -175,15 +152,9 @@ public class ConsoleController implements Initializable {
 		noConsolePane.toFront();
 	}
 	
-	
-	/**
-	 * Shows the choiceBox with terminal panes, and sets the choiceBox with console tabs to not 
-	 * visible. Also sets text color of the labels.
-	 */
 	public void showTerminalTabs() {
 		btnConsole.setStyle("");
 		btnTerminal.setStyle("-fx-text-fill:white; -fx-border-color:#666; -fx-border-width: 0 0 2 0;");
-		
 		
 		if(terminalList.size() == 0) {
 			newTerminal();
@@ -192,28 +163,28 @@ public class ConsoleController implements Initializable {
 			terminalAnchorPane.toFront();
 		}
 		
-		
 		consoleChoiceBox.setVisible(false);
 		consoleChoiceBox.setDisable(true);
+		
 		terminalChoiceBox.setVisible(true);
 		terminalChoiceBox.setDisable(false);
+		
 		btnNewTerminal.setVisible(true);
+		
 		btnNewConsole.setVisible(false);
+		
 		btnClearConsole.setDisable(true);
 		btnClearConsole.setVisible(false);
+		
 		iconTerminateProcess.setVisible(false);
 		iconTerminateProcess.setDisable(true);
+		
 		iconCloseConsoleInstance.setVisible(false);
 		iconCloseConsoleInstance.setDisable(true);
+		
 		iconCloseTerminalInstance.setVisible(true);
 		iconCloseTerminalInstance.setDisable(false);
-				
 	}
-
-	/**
-	 * Creates a new ConsoleArea, adds it to the console AnchorPane and puts it as an option in the
-	 * choiceBox.
-	 */
 	
 	public void newConsole(ConsoleArea consoleArea) {
 		consoleAnchorPane = new AnchorPane();
@@ -221,8 +192,6 @@ public class ConsoleController implements Initializable {
 		consoleAnchorPane.setId("consoleAnchor");
 		fillAnchor(consoleArea);
 		fillAnchor(consoleAnchorPane);
-		
-		
 		
 		consoleAnchorPane.getChildren().add(consoleArea);
 		rootAnchor.getChildren().add(consoleAnchorPane);
@@ -235,13 +204,7 @@ public class ConsoleController implements Initializable {
 		new ConsoleRedirect(consoleArea);	
 		showConsoleTabs();
 	}
-
 	
-	/*
-	 * Creates a new Terminal, adds it to the terminal
-	 *  AnchorPane and puts it as an option in the
-	 * choiceBox.
-	 */
 	public void newTerminal() {		
 		Terminal terminal = new Terminal(createTerminalConfig(), FileSystems.getDefault().getPath(".").toAbsolutePath());
 		terminal.setId("Terminal ("+terminalList.size()+")");
@@ -259,7 +222,6 @@ public class ConsoleController implements Initializable {
 		terminalChoiceBox.getSelectionModel().select(terminal);
 		
 		showTerminalTabs();
-		
 	}
 	
 	private TerminalConfig createTerminalConfig() {
@@ -271,39 +233,24 @@ public class ConsoleController implements Initializable {
 		windowsConfig.setFontFamily("consolas");
 		windowsConfig.setFontSize(12);
 		windowsConfig.setScrollbarVisible(false);
-		
-		//TODO Non-windows config (if needed).
-		
-		
+
 		return (System.getProperty("os.name").startsWith("W") ? windowsConfig : new TerminalConfig());
 	}
 	
-
-	/**
-	 * sets the anchor of a node to fill parent 
-	 * 
-	 * @param node to fill to parent anchor
-	 */
 	public void fillAnchor(Node node) {
 		AnchorPane.setTopAnchor(node, 0.0);
 		AnchorPane.setRightAnchor(node, 0.0);
 		AnchorPane.setBottomAnchor(node, 0.0);
 		AnchorPane.setLeftAnchor(node, 0.0);
 	}
-	
-	
-	/**
-	 * Clears the active consoleArea
-	 */
+
 	public void clearConsole() {
 		activeConsole.clear();
 	}
 	
-	
 	public void closeComponent() {
 		mainController.closeConsoleComponent();
 	}
-	
 	
 	public void changeAllConsoleAreaColors(String color) {
 		for(ConsoleArea c : consoleList) {
@@ -311,9 +258,6 @@ public class ConsoleController implements Initializable {
 		}
 	}
 	
-	/**
-	 * Performs initialization steps.
-	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -329,9 +273,7 @@ public class ConsoleController implements Initializable {
 			}
 			
 		});
-				
-					
-				
+		
 		terminalChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
 			if(newValue != null) {
 				for(Terminal t : terminalList) {
@@ -369,8 +311,6 @@ public class ConsoleController implements Initializable {
 				terminalChoiceBox.getItems().remove(activeTerminal);
 				terminalChoiceBox.getSelectionModel().selectLast();
 			}
-			
-			
 		});
 		
 		
@@ -380,7 +320,6 @@ public class ConsoleController implements Initializable {
 			}else {
 				newConsole(new ConsoleArea("Console(" + consoleList.size() + ")", null, "-fx-background-color:#989898"));
 			}
-			
 		});
 		
 		iconTerminateProcess.setOnMouseClicked(e -> {
@@ -393,7 +332,5 @@ public class ConsoleController implements Initializable {
 			}
 							
 		});
-		
-		
 	}
 }

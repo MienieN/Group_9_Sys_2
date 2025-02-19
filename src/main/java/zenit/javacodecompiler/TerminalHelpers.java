@@ -6,23 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-/**
- * Contains static helper methods to run shellscripts in terminal
- * @author Alexander Libot
- *
- */
 public class TerminalHelpers {
 	
 	protected static Process runCommand(String command) {
 		return runCommand(command, null);
 	}
-	
-	/**
-	 * Tries to run the {@code command} in {@code directory} in the terminal.
-	 * Uses {@link StreamGobbler} to manage input stream
-	 * @param command The command to be run in terminal
-	 * @param directory The directory to run the command in
-	 */
+
 	protected static Process runCommand(String command, File directory) {
 		try {
 			ProcessBuilder builder = new ProcessBuilder();

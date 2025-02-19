@@ -33,11 +33,6 @@ import main.java.zenit.console.ConsoleController;
 import main.java.zenit.ui.MainController;
 import main.java.zenit.zencodearea.ZenCodeArea;
 
-/**
- * Controller class for the NewTextSize window,
- * @author Sigge Labor
- *
- */
 public class SettingsPanelController extends AnchorPane implements ThemeCustomizable{
 
 	private int oldSize;
@@ -61,106 +56,69 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	private enum OS {	
 		MACOS, WINDOWS, LINUX
 	}
+	
 	private OS operatingSystem;
-
 	@FXML
 	private TextField fldNewSize;
-
 	@FXML
 	private Slider sldrNewSize;
-	
 	@FXML
 	private Label lblOldTextSize;
-	
 	@FXML
 	private Label lblOldFont;
-	
 	@FXML
 	private Label lblCurrentJavaHome;
-	
 	@FXML
 	private Label newJavaHome;
-	
 	@FXML
 	private Label lblTxtAppeaSize;
-	
 	@FXML
 	private ChoiceBox<String> chcbxNewFont;
-	
 	@FXML
 	private Button btnTextAppearance;
-	
 	@FXML
 	private Button btnJavaHome;
-	
 	@FXML
 	private Button btnSupport;
-	
 	@FXML
 	private Button btnTheme;
-	
 	@FXML
 	private Button btnCustomCSS;
-	
 	@FXML
 	private Button btnCustomTheme;
-	
 	@FXML
 	private Hyperlink linkOpenInGitHub;
-	
 	@FXML
 	private Hyperlink linkSubmitIssue;
-	
 	@FXML
 	private Hyperlink linkDownloadSource;
-	
 	@FXML
 	private ToggleSwitch toggleDarkMode;
-	
 	@FXML
 	private ToggleSwitch toggleSwitchCustomTheme;
-	
 	@FXML
 	private ListView listViewAddedCSS;
-	
 	@FXML
 	private ColorPicker colorPickerPrimaryColor;
-	
 	@FXML
 	private ColorPicker colorPickerPrimaryTint;
-	
 	@FXML
 	private ColorPicker colorPickerSecondaryColor;
-	
 	@FXML
 	private ColorPicker colorPickerSecondaryTint;
-	
 	@FXML
 	private AnchorPane pnlTextAppearance;
-	
 	@FXML
 	private AnchorPane pnlJavaHome;
-	
 	@FXML
 	private AnchorPane pnlSupport;
-	
 	@FXML
 	private AnchorPane pnlTheme;
-	
 	@FXML
 	private AnchorPane pnlCustomCSS;
-	
 	@FXML
 	private AnchorPane pnlCustomTheme;
-	
 	private ConsoleController consoleController;
-	
-	
-
-	/**
-	 * constructs a controller for the TextSizeWindow. 
-	 * @param codeArea the ZenCodeArea that will be modified.
-	 */
 	
 	public SettingsPanelController(MainController mainController, int oldFontSize, String oldFontFamily, ConsoleController consoleController) {
 		this.mainController = mainController;
@@ -206,19 +164,11 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		themeHandler = new CustomCSSThemeHandler(stages);
 	}
 	
-	/**
-	 * Sets the font of the given ZenCodeArea.
-	 * @param newFont the font to be applied.
-	 */
 	public void setNewFont(String newFont) {
 		chcbxNewFont.setValue(newFont);
 		mainController.setFontFamily(newFont);
 	}
-	
-	/**
-	 * Sets the font size of the given ZenCodeArea.
-	 * @param newFontSize the font size to be applied.
-	 */
+
 	public void setNewFontSize(long newFontSize) {
 		long size = newFontSize;
 		fldNewSize.textProperty().setValue(String.valueOf(size));
@@ -231,11 +181,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		sldrNewSize.setValue(size);
 		mainController.setFontSize((int)size);//this.codeArea.setFontSize((int)size);
 	}
-	
-	/**
-	 * Moves a panel to the front, and thereby makes it visible.
-	 * @param e
-	 */
+
 	public void panelToFront(Event e) {
 		if(e.getSource() == btnTextAppearance) {
 			pnlTextAppearance.toFront();
@@ -286,13 +232,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 				}
 		}
 	}
-	
-	// TODO update the comments below im tired.
-	
-	/**
-	 * Adds the string written in fldCSSLineInput to the setStyle method. till will add the styling
-	 * to the application. 
-	 */
+
 	@FXML
 	private void addCSSLine() {
 		
@@ -316,11 +256,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 //			e.printStackTrace();
 //		}
 	}
-	
-	/**
-	 * Updates the listViewAddedCSS to show the correct lines. 
-	 */
-	@SuppressWarnings("unchecked")
+
 	private void updateCustomCSSListView() {
 		listViewAddedCSS.getItems().clear();
 		
@@ -329,10 +265,6 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		}
 	}
 	
-	/**
-	 * Calls the openInBrowser method. The URL depends on which button that is clicked.
-	 * @param e
-	 */
 	@FXML
 	private void openLinkInBrowserEvent(Event e) {	
 		
@@ -346,12 +278,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 			openInBrowser("https://github.com/strazan/zenit/archive/develop.zip");
 		}	
 	}
-	
-	/**
-	 * Opens an URL an the computers default browser. The command varies depending on the users
-	 * operating system.
-	 * @param url to open
-	 */
+
 	private void openInBrowser(String url) {
 		Runtime rt = Runtime.getRuntime();
 		
@@ -387,13 +314,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 				break;
 		}
 	}
-	
-	/**
-	 * Switches between dark- and light mode depending on what is selected in the setting pane's
-	 * toggle switch.
-	 * @param event
-	 * @author Pontus Laos, Sigge Labor
-	 */
+
 	private void darkModeChanged(boolean isDarkMode) {
 		if(!isCustomTheme) {
 			var stylesheets = this.mainController.getStage().getScene().getStylesheets();
@@ -436,9 +357,6 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		mainController.setDarkmode(this.isDarkMode);
 	}
 
-	/**
-	 * initializing steps. Variables will get their value. ActionListeners added.
-	 */
 	private void initialize() {
 		lblOldTextSize.setText(String.valueOf(oldSize));
 		fldNewSize.setText(String.valueOf(oldSize));
@@ -534,24 +452,15 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		     });
 		});	
 	}
-	
-	/**
-	 * @return this stage
-	 */
+
 	public Stage getStage() {
 		return this.window;
 	}
-	
-	/**
-	 * @return the path to the stages custom theme stylesheet.
-	 */
+
 	public File getCustomThemeCSS() {
 		return this.customThemeCSS;
 	}
-	
-	/**
-	 * @return the path the the active default stylesheet.
-	 */
+
 	public String getActiveStylesheet() {
 	
 		if(isDarkMode) {

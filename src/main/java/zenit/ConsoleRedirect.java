@@ -1,24 +1,12 @@
 package main.java.zenit;
 
 import java.io.PrintStream;
-
 import main.java.zenit.console.ConsoleArea;
-import main.java.zenit.console.ConsoleAreaErrorStream;
 import main.java.zenit.console.ConsoleAreaOutputStream;
+import main.java.zenit.console.ConsoleAreaErrorStream;
 
-/**
- * This class redirects the PrintStream to given ConsoleArea.
- * 
- * @author siggelabor
- *
- */
 public class ConsoleRedirect {
 
-	/**
-	 * This method will set the out and error PrintStream to chosen ConsoleArea.
-	 * 
-	 * @param the ConsoleArea prints are to be directed to.
-	 */
 	public ConsoleRedirect(ConsoleArea ta) {
 		try {
 		

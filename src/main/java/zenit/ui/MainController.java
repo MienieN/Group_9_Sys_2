@@ -167,15 +167,25 @@ public class MainController extends VBox implements ThemeCustomizable {
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/zenit/ui/Main.fxml"));
-			
+
 			File workspace = null;
 
 			try {
+				//Startar workspace som existerar om det finns ett workspace att läsa av från fil
 				workspace = WorkspaceHandler.readWorkspace();
 			} catch (IOException ex) {
-				DirectoryChooser directoryChooser = new DirectoryChooser();
-				directoryChooser.setTitle("Select new workspace folder");
-				workspace = directoryChooser.showDialog(stage);
+				//gick det inte all läsa av ett workspace så startar den JREVersionsControllerStart som ger användaren
+				//Möjlighet att välja JDK sedan skapas workspace och projekt lokalt på datorn.
+				JREVersionsControllerStart jdkSelector = new JREVersionsControllerStart(false);
+				jdkSelector.start();
+
+				if (!jdkSelector.isProjectCreated()) {
+					return;
+				}
+
+				workspace = WorkspaceHandler.setUpNewWorkspace();
+				this.fileController = new FileController(workspace);
+				File newProject = fileController.createProject("New Project");
 			}
 
 			FileController fileController = new FileController(workspace);

@@ -63,10 +63,10 @@
 	        <artifactId>ikonli-javafx</artifactId>
 	        <version>11.3.3</version>
 	    </dependency>
-	    <dependency>
-		    <groupId>com.kodedu.terminalfx</groupId>
-		    <artifactId>terminalfx</artifactId>
-		    <version>1.0.9</version>
+		<dependency>
+			<groupId>com.kodedu.terminalfx</groupId>
+			<artifactId>terminalfx</artifactId>
+			<version>1.2.0</version>
 		</dependency>
 		
 		<dependency>
@@ -79,14 +79,18 @@
 	<repositories>
 		<repository>
 			<id>central</id>
-			<name>jcenter</name>
-			<url>http://jcenter.bintray.com</url>
+			<name>Maven Central Repository</name>
+			<url>https://repo.maven.apache.org/maven2</url>
 		</repository>
-		
+
 		<repository>
-		    <id>terminalfx-repo</id>
-		    <url>https://github.com/javaterminal/terminalfx/raw/master/releases</url>
-    	</repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+		<repository>
+			<id>terminalfx-repo</id>
+			<url>https://github.com/javaterminal/terminalfx/raw/master/releases</url>
+		</repository>
     	
 	</repositories>
 

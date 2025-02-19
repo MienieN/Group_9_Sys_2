@@ -36,3 +36,9 @@ jobs:
 
     - name: Generate rapport
       run: mvn surefire-report:report-only
+
+    - name: Upload report as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: surefire-report
+        path: target/site/surefire-report.html

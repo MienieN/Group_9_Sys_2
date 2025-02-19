@@ -70,4 +70,21 @@ public class WorkspaceHandler {
 		return workspace;
 	}
 
+	/*
+	 Creates a new workspace when user starts the program for the first time instead of asking them to choose a workspace.
+	 Uses the users desktop to save a new folder named zenit to store the new project in.
+	 */
+
+	public static File setUpNewWorkspace() {
+		String userHome = System.getProperty("user.home");
+		File desktop = new File(userHome, "Desktop");
+		File zenitDir = new File(desktop, "Zenit");
+
+		if (!zenitDir.exists()) {
+			zenitDir.mkdirs();
+		}
+
+		return zenitDir;
+	}
+
 }

@@ -25,7 +25,6 @@ public class TestUI extends Application {
 	public void stop() {
 		controller.quit();
 		Platform.exit();
-
 	}
 	
 	/**
@@ -35,6 +34,5 @@ public class TestUI extends Application {
 	public static void main(String[] args) {
 		launch(args);
 		System.out.println("Hello World");
-
 	}
 }

@@ -19,13 +19,13 @@ import main.java.zenit.zencodearea.ZenCodeArea;
 public class FileTab extends Tab {
 	private File initialFile, file;
 	private String initialTitle;
-	private MainController mc;
+	private MainController mainController;
 	private ZenCodeArea zenCodeArea;
 	private boolean hasChanged;
 	
 	public FileTab(ZenCodeArea zenCodeArea, MainController mc) {
 		this.zenCodeArea = zenCodeArea;
-		this.mc = mc;
+		this.mainController = mc;
 		initialTitle = "Untitled";
 		
 		zenCodeArea.setOnMouseClicked(new UpdateDetector());
@@ -74,41 +74,34 @@ public class FileTab extends Tab {
 		zenCodeArea.textProperty().addListener(listener);
 	}
 	
+	// TODO Separate concerns and simplify
 	public void shortcutsTrigger() {
 		if (file == null) { return; }
 		
 		String text = zenCodeArea.getText();
 		int caretPosition = zenCodeArea.getCaretPosition();
 		
-		// TODO WAYYYY too many ifs, and if conditions.
-		if (caretPosition >= 6 && text.substring(
-			caretPosition - 6, caretPosition).equals("sysout")) 
-		{
+		if (caretPosition >= 6 && text.substring(caretPosition - 6, caretPosition).equals("sysout")) {
 			zenCodeArea.replaceText(caretPosition - 6, caretPosition, "System.out.println();");
 			zenCodeArea.moveTo(caretPosition + 13);
 		}
-		else if (caretPosition >= 6 && text.substring(
-			caretPosition - 6, caretPosition).equals("syserr")) 
-		{
+		else if (caretPosition >= 6 && text.substring(caretPosition - 6, caretPosition).equals("syserr")) {
 			zenCodeArea.replaceText(caretPosition - 6, caretPosition, "System.err.println();");
 			zenCodeArea.moveTo(caretPosition + 13);
 		}
-		else if (caretPosition >= 4 && text.substring(
-			caretPosition - 4, caretPosition).equals("main")) 
-		{
+		else if (caretPosition >= 4 && text.substring(caretPosition - 4, caretPosition).equals("main")) {
 			zenCodeArea.replaceText(
 				caretPosition - 4, caretPosition, "public static void main(String[]args) {\n \n}"
 			);
 			zenCodeArea.moveTo(caretPosition + 37);
 		}
-		else if (caretPosition >= 2 && text.substring(
-			caretPosition - 2, caretPosition).equals("pv")) 
-		{
+		else if (caretPosition >= 2 && text.substring(caretPosition - 2, caretPosition).equals("pv")) {
 			zenCodeArea.replaceText(caretPosition - 2, caretPosition, "public void ");
 			zenCodeArea.moveTo(caretPosition + 10);
 		}
 	}
 	
+	// TODO Simplify if possible
 	public void commentsShortcutsTrigger() {
 		if (file == null) { return; }
 		
@@ -145,7 +138,7 @@ public class FileTab extends Tab {
 		}
 		
 		if (previousText.endsWith("{")) {
-			spaces += "    "; // lol
+			spaces += "    ";
 			zenCodeArea.insertText(zenCodeArea.getCaretPosition(), spaces);
 			addMissingCurlyBrace(previousLine + 2, 0, spaces);
 		} else {
@@ -218,6 +211,7 @@ public class FileTab extends Tab {
 		
 		var wrapper = new Object() { int response; };
 		
+		// TODO possible switch case?
 		alert.showAndWait().ifPresent(result -> {
 			if (result == cancelButton) {
 				wrapper.response = 0;
@@ -235,8 +229,8 @@ public class FileTab extends Tab {
 		@Override
 		public void handle(Event event) {
 			int row = zenCodeArea.getCurrentParagraph();
-			int col = zenCodeArea.getCaretColumn();
-			mc.updateStatusRight((row+1) + " : " + (col+1));
+			int column = zenCodeArea.getCaretColumn();
+			mainController.updateStatusRight((row+1) + " : " + (column+1));
 		}
 	}
 }

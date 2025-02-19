@@ -9,7 +9,7 @@ import javafx.scene.input.KeyCombination.Modifier;
 import javafx.scene.input.KeyEvent;
 
 public final class KeyboardShortcuts {
-	
+	// TODO Remove final declarations. The class is already final.
 	public static final void add(Scene scene, KeyCode code, Modifier modifier, Runnable action) {
 		scene.getAccelerators().put(new KeyCodeCombination(code, modifier), action);
 	}
@@ -21,17 +21,17 @@ public final class KeyboardShortcuts {
 		//add(scene, KeyCode.W, KeyCombination.SHORTCUT_DOWN, () -> controller.closeTab(null));
 		//add(scene, KeyCode.R, KeyCombination.SHORTCUT_DOWN, controller::compileAndRun);
 		//add(scene, KeyCode.F, KeyCombination.SHORTCUT_DOWN, controller::search);
-		add(scene, KeyCode.SPACE, KeyCombination.CONTROL_DOWN, controller::shortcutsTrigger);
 		//add(scene, KeyCode.DIGIT7, KeyCombination.SHORTCUT_DOWN, controller::commentAndUncomment);
+		add(scene, KeyCode.SPACE, KeyCombination.CONTROL_DOWN, controller::shortcutsTrigger);
 		
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent ke) {
+			public void handle(KeyEvent keyEvent) {
 				if (controller.getSelectedTab() != null) {
 					if (controller.getSelectedTab().getZenCodeArea().isFocused()) {
-						if (ke.getCode() == KeyCode.ENTER) {
+						if (keyEvent.getCode() == KeyCode.ENTER) {
 							controller.commentsShortcutsTrigger();
 							controller.navigateToCorrectTabIndex();
-							ke.consume(); // <-- stops passing the event to next node
+							keyEvent.consume(); // <-- stops passing the event to next node
 						}
 					}
 				}

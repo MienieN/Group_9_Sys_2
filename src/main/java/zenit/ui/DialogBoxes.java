@@ -15,19 +15,19 @@ public class DialogBoxes {
 		return inputDialog(stage, title, header, content, textInput, 0, 0);
 	}
 
-	public static String inputDialog(Stage stage, String title, String header, String content, 
+	public static String inputDialog(Stage stage, String title, String header, String content, //TODO stage unused
 			String textInput, int startSelection, int stopSelection) {
 		TextInputDialog dialog = new TextInputDialog(textInput);
 		dialog.setTitle(title);
 		dialog.setHeaderText(header);
 		dialog.setContentText(content);
-		TextField tf = dialog.getEditor();
+		TextField textField = dialog.getEditor();
 
 		Platform.runLater(() -> {
 			if (stopSelection <= 0) {
-				tf.selectRange(content.length() - 1, startSelection);
+				textField.selectRange(content.length() - 1, startSelection);
 			} else {
-				tf.selectRange(stopSelection, startSelection);
+				textField.selectRange(stopSelection, startSelection);
 			}
 		});
 		

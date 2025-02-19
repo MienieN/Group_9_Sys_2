@@ -5,25 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/READTHIS" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/KeyboardShortcuts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/KeyboardShortcuts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/tree/FileTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/tree/FileTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleAreaErrorStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleAreaErrorStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleAreaOutputStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleAreaOutputStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleController.java" afterDir="false" />
     </list>
-    <list id="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" name="Changes by Yrjam" comment="">
+    <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ConsoleRedirect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ConsoleRedirect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/TextAreaOutputStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/TextAreaOutputStream.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/Zenit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/Zenit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/MetadataFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/MetadataFileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/RunnableClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/RunnableClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/helpers/FileNameHelpers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/helpers/FileNameHelpers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKVerifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKVerifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/Metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/Metadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFolderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFolderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/util/StringUtilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/util/StringUtilities.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/util/Tuple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/util/Tuple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/zencodearea/Syntax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/zencodearea/Syntax.java" afterDir="false" />
@@ -37,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Sprint_2_Refactoring" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,33 +51,20 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java">
       <ranges>
-        <range start1="5" end1="12" start2="5" end2="5" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="14" end1="15" start2="7" end2="8" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="16" end1="18" start2="9" end2="9" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="19" end1="25" start2="10" end2="10" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="26" end1="29" start2="11" end2="11" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="33" end1="36" start2="15" end2="15" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="44" end1="46" start2="23" end2="23" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="73" end1="76" start2="50" end2="51" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="80" end1="84" start2="55" end2="56" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="92" end1="93" start2="64" end2="65" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="98" end1="102" start2="70" end2="70" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java">
-      <ranges>
-        <range start1="40" end1="42" start2="40" end2="42" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="44" end1="46" start2="44" end2="44" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="60" end1="61" start2="58" end2="59" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="64" end1="67" start2="62" end2="62" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="73" end1="74" start2="68" end2="69" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="77" end1="78" start2="72" end2="73" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="139" end1="140" start2="134" end2="135" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="155" end1="156" start2="150" end2="151" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="157" end1="158" start2="152" end2="153" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="182" end1="183" start2="177" end2="178" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="184" end1="185" start2="179" end2="180" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
-        <range start1="227" end1="228" start2="222" end2="223" changelist="eb8a0bcb-3e09-4fa5-8a3e-e07baf9dc11b" />
+        <range start1="5" end1="5" start2="5" end2="11" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="6" end1="7" start2="12" end2="12" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="10" end1="11" start2="15" end2="15" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="14" end1="24" start2="18" end2="43" changelist="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" />
+        <range start1="25" end1="25" start2="44" end2="49" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="29" end1="29" start2="53" end2="58" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="33" end1="33" start2="62" end2="67" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="37" end1="38" start2="71" end2="77" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="42" end1="42" start2="81" end2="86" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="46" end1="48" start2="90" end2="97" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="51" end1="51" start2="100" end2="105" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="56" end1="57" start2="110" end2="111" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="86" end1="86" start2="140" end2="145" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
+        <range start1="90" end1="90" start2="149" end2="155" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
       </ranges>
     </file>
   </component>
@@ -100,7 +81,7 @@
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Sprint__2__Refactoring",
+    "git-widget-placeholder": "Sprint__2__Refactoring__variable__and__method__names",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/MAU/Term 4/Sys 2/Group_9_Sys_2 - Copy",
     "node.js.detected.package.eslint": "true",

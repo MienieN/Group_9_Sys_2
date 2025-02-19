@@ -2,10 +2,15 @@ package main.java.zenit.filesystem.helpers;
 
 import java.io.File;
 
+/**
+ * Utility class for handling file paths and extracting relevant components such as
+ * project name, package name, and class name. It also provides methods for 
+ * manipulating file paths, such as removing parts of the path or renaming folders.
+ */
 public class FileNameHelpers {
 	
-	public static String getProjectnameFromFile(File file) {
-		String projectname = null;
+	public static String getProjectNameFromFile(File file) {
+		String projectName = null;
 	
 		if (file != null) {
 			String[] folders = getFoldersAsStringArray(file);
@@ -13,17 +18,17 @@ public class FileNameHelpers {
 			int srcIndex = getSrcFolderIndex(folders);
 
 			if (srcIndex != -1) {
-				projectname = folders[srcIndex - 1]; //Projectfolder is one step up from src-folder
+				projectName = folders[srcIndex - 1]; // Project folder is one step up from src-folder
 			} else {
-				projectname = folders[folders.length-1];
+				projectName = folders[folders.length-1];
 			}
 		}
 		
-		return projectname;
+		return projectName;
 	}
 	
-	public static String getPackagenameFromFile(File file) {
-		String packagename = null;
+	public static String getPackageNameFromFile(File file) {
+		String packageName = null;
 		
 		if (file != null) {
 
@@ -32,26 +37,26 @@ public class FileNameHelpers {
 			int srcIndex = getSrcFolderIndex(folders);
 
 			if (srcIndex != -1 && folders.length > srcIndex) { //Filepath is deeper that src-folder
-				packagename = folders[srcIndex + 1]; //Package folder is one step down from src-folder
+				packageName = folders[srcIndex + 1]; //Package folder is one step down from src-folder
 			}
 		}
 		
-		return packagename;
+		return packageName;
 	}
 	
-	public static String getClassnameFromFile(File file) {
-		String classname = null;
+	public static String getClassNameFromFile(File file) {
+		String className = null;
 		
 		if (file != null) {
 			String[] folders = getFoldersAsStringArray(file);
 			
 			int srcIndex = getSrcFolderIndex(folders);
 			
-			if (srcIndex != -1 && folders.length > srcIndex+2 ) { //Filepath is atleast two folders deeper than src-folder
-				classname = folders[srcIndex +2]; //Class-file is two steps down from src-folder
+			if (srcIndex != -1 && folders.length > srcIndex+2 ) { // Filepath is at least two folders deeper than src-folder
+				className = folders[srcIndex +2]; // Class-file is two steps down from src-folder
 			}
 		}
-		return classname;
+		return className;
 	}
 	
 	public static File getFilepathWithoutTopFile(File filepath) {
@@ -114,7 +119,7 @@ public class FileNameHelpers {
 	}
 
 	public static int getSrcFolderIndex(String[] folders) {
-		int srcIndex = -1; //Indicates how deep in the filestructure the src-folder is
+		int srcIndex = -1; // Indicates how deep in the file structure the src-folder is
 		int counter = 0;
 		
 		for (String folder : folders) {
@@ -129,8 +134,8 @@ public class FileNameHelpers {
 
 	public static String[] getFoldersAsStringArray(File file) {
 		String[] folders;
-		String filepath = file.getAbsolutePath(); //Get the path in string
-		folders = filepath.split("/"); //Split path into the different folders
+		String filepath = file.getAbsolutePath(); // Get the path in string
+		folders = filepath.split("/"); // Split path into the different folders
 		
 		return folders;
 	}

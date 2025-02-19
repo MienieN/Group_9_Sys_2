@@ -34,7 +34,7 @@ public class JavaFileHandler extends FileHandler {
 			//Write content to file
 			if (content == null) {
 				try {
-					content = CodeSnippets.newSnippet(typeCode, file.getName(), FileNameHelpers.getPackagenameFromFile(file));
+					content = CodeSnippets.newSnippet(typeCode, file.getName(), FileNameHelpers.getPackageNameFromFile(file));
 				} catch (TypeCodeException ex) {
 					ex.printStackTrace();
 				}

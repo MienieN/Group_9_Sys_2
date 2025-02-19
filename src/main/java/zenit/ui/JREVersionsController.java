@@ -14,14 +14,14 @@ import javafx.stage.Stage;
 import main.java.zenit.filesystem.jreversions.JREVersions;
 
 public class JREVersionsController extends AnchorPane {
-	
 	private Stage stage;
-	private boolean darkmode;
 	private List<File> JVMs;
-	@FXML
-	private ListView<String> JDKList;
+	private boolean darkMode;
+	@FXML private ListView<String> JDKList;
 	
-	public JREVersionsController(boolean darkmode) { this.darkmode = darkmode; }
+	public JREVersionsController(boolean darkMode) {
+		this.darkMode = darkMode;
+	}
 	
 	public void start() {
 		try {
@@ -39,15 +39,18 @@ public class JREVersionsController extends AnchorPane {
 			
 			initialize();
 			
-		} catch (IOException e) { e.printStackTrace(); }
+		} catch (IOException e) {
+			System.out.println("Error JREVersionsController start() = " + e);
+		}
 	}
 	
 	private void initialize() {	
-		ifDarkModeChanged(darkmode);
+		ifDarkModeChanged(darkMode);
 		updateList();
 		stage.show();
 	}
 	
+	// TODO Simplify if possible
 	private void updateList() {
 		JVMs = JREVersions.read();
 		ArrayList<String> JVMsString = new ArrayList<String>();
@@ -74,11 +77,11 @@ public class JREVersionsController extends AnchorPane {
 	
 	@FXML
 	private void addJRE() {
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setInitialDirectory(JREVersions.getJVMDirectory());
-		dc.setTitle("Select JDK to add");
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setInitialDirectory(JREVersions.getJVMDirectory());
+		directoryChooser.setTitle("Select JDK to add");
 		
-		File selected = dc.showDialog(stage);
+		File selected = directoryChooser.showDialog(stage);
 		
 		if (selected != null) {
 			boolean success = JREVersions.append(selected);
@@ -91,6 +94,7 @@ public class JREVersionsController extends AnchorPane {
 		}
 	}
 	
+	// TODO Separate concerns and simplify
 	@FXML
 	private void removeJRE() {
 		String selected = JDKList.getSelectionModel().getSelectedItem();
@@ -125,6 +129,7 @@ public class JREVersionsController extends AnchorPane {
 		}
 	}
 	
+	// TODO simplify if possible
 	@FXML
 	private void selectDefaultJRE() {
 		String selected = JDKList.getSelectionModel().getSelectedItem();

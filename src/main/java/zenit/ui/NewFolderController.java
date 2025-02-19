@@ -18,20 +18,18 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class NewFolderController extends AnchorPane {
-	
 	private Stage stage;
-	private boolean darkmode;
+	private File workspace;
+	private boolean darkMode;
+	private double xOffset = 0, yOffset = 0;
 	@FXML private ImageView logo;
 	@FXML private AnchorPane header;
-	@FXML private ListView<String> filepath;
-	@FXML private TextField tfName;
-    private double xOffset = 0;
-    private double yOffset = 0;
-    private File workspace;
+	@FXML private ListView<String> filePath;
+	@FXML private TextField textFieldName;
 	
 	public NewFolderController(File workspace, boolean darkmode) {
 		this.workspace = workspace;
-		this.darkmode = darkmode;
+		this.darkMode = darkmode;
 	}
 	
 	public void start() {
@@ -50,23 +48,21 @@ public class NewFolderController extends AnchorPane {
 			stage.setScene(scene);
 			
 			initialize();
-			ifDarkModeChanged(darkmode);
+			ifDarkModeChanged(darkMode);
 			stage.showAndWait();
 				
 		} catch (IOException e) {
-			
+			System.out.println("Error NewFolderController start() = " + e);
 		}
-
 	}
 
 	private void initialize() {
-		
 		logo.setImage(new Image(getClass().getResource("/zenit/setup/zenit.png").toExternalForm()));
 		logo.setFitWidth(45);
 		
-		filepath.getItems().clear();
-		filepath.getItems().add(workspace.getPath());
-		filepath.getSelectionModel().selectFirst();
+		filePath.getItems().clear();
+		filePath.getItems().add(workspace.getPath());
+		filePath.getSelectionModel().selectFirst();
 		
 	    header.setOnMousePressed(new EventHandler<MouseEvent>() {
 	    	   @Override
@@ -76,29 +72,29 @@ public class NewFolderController extends AnchorPane {
 	    	   }
 	    	});
 
-	    	//move around here
+		//move around here
 	    header.setOnMouseDragged(new EventHandler<MouseEvent>() {
-	    	   @Override
-	    	   public void handle(MouseEvent event) {
-	    	       stage.setX(event.getScreenX() - xOffset);
-	    	       stage.setY(event.getScreenY() - yOffset);
-	    	   }
-	    	});
+		   @Override
+		   public void handle(MouseEvent event) {
+			   stage.setX(event.getScreenX() - xOffset);
+			   stage.setY(event.getScreenY() - yOffset);
+		   }
+		});
 	}
 	
 	@FXML
 	private void create() {
-		String foldername = tfName.getText();
+		String folderName = textFieldName.getText();
 		
-		if (!foldername.equals("")) {
+		if (!folderName.equals("")) {
 			
-			String filePath = this.filepath.getSelectionModel().getSelectedItem() + File.separator
-					+ foldername;
+			String filePath = this.filePath.getSelectionModel().getSelectedItem() + File.separator
+					+ folderName;
 			File newFolder = new File(filePath);
 
 			if (!newFolder.mkdir()) {
 				DialogBoxes.errorDialog("Folder name already exist", "", "A folder with the name "
-						+ foldername + " already exist. Please input a different name.");
+						+ folderName + " already exist. Please input a different name.");
 			}
 			
 			stage.close();
@@ -106,45 +102,42 @@ public class NewFolderController extends AnchorPane {
 			DialogBoxes.errorDialog("No name selected", "", "No name has been given to the new "
 					+ "folder. Please input a new name to create folder.");
 		}
-		
 	}
 	
 	@FXML
-	private void cancel() {
-		stage.close();
-	}
+	private void cancel() { stage.close(); }
 	
 	@FXML
 	private void browse() {
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setInitialDirectory(workspace);
-		dc.setTitle("Select directory to create new folder in");
-		File chosen = dc.showDialog(stage);
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setInitialDirectory(workspace);
+		directoryChooser.setTitle("Select directory to create new folder in");
+		File chosen = directoryChooser.showDialog(stage);
 		
 		if (chosen != null) {
-			filepath.getItems().clear();
-			filepath.getItems().add(chosen.getPath());
-			filepath.getSelectionModel().selectFirst();
+			filePath.getItems().clear();
+			filePath.getItems().add(chosen.getPath());
+			filePath.getSelectionModel().selectFirst();
 		}
 	}
 	
-	
 	public void ifDarkModeChanged(boolean isDarkMode) {
-		var stylesheets = stage.getScene().getStylesheets();
+		var styleSheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();
 		var lightMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle-lm.css").toExternalForm();
 		
+		// TODO Switch case?
 		if (isDarkMode) {
-			if (stylesheets.contains(lightMode)) {
-				stylesheets.remove(lightMode);
+			if (styleSheets.contains(lightMode)) {
+				styleSheets.remove(lightMode);
 			}
 			
-			stylesheets.add(darkMode);
+			styleSheets.add(darkMode);
 		} else {
-			if (stylesheets.contains(darkMode)) {
-				stylesheets.remove(darkMode);
+			if (styleSheets.contains(darkMode)) {
+				styleSheets.remove(darkMode);
 			}
-			stylesheets.add(lightMode);
+			styleSheets.add(lightMode);
 		}	
 	}
 }

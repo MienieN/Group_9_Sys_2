@@ -5,135 +5,75 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
-
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/READTHIS" beforeDir="false" afterPath="$PROJECT_DIR$/READTHIS" afterDir="false" />
-
-      <change afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsControllerStart.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/zenit/ui/JREVersionsStartUp.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/JDK/DefaultJDK.dat" beforeDir="false" afterPath="$PROJECT_DIR$/res/JDK/DefaultJDK.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/JDK/JDK.dat" beforeDir="false" afterPath="$PROJECT_DIR$/res/JDK/JDK.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 2.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 3.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 4.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 5.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 6.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 7.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/workspace/workspace 8.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/TestUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/TestUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="FxmlFile" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
+    &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
     &quot;assignee&quot;: &quot;Williamstara&quot;
-  }
-}</component>
+    }
+    }</component>
   <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/MienieN/Group_9_Sys_2.git&quot;,
-    &quot;accountId&quot;: &quot;4add3a3d-07a6-42be-831d-aa2df88ec300&quot;
-  }
-}</component>
+    &quot;accountId&quot;: &quot;b5631bbb-6360-4f5d-b270-92aadd4a3dcd&quot;
+    }
+    }</component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
-}</component>
+    &quot;associatedIndex&quot;: 6
+    }</component>
   <component name="ProjectId" id="2sZPwTquSGtVmK40ypHm0HJHts3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;MinTestBranch&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jonatan/Desktop/Group_9_Sys_2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.45747125&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.TestUI.executor": "Run",
     "Application.Unnamed.executor": "Run",
-    "Maven.zenit [test].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "startPopup",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/williamstara/Documents/GitHub/Group_9_Sys_2/src/main/resources/zenit/ui",
+    "last_opened_file_path": "C:/MAU/Term 4/Sys 2/Group_9_Sys_2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.45747125",
-    "settings.editor.selected.configurable": "advanced.settings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/zenit/ui" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="main.java.zenit.ui" />
-    </key>
-  </component>
   <component name="RunManager">
-    <configuration name="TestUI" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
       <option name="VM_PARAMETERS" value="--module-path lib/windowsFX/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
-      <option name="VM_PARAMETERS" value="--module-path lib/javafx-sdk-23.0.2/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
   </component>
-
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -151,12 +91,8 @@
       <workItem from="1739188123221" duration="41000" />
       <workItem from="1739188171283" duration="3000" />
       <workItem from="1739194216168" duration="7000" />
-      <workItem from="1739456345005" duration="1575000" />
-      <workItem from="1739459344433" duration="165000" />
-      <workItem from="1739459614980" duration="6000" />
-      <workItem from="1739459871204" duration="306000" />
-      <workItem from="1739460695244" duration="5944000" />
-      <workItem from="1739716360399" duration="4699000" />
+      <workItem from="1739880854091" duration="109000" />
+      <workItem from="1739966664902" duration="1467000" />
     </task>
     <servers />
   </component>

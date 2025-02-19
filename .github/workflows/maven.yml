@@ -32,4 +32,7 @@ jobs:
       run: mvn clean compile
 
     - name: Test with Maven
-      run: mvn surefire-report:report
+      run: mvn test
+
+    - name: Generate rapport
+      run: mvn surefire-report:report-only

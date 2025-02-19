@@ -1,8 +1,8 @@
 package main.java.zenit.util;
 
 public class Tuple<T1, T2> {
-	private T1 fst;
-	private T2 snd;
+	private T1 first;
+	private T2 second;
 	
 	public Tuple() {}
 	
@@ -12,20 +12,20 @@ public class Tuple<T1, T2> {
 	}
 	
 	public void set(T1 fst, T2 snd) {
-		this.fst = fst;
-		this.snd = snd;
+		this.first = fst;
+		this.second = snd;
 	}
 	
 	public T1 fst() {
-		return fst;
+		return first;
 	}
 	
 	public T2 snd() {
-		return snd;
+		return second;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("(%s, %s", fst, snd);
+		return String.format("(%s, %s", first, second);
 	}
 }

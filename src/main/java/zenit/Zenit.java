@@ -25,17 +25,15 @@ public class Zenit extends Application {
 		File JDK = new File("res/JDK/JDK.dat");
 		File defaultJDK = new File ("res/JDK/DefaultJDK.dat");
 		
-		SetupController sc;
+		SetupController setupController;
 		if (!workspace.exists() || !JDK.exists() || !defaultJDK.exists()) {
-			sc = new SetupController();
-			sc.start();
+			setupController = new SetupController();
+			setupController.start();
 		}
 
 		if (OS.equals("Mac OS X")) {
 			new MacOSLauncher(stage);
-		} else if (OS.equals("Linux")){
-			new MainController(stage);
-		} else if (OS.startsWith("Windows")) {
+		} else if (OS.equals("Linux") || OS.startsWith("Windows")) {
 			new MainController(stage);
 		}
 	}
@@ -46,9 +44,5 @@ public class Zenit extends Application {
 		System.exit(0);
 	}
 	
-	
-	public static void main(String[] args) {
-		launch(args);
-	}
-
+	public static void main(String[] args) { launch(args); }
 }

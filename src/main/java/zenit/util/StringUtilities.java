@@ -1,7 +1,6 @@
 package main.java.zenit.util;
 
 public class StringUtilities {
-
 	public static int countLeadingSpaces(String text) {
 		if (text == null || text.length() == 0 || text.charAt(0) != ' ') {
 			return 0;

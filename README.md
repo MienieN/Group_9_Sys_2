@@ -13,7 +13,11 @@ To run the program:
 • add following in VM options inside 'run configurations' inside your IDE (Intellij = Next to the run button -> Edit configuration ->
 -> Add new -> Application -> Modify options -> Add VM options):
 
---module-path lib/javafx-sdk-23.0.2/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web
+FOR WINDOWS:
+
+--module-path
+lib/windowsFX/lib/
+--add-modules=javafx.controls,javafx.fxml,javafx.web
 --add-opens
 javafx.graphics/javafx.scene.text=ALL-UNNAMED
 --add-exports
@@ -27,6 +31,26 @@ javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED
 --add-exports
 javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED
 -Dprism.allowhidpi=true
+
+FOR MAC:
+
+--module-path
+lib/javafx-sdk-23.0.2/lib/
+--add-modules=javafx.controls,javafx.fxml,javafx.web
+--add-opens
+javafx.graphics/javafx.scene.text=ALL-UNNAMED
+--add-exports
+javafx.graphics/com.sun.javafx.text=ALL-UNNAMED
+--add-opens
+javafx.graphics/com.sun.javafx.text=ALL-UNNAMED
+--add-exports
+javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED
+--add-exports
+javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED
+--add-exports
+javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED
+-Dprism.allowhidpi=true
+
 
 • Add the project as a module, to do this follow the steps below:
 - Go to Project structure

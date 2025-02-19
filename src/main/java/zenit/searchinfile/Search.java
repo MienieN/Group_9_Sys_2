@@ -17,15 +17,6 @@ import main.java.zenit.ui.MainController;
 import main.java.zenit.util.Tuple;
 import main.java.zenit.zencodearea.ZenCodeArea;
 
-/**
- * The Search class lets you search for a word then either
- * highlights it yellow or grey, depending on what background you have,
- * or replaces it with another word of your choosing
- * 
- * @author Fredrik Eklundh
- *
- */
-
 public class Search {
 
 	private ZenCodeArea zenCodeArea;
@@ -48,11 +39,6 @@ public class Search {
 	private boolean isDarkMode;	
 	private boolean caseSensetive = false; 
 	
-	/**
-	 * Opens a TextInputDialog and let's you type in a word to search for 
-	 * 
-	 * @throws FileNotFoundException
-	 */
 	public Search(ZenCodeArea zenCodeArea, File file, boolean isDarkMode, MainController mainController) {
 		
 		new SearchInFileController(this, mainController);
@@ -60,8 +46,6 @@ public class Search {
 		this.zenCodeArea = zenCodeArea;
 		this.file = file;
 		this.isDarkMode = isDarkMode;
-		
-
 	}
 	
 	public int searchInFile(String word) {
@@ -112,10 +96,6 @@ public class Search {
 		return numberOfTimes;
 	}
 
-	/**
-	 * Clears the "found match"-styling.
-	 * @author Fredrik Eklundh, Pontus Laos
-	 */
 	public void clearZen() {
 		if (absolutePos != null) {
 			for (int i = 0; i < absolutePos.size(); i++) {
@@ -125,9 +105,6 @@ public class Search {
 		}
 	}
 	
-	/**
-	 * When you close the search panel the highlight disappears
-	 */
 	public void cleanZen() {
 		int carPos = zenCodeArea.getCaretPosition();
 		zenCodeArea.appendText(" ");
@@ -135,33 +112,16 @@ public class Search {
 		zenCodeArea.moveTo(carPos);
 	}
 	
-	/**
-	 * Replaces every occurrence of a certain word with another word.
-	 * 
-	 * @param wordBefore
-	 * @param wordAfter
-	 * @param absolutePos
-	 */	
 	public void replaceAll(String wordAfter) {
 		for (int i = absolutePos.size() -1; i >= 0; i--) {
 			zenCodeArea.replaceText(absolutePos.get(i).fst(), absolutePos.get(i).snd(), wordAfter);
 		}
 	}
 	
-	/**
-	 * Replaces a single word with another word.
-	 * 
-	 * @param wordBefore
-	 * @param wordAfter
-	 * @param absolutePos
-	 */
 	public void replaceOne(String wordAfter) {
 		zenCodeArea.replaceText(absolutePos.get(i).fst(), absolutePos.get(i).snd(), wordAfter);
 	}
-	
-	/**
-	 * Jumps down/to the next occurrence of the highlighted word
-	 */
+
 	public int jumpDown() {
 		if (i < absolutePos.size() - 1) {
 			i++;
@@ -175,9 +135,6 @@ public class Search {
 		return i;
 	}
 	
-	/**
-	 * Jumps up/to the previous occurrence of the highlighted word
-	 */
 	public int jumpUp() {
 		if(i > 0) {
 			i--;
@@ -189,10 +146,7 @@ public class Search {
 		zenCodeArea.requestFollowCaret();	
 		return i;
 	}
-	
-	/**
-	 * Making the search ignore if it's capital letters or lowercase
-	 */
+
 	private void notCaseSensetive() {
 		
 		while (txtscan.hasNextLine()) {
@@ -212,10 +166,7 @@ public class Search {
 			}
 		}
 	}
-	
-	/**
-	 * This search makes a different if it's capital letters or lowercase
-	 */
+
 	private void caseSensetive() {
 		
 		while (txtscan.hasNextLine()) {

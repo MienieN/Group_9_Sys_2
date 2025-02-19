@@ -2,11 +2,6 @@ package main.java.zenit.filesystem.helpers;
 
 import main.java.zenit.exceptions.TypeCodeException;
 
-/**
- * Snippets of code to insert into classes. Accessed via newSnippet method and constants.
- * @author Alexander Libot
- *
- */
 public class CodeSnippets {
 	
 	public static final int EMPTY = 99;
@@ -24,12 +19,6 @@ public class CodeSnippets {
 		return snippet;
 	}
 	
-	/**
-	 * Template code for new class
-	 * @param classname The name of the class
-	 * @param packagename The name of the package
-	 * @return Created code
-	 */
 	private static String newClass (String classname, String packagename) {
 		
 		int index = classname.indexOf(".java");
@@ -45,12 +34,6 @@ public class CodeSnippets {
 		return codesnippet;
 	}
 	
-	/**
-	 * Template code for new interface
-	 * @param classname The name of the interface
-	 * @param packagename The name of the package
-	 * @return Created code
-	 */
 	private static String newInterface (String classname, String packagename) {
 		
 		int index = classname.indexOf(".java");

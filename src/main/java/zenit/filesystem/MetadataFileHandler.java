@@ -7,22 +7,10 @@ import java.util.regex.Matcher;
 import main.java.zenit.filesystem.jreversions.JREVersions;
 import main.java.zenit.filesystem.metadata.Metadata;
 
-/**
- * Method for creating a metadata file used during compilation
- * @author Alexander Libot
- *
- */
 public class MetadataFileHandler extends FileHandler {
 	
 	public final static String LATEST_VERSION = "2.2.1";
-	
-	/**
-	 * Tries to create a new .metadata file in project folder.
-	 * Standard directory for class-files is "bin" and standard directory for java-files
-	 * is "src".
-	 * @param projectFile The folder where .metadata file is created in
-	 * @throws IOException Throws IOException if file already exists.
-	 */
+
 	protected static File createMetadataFile(File projectFile) throws IOException {
 		File metadataFile = new File(projectFile.getPath() + File.separator + ".metadata");
 		boolean success = metadataFile.createNewFile();
@@ -48,12 +36,6 @@ public class MetadataFileHandler extends FileHandler {
 		return metadataFile;
 	}
 	
-	/**
-	 * Updates the metadata-file with the requirements for the latest version
-	 * @param metadataFile The metadata file to update
-	 * @return Updated {@link main.java.zenit.filesystem.Metadata Metadata} object if updated,
-	 * otherwhise {@code null}
-	 */
 	protected static Metadata updateMetadata(File metadataFile) {
 		Metadata metadata = new Metadata(metadataFile);
 		
@@ -86,14 +68,7 @@ public class MetadataFileHandler extends FileHandler {
 			return null;
 		}		
 	}
-	
-	/**
-	 * Changes the compile directory to directory parameter in project.
-	 * @param directory New directory
-	 * @param projectFile Project to change directory in
-	 * @param internal {@code true} if directory path should be internal, otherwise {@code false}
-	 * @return The new directory path
-	 */
+
 	protected static String changeDirectory(File directory, ProjectFile projectFile,
 			boolean internal) {
 		String directoryPath = directory.getPath();
@@ -109,14 +84,7 @@ public class MetadataFileHandler extends FileHandler {
 		
 		return directoryPath;
 	}
-	
-	/**
-	 * Changes the compile source path to directory parameter in project.
-	 * @param directory New source path directory
-	 * @param projectFile Project to change directory in
-	 * @param internal {@code true} if source path should be internal, otherwise {@code false}
-	 * @return The new source path
-	 */
+
 	protected static String changeSourcepath(File directory, ProjectFile projectFile,
 			boolean internal) {
 		String sourcepath = directory.getPath();

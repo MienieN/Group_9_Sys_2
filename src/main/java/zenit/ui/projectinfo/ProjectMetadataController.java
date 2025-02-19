@@ -2,7 +2,6 @@ package main.java.zenit.ui.projectinfo;
 
 import java.io.File;
 import java.util.List;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +20,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import main.java.zenit.filesystem.FileController;
 import main.java.zenit.filesystem.ProjectFile;
 import main.java.zenit.filesystem.RunnableClass;
@@ -30,88 +28,33 @@ import main.java.zenit.filesystem.metadata.MetadataVerifier;
 import main.java.zenit.ui.DialogBoxes;
 import main.java.zenit.ui.MainController;
 
-/**
- * Window containing run and compile information about a project. Also ability to modify that
- * information.
- * 
- * @author Alexander
- *
- */
 public class ProjectMetadataController extends AnchorPane {
-
 	private Stage propertyStage;
-
 	private FileController fileController;
 	private MainController mc;
-
 	private ProjectFile projectFile;
 	private Metadata metadata;
-	
-	private boolean darkmode;
-	private boolean taUpdated = false;
-
 	private RunnableClass[] runnableClasses;
 	private RunnableClass selectedRunnableClass;
-	
 	private FileChooser.ExtensionFilter libraryFilter = new FileChooser.ExtensionFilter("Libraries", "*.jar", "*.zip");
-
+	private boolean darkmode, taUpdated = false;
+	private double xOffset = 0, yOffset = 0;
+	
 	@FXML private AnchorPane header;
-	
-	@FXML
-	private ImageView logo;
-	@FXML
-	private Text title;
-	@FXML
-	private ListView<String> directoryPathList;
-	@FXML
-	private ListView<String> sourcepathList;
-	@FXML
-	private ListView<String> internalLibrariesList;
-	@FXML
-	private ListView<String> externalLibrariesList;
-	@FXML
-	private ListView<String> runnableClassesList;
+	@FXML private ImageView logo;
+	@FXML private Text title;
+	@FXML private ListView<String> directoryPathList, sourcepathList,runnableClassesList, internalLibrariesList, externalLibrariesList;
+	@FXML private TextArea taProgramArguments, taVMArguments;
+	@FXML private ComboBox<String> JREVersions;
+	@FXML private Button addInternalLibrary, removeInternalLibrary, addExternalLibrary, removeExternalLibrary, save, run;
 
-	@FXML
-	private TextArea taProgramArguments;
-	@FXML
-	private TextArea taVMArguments;
-
-	@FXML
-	private ComboBox<String> JREVersions;
-
-	@FXML
-	private Button addInternalLibrary;
-	@FXML
-	private Button removeInternalLibrary;
-	@FXML
-	private Button addExternalLibrary;
-	@FXML
-	private Button removeExternalLibrary;
-	@FXML
-	private Button save;
-	@FXML
-	private Button run;
-	
-    private double xOffset = 0;
-    private double yOffset = 0;
-
-	/**
-	 * Sets up new object. Use {@link #start()} to open window.
-	 * @param fc FileController object
-	 * @param projectFile The project to display information about
-	 * @param darkmode {@code true} if dark mode is enabled
-	 */
 	public ProjectMetadataController(FileController fc, ProjectFile projectFile, boolean darkmode, MainController mc) {
 		this.projectFile = projectFile;
 		fileController = fc;
 		this.darkmode = darkmode;
 		this.mc = mc;
 	}
-	
-	/**
-	 * Opens new Project Info window.
-	 */
+
 	public void start() {
 		try {
 			//setup scene
@@ -169,9 +112,6 @@ public class ProjectMetadataController extends AnchorPane {
 		}
 	}
 
-	/**
-	 * Initializes variables with data from metadata-file
-	 */
 	private void initialize() {
 		
 		title.setText(projectFile.getName() + " settings");
@@ -221,9 +161,6 @@ public class ProjectMetadataController extends AnchorPane {
 	    	});
 	}
 
-	/**
-	 * Updates the list with data from metadata-file
-	 */
 	private void updateLists() {
 		internalLibrariesList.getItems().clear();
 		String[] internalLibraries = metadata.getInternalLibraries();
@@ -251,10 +188,6 @@ public class ProjectMetadataController extends AnchorPane {
 	}
 	
 	//Settings
-	
-	/**
-	 * Opens directory chooser to choose a new compile-directory directory
-	 */
 	@FXML
 	private void changeDirectory() {
 		int returnValue = DialogBoxes.twoChoiceDialog("Internal directory", "Internal directory",
@@ -278,10 +211,7 @@ public class ProjectMetadataController extends AnchorPane {
 			updateText(directoryPathList, directoryPath);
 		}
 	}
-	
-	/**
-	 * Opens directory chooser to choose a new source path directory
-	 */
+
 	@FXML
 	private void changeSourcepath() {
 		int returnValue = DialogBoxes.twoChoiceDialog("Internal sourcepath", "Internal sourcepath",
@@ -306,10 +236,7 @@ public class ProjectMetadataController extends AnchorPane {
 			updateText(sourcepathList, sourcepath);
 		}
 	}
-	
-	/**
-	 * Changes the JREVersion
-	 */
+
 	@FXML
 	private void changeJREVersion() {
 		String JDKName = JREVersions.getSelectionModel().getSelectedItem();
@@ -317,11 +244,7 @@ public class ProjectMetadataController extends AnchorPane {
 		metadata.setJREVersion(JDK);
 		metadata.encode();
 	}
-
-	/**
-	 * Tries to add files selected from file chooser to internal library list, copies files and
-	 * adds build paths.
-	 */
+	
 	@FXML
 	private void addInternalLibrary() {
 		FileChooser fc = new FileChooser();
@@ -339,10 +262,6 @@ public class ProjectMetadataController extends AnchorPane {
 		}
 	}
 
-	/**
-	 * Tries to removed selected items in internal library list, removes files and removes 
-	 * build paths.
-	 */
 	@FXML
 	private void removeInternalLibrary() {
 		List<String> selectedLibraries = internalLibrariesList.getSelectionModel().getSelectedItems();
@@ -357,10 +276,7 @@ public class ProjectMetadataController extends AnchorPane {
 			}
 		}
 	}
-
-	/**
-	 * Tries to add files selected from file chooser to external library list and adds build paths.
-	 */
+	
 	@FXML
 	private void addExternalLibrary() {
 		FileChooser fc = new FileChooser();
@@ -378,9 +294,6 @@ public class ProjectMetadataController extends AnchorPane {
 		}
 	}
 
-	/**
-	 * Tries to remove the selected items in external library list and removes build paths.
-	 */
 	@FXML
 	private void removeExternalLibrary() {
 		List<String> selectedLibraries = externalLibrariesList.getSelectionModel().getSelectedItems();
@@ -397,10 +310,6 @@ public class ProjectMetadataController extends AnchorPane {
 	}
 	
 	//Advanced settings
-
-	/**
-	 * Saves the text in text fields to metadata.
-	 */
 	@FXML
 	private void save() {
 		String pa = taProgramArguments.getText();
@@ -420,9 +329,6 @@ public class ProjectMetadataController extends AnchorPane {
 		}	
 	}
 
-	/**
-	 * Compiles and runs the selected runnable class
-	 */
 	@FXML
 	private void run() {
 		String runClass = getSelectedRunnableClass().getPath();
@@ -432,15 +338,8 @@ public class ProjectMetadataController extends AnchorPane {
 			File runFile = new File(srcPath + runClass);
 			mc.compileAndRun(runFile);
 		}
-		
-		
 	}
 	
-	/**
-	 * Called when runnable class is changed in list.
-	 * Checks if updates are saved, give option to save or discard changes.
-	 * Loads program arguments and vm arguments to text fields.
-	 */
 	@FXML
 	private void runnableClassChange() {
 		if (taUpdated) {
@@ -466,15 +365,9 @@ public class ProjectMetadataController extends AnchorPane {
 			taVMArguments.setEditable(false);
 		}
 	}
-	
-	/**
-	 * Sets flag to true if called. Used to warn about runnable class switching if an unsaved
-	 * update has been made
-	 */
+
 	@FXML
-	private void argumentsChanged() {
-		taUpdated = true;
-	}
+	private void argumentsChanged() { taUpdated = true; }
 	
 	@FXML
 	private void addRunnableClass() {
@@ -494,15 +387,9 @@ public class ProjectMetadataController extends AnchorPane {
 	}
 	
 	@FXML
-	private void close() {
-		propertyStage.close();
-	}
+	private void close() { propertyStage.close(); }
 	
 	//Help classes
-	
-	/**
-	 * Returns the currently selected runnable class. If no class is selected returns null.
-	 */
 	private RunnableClass getSelectedRunnableClass() {
 		String selected = runnableClassesList.getSelectionModel().getSelectedItem();
 
@@ -517,10 +404,6 @@ public class ProjectMetadataController extends AnchorPane {
 		return null;
 	}
 	
-	/**
-	 * Changes css style depending on set light mode.
-	 * @param isDarkMode true if dark mode is enabled
-	 */
 	public void ifDarkModeChanged(boolean isDarkMode) {
 		var stylesheets = propertyStage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();
@@ -544,6 +427,4 @@ public class ProjectMetadataController extends AnchorPane {
 		list.getItems().clear();
 		list.getItems().add(string);
 	}
-	
-
 }

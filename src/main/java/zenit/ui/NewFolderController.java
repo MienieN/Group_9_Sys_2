@@ -21,26 +21,19 @@ public class NewFolderController extends AnchorPane {
 	
 	private Stage stage;
 	private boolean darkmode;
-	
 	@FXML private ImageView logo;
 	@FXML private AnchorPane header;
 	@FXML private ListView<String> filepath;
 	@FXML private TextField tfName;
-	
     private double xOffset = 0;
     private double yOffset = 0;
-    
     private File workspace;
-	
 	
 	public NewFolderController(File workspace, boolean darkmode) {
 		this.workspace = workspace;
 		this.darkmode = darkmode;
 	}
 	
-	/**
-	 * Opens new Project Info window.
-	 */
 	public void start() {
 		try {
 			//setup scene
@@ -154,5 +147,4 @@ public class NewFolderController extends AnchorPane {
 			stylesheets.add(lightMode);
 		}	
 	}
-
 }

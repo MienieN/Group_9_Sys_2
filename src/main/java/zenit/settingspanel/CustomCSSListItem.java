@@ -7,13 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * JavaFX component for the ListView in the settingspanel.
- * @author siggelabor
- *
- */
 public class CustomCSSListItem extends AnchorPane {
-
 	@FXML 
 	private Label lblCSSText;
 	

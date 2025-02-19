@@ -9,18 +9,8 @@ import java.util.ArrayList;
 
 import main.java.zenit.filesystem.RunnableClass;
 
-/**
- * Encodes a {@link Metadata} object to file.
- * @author Alexander Libot
- *
- */
 public class MetadataEncoder {
-	
-	/**
-	 * Writes the parameters from {@link Metadata} object along with keywords to file.
-	 * @param metadataFile File to write to
-	 * @param metadata Object to extract data from
-	 */
+
 	public static boolean encode(File metadataFile, Metadata metadata) {
 		ArrayList<String> lines = new ArrayList<String>();
 		
@@ -118,12 +108,6 @@ public class MetadataEncoder {
 		
 	}
 	
-	/**
-	 * Writes lines to file
-	 * @param metadataFile  File to write to
-	 * @param lines Lines to write to file
-	 * @throws IOException
-	 */
 	private static void writeMetadata(File metadataFile, ArrayList<String> lines) throws IOException {
 		try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(metadataFile), "UTF-8"))) {
 			for (String writeLine : lines) {

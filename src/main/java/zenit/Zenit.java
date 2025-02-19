@@ -1,19 +1,18 @@
 package main.java.zenit;
 
 import java.io.File;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
 import main.java.zenit.launchers.MacOSLauncher;
 import main.java.zenit.setup.SetupController;
 import main.java.zenit.ui.MainController;
 
 /**
- * Used to launch the application
- * @author Alexander Libot
- *
+ * The Zenit class represents the main entry point for the application that
+ * extends the JavaFX Application class. It initializes the application
+ * based on the operating system, setting up the required environment
+ * and launching the appropriate controllers.
  */
 public class Zenit extends Application {
 	

@@ -22,28 +22,21 @@ public class NewFileController extends AnchorPane {
 	
 	private Stage stage;
 	private boolean darkmode;
-	
 	@FXML private ImageView logo;
 	@FXML private AnchorPane header;
 	@FXML private ListView<String> filepath;
 	@FXML private ComboBox<String> fileEnding;
 	@FXML private TextField tfName;
-	
     private double xOffset = 0;
     private double yOffset = 0;
-    
     private File workspace;
     private File newFile;
-	
 	
 	public NewFileController(File workspace, boolean darkmode) {
 		this.workspace = workspace;
 		this.darkmode = darkmode;
 	}
 	
-	/**
-	 * Opens new Project Info window.
-	 */
 	public void start() {
 		try {
 			//setup scene
@@ -66,7 +59,6 @@ public class NewFileController extends AnchorPane {
 		} catch (IOException e) {
 			
 		}
-
 	}
 
 	private void initialize() {
@@ -126,7 +118,6 @@ public class NewFileController extends AnchorPane {
 			DialogBoxes.errorDialog("No name selected", "", "No name has been given to the new file"
 					+ ". Please input a new name to create file.");
 		}
-		
 	}
 	
 	@FXML
@@ -147,7 +138,6 @@ public class NewFileController extends AnchorPane {
 			filepath.getSelectionModel().selectFirst();
 		}
 	}
-	
 	
 	public void ifDarkModeChanged(boolean isDarkMode) {
 		var stylesheets = stage.getScene().getStylesheets();
@@ -171,5 +161,4 @@ public class NewFileController extends AnchorPane {
 	public File getNewFile() {
 		return newFile;
 	}
-
 }

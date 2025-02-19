@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +11,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-
 import main.java.zenit.filesystem.jreversions.JREVersions;
 
 public class JREVersionsController extends AnchorPane {
@@ -20,13 +18,10 @@ public class JREVersionsController extends AnchorPane {
 	private Stage stage;
 	private boolean darkmode;
 	private List<File> JVMs;
-	
 	@FXML
 	private ListView<String> JDKList;
 	
-	public JREVersionsController(boolean darkmode) {
-		this.darkmode = darkmode;
-	}
+	public JREVersionsController(boolean darkmode) { this.darkmode = darkmode; }
 	
 	public void start() {
 		try {
@@ -44,16 +39,12 @@ public class JREVersionsController extends AnchorPane {
 			
 			initialize();
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
 	private void initialize() {	
 		ifDarkModeChanged(darkmode);
-		
 		updateList();
-		
 		stage.show();
 	}
 	
@@ -98,7 +89,6 @@ public class JREVersionsController extends AnchorPane {
 						+ "contain the needed java or javac executables");
 			}
 		}
-		
 	}
 	
 	@FXML
@@ -158,10 +148,6 @@ public class JREVersionsController extends AnchorPane {
 		}
 	}
 	
-	/**
-	 * Changes css style depending on set light mode.
-	 * @param isDarkMode true if dark mode is enabled
-	 */
 	public void ifDarkModeChanged(boolean isDarkMode) {
 		var stylesheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();

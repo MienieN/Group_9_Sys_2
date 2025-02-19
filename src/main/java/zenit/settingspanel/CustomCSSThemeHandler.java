@@ -20,22 +20,13 @@ import java.util.Properties;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-/**
- * A handler for custom css theme.
- * @author siggelabor
- *
- */
 public class CustomCSSThemeHandler {
-	
 	private String Color_Primary ;
 	private String Color_PrimaryTint;
 	private String Color_Secondary ; 
-	private String Color_SecondaryTint ; 
-	
+	private String Color_SecondaryTint ;
 	private boolean isCustomThemeToggled;
-
 	private List<ThemeCustomizable> stages;
-	
 	private final String key_Primary = "primary";
 	private final String key_PrimaryTint = "primtint";
 	private final String key_Secondary = "secondary";
@@ -44,19 +35,11 @@ public class CustomCSSThemeHandler {
 	private InputStream input = null;
 	private OutputStream output = null;
 
-	/**
-	 * Constructs a new CustomCSSThemeHandler
-	 * @param customStyleSheets the List containing all ThemeCustomizable (controllers)
-	 * of the application.
-	 */
 	public CustomCSSThemeHandler( List<ThemeCustomizable> stages) {
 		this.stages = stages;
 		loadAllProperties();
 	}		
-		
-	/**
-	 * Creates new I/O stream to the config.properties file.
-	 */
+
 	public void openStreams() {
 		try {
 			input = new FileInputStream("config.properties");
@@ -66,10 +49,7 @@ public class CustomCSSThemeHandler {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * Closes I/O stream for the config.properties file.
-	 */
+
 	public void closeStreams() {
 		
 		if (input != null) {
@@ -88,11 +68,6 @@ public class CustomCSSThemeHandler {
 		}	
 	}
 
-	/**
-	 * Checks if the color already exists in the application.
-	 * @param color
-	 * @return
-	 */
 	private boolean isColorValid(String color) {
 		
 		if((!color.equals(Color_Primary)) && 
@@ -104,13 +79,7 @@ public class CustomCSSThemeHandler {
 		}
 		return false;
 	}
-	
-	/**
-	 * Changes the themes of the application. This method will look for all occurrences of current
-	 * the chosen colorTheme in the StyleSheet and change them to the new picked color.
-	 * @param color new color to apply.
-	 * @param colorTheme which 'group' to change.
-	 */
+
 	public void changeColor(Color color, CustomColor colorTheme) {
 		
 		String newColor;
@@ -128,13 +97,7 @@ public class CustomCSSThemeHandler {
 			closeStreams();
 		}	
 	}
-	
-	/**
-	 * Uses CustomColor enum to get the right Color, in string format.
-	 * 
-	 * @param enumColor
-	 * @return
-	 */
+
 	public String getStringFromEnum(CustomColor enumColor) {
 		String toReturn = "";
 		
@@ -158,13 +121,7 @@ public class CustomCSSThemeHandler {
 		
 		return toReturn;
 	}
-	
-	/**
-	 * Stores a color to the config.properties file.
-	 * 
-	 * @param color to be stored 
-	 * @param colorTheme
-	 */
+
 	public void storeColor(String color, CustomColor colorTheme) {
 
 		switch(colorTheme) {
@@ -189,11 +146,7 @@ public class CustomCSSThemeHandler {
 			break;			
 		}
 	}
-	
-	/**
-	 * Loads all saved properties stored in the config.properties file, and saves them to the
-	 * matching instance variable.
-	 */
+
 	public void loadAllProperties() {
 		openStreams();
 		Color_Primary = getProperty(key_Primary);
@@ -208,16 +161,9 @@ public class CustomCSSThemeHandler {
 		Color_SecondaryTint = getProperty(key_SecondaryTint);
 		closeStreams();
 	}
-	
-	/**
-	 * Gets the stored property of given key.
-	 * @param key to the property
-	 * @return value
-	 */
-	public String getProperty(String key) {
-		
-		Properties prop = new Properties();
 
+	public String getProperty(String key) {
+		Properties prop = new Properties();
 		String property = "";
 		
 		try {
@@ -231,12 +177,7 @@ public class CustomCSSThemeHandler {
 		}
 		return property;
 	}
-	
-	/**
-	 * Stores a property
-	 * @param key
-	 * @param value
-	 */
+
 	public void storeProperty(String key, String value) {
 		Properties prop = new Properties();
 		
@@ -251,20 +192,7 @@ public class CustomCSSThemeHandler {
 		}
 			
 	}
-	
-	/*
-	 * TODO CHANGE THIS SO ITS MORE SAFE LOL
-	 */
-	
-	/**
-	 * 
-	 * 
-	 * @param stage the stage to where the stylesheets are suppose to be added.
-	 * @param customThemeCSSfilepath full path
-	 * @param regex 'color' to be changed.
-	 * @param replacement the ner color
-	 * @param localPath the 'workpace dir'
-	 */
+
 	public void changeStyleSheet(
 		Stage stage, File customThemeCSSfile, String regex, String replacement
 	) {
@@ -307,12 +235,7 @@ public class CustomCSSThemeHandler {
 		e.printStackTrace();
 		}		
 	}
-	
-	/**
-	 * Adds or removes custom theme stylesheets.
-	 * 
-	 * @param isToggled 
-	 */
+
 	public void toggleCustomTheme(boolean isToggled) {	
 		if(isToggled) {		
 			updateDefaultStylesheets(isToggled);
@@ -336,10 +259,7 @@ public class CustomCSSThemeHandler {
 		}	
 		isCustomThemeToggled = isToggled;
 	}
-	
-	/**
-	 * Updates all current default stylesheets.
-	 */
+
 	public void updateDefaultStylesheets(boolean isCustomTheme) {
 			
 			for (int i = 0; i < stages.size(); i++) {
@@ -355,11 +275,6 @@ public class CustomCSSThemeHandler {
 			}
 		}		
 	
-	/**
-	 * Converts a JavaFX Color to hex-format.
-	 * @param color to be converted.
-	 * @return hex2 the color in hex-format
-	 */
 	private String colorToHex(Color color) {
 	    String hex1;
 	    String hex2;

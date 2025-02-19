@@ -3,7 +3,6 @@ package main.java.zenit.ui.projectinfo;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import main.java.zenit.filesystem.FileController;
 import main.java.zenit.filesystem.ProjectFile;
 import main.java.zenit.filesystem.RunnableClass;
@@ -24,19 +22,15 @@ import main.java.zenit.filesystem.metadata.Metadata;
 import main.java.zenit.ui.DialogBoxes;
 
 public class ProjectRunnableClassesController extends AnchorPane {
-	
 	private Stage stage;
 	private ProjectFile projectFile;
 	private boolean darkmode;
 	private FileController fc;
-	
 	@FXML private ImageView logo;
 	@FXML private TreeView<String> treeView;
 	@FXML private AnchorPane header;
-	
     private double xOffset = 0;
     private double yOffset = 0;
-	
 	
 	public ProjectRunnableClassesController(ProjectFile projectFile, boolean darkmode, FileController fc) {
 		this.projectFile = projectFile;
@@ -44,9 +38,6 @@ public class ProjectRunnableClassesController extends AnchorPane {
 		this.fc = fc;
 	}
 	
-	/**
-	 * Opens new Project Info window.
-	 */
 	public void start() {
 		try {
 			//setup scene
@@ -66,15 +57,10 @@ public class ProjectRunnableClassesController extends AnchorPane {
 			ifDarkModeChanged(darkmode);
 			stage.showAndWait();
 				
-		} catch (IOException e) {
-			
-		}
-
+		} catch (IOException e) { }
 	}
-
-
+	
 	private void initialize() {
-		
 		logo.setImage(new Image(getClass().getResource("/zenit/setup/zenit.png").toExternalForm()));
 		logo.setFitWidth(55);
 		
@@ -91,25 +77,26 @@ public class ProjectRunnableClassesController extends AnchorPane {
 		});
 		
 	    header.setOnMousePressed(new EventHandler<MouseEvent>() {
-	    	   @Override
-	    	   public void handle(MouseEvent event) {
-	    	       xOffset = event.getSceneX();
-	    	       yOffset = event.getSceneY();
-	    	   }
-	    	});
+		   @Override
+		   public void handle(MouseEvent event) {
+			   xOffset = event.getSceneX();
+			   yOffset = event.getSceneY();
+		   }
+		});
 
 	    	//move around here
 	    header.setOnMouseDragged(new EventHandler<MouseEvent>() {
-	    	   @Override
-	    	   public void handle(MouseEvent event) {
-	    	       stage.setX(event.getScreenX() - xOffset);
-	    	       stage.setY(event.getScreenY() - yOffset);
-	    	   }
-	    	});
+		   @Override
+		   public void handle(MouseEvent event) {
+			   stage.setX(event.getScreenX() - xOffset);
+			   stage.setY(event.getScreenY() - yOffset);
+		   }
+		});
 	}
 	
 	private void populateTree(File root) {
 		File[] children = root.listFiles();
+		
 		for (File file : children) {
 			addNode(file, treeView.getRoot());
 		}
@@ -173,12 +160,8 @@ public class ProjectRunnableClassesController extends AnchorPane {
 			DialogBoxes.errorDialog("Class not runnable", "", "Select a class that is runnable "
 					+ "(contains a main-method");
 		}
-		
 	}
 	
 	@FXML
-	private void close() {
-		stage.close();
-	}
-
+	private void close() { stage.close(); }
 }

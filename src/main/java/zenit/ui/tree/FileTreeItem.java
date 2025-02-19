@@ -1,22 +1,13 @@
 package main.java.zenit.ui.tree;
 
 import java.io.File;
-
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-/**
- * Extension of the TreeItem class with the ability to save a corresponding File-object
- * in the instance.
- * @author Alexander Libot
- *
- * @param <T>
- */
 public class FileTreeItem<T> extends TreeItem<T> {
 	private File file;
 	private int type;
-	
 	public static final int WORKSPACE = 100;
 	public static final int PROJECT = 101;
 	public static final int PACKAGE = 102;
@@ -25,15 +16,8 @@ public class FileTreeItem<T> extends TreeItem<T> {
 	public static final int FOLDER = 105;
 	public static final int FILE = 106;
 	public static final int INCOMPATIBLE = 107;
-
-
     private ImageView icon;
-    
 	
-	/**
-	 * @param file Corresponding file
-	 * @param name
-	 */
 	public FileTreeItem(File file, T name, int type) {
 		super(name);
 		this.file = file;
@@ -63,23 +47,11 @@ public class FileTreeItem<T> extends TreeItem<T> {
 		}
 	}
 	
-	/**
-	 * Set the corresponding file
-	 */
-	public void setFile(File file) {
-		this.file = file;
-	}
+	public void setFile(File file) { this.file = file; }
 	
-	/**
-	 * Get the corresponding file
-	 */
-	public File getFile() {
-		return file;
-	}
+	public File getFile() { return file; }
 	
-	public int getType() {
-		return type;
-	}
+	public int getType() { return type; }
 	
 	public String getStringType() {
 		String stringType;
@@ -93,7 +65,6 @@ public class FileTreeItem<T> extends TreeItem<T> {
 		case INCOMPATIBLE: stringType = "incompatible"; break;
 		default: stringType = null;
 		}
-		
 		return stringType;
 	}
 }

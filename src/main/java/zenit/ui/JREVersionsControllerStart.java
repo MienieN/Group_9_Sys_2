@@ -8,7 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import main.java.zenit.filesystem.jreversions.JREVersions;
+import main.java.zenit.filesystem.jreversions.JDKDirectories;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 	
 	// TODO Simplify
 	private void updateList() {
-		JVMs = JREVersions.read();
+		JVMs = JDKDirectories.readJDKInstallationDirectoriesFromFile();
 		ArrayList<String> JVMsString = new ArrayList<String>();
 		
 		for (File JVM : JVMs) {
@@ -69,7 +69,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 		JDKList.getItems().clear();
 		JDKList.getItems().addAll(JVMsString);
 		
-		File defaultJDK = JREVersions.getDefaultJDKFile();
+		File defaultJDK = JDKDirectories.getDefaultJDKFile();
 		
 		if (defaultJDK != null) {
 			String defaultName = defaultJDK.getName() + " [default]";
@@ -85,13 +85,13 @@ public class JREVersionsControllerStart extends AnchorPane {
 	@FXML
 	private void addJRE() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		directoryChooser.setInitialDirectory(JREVersions.getJVMDirectory());
+		directoryChooser.setInitialDirectory(JDKDirectories.getJVMDirectory());
 		directoryChooser.setTitle("Select JDK to add");
 		
 		File selected = directoryChooser.showDialog(stage);
 		
 		if (selected != null) {
-			boolean success = JREVersions.append(selected);
+			boolean success = JDKDirectories.appendToList(selected);
 			if (success) {
 				updateList();
 			} else {
@@ -127,7 +127,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 				}
 			}
 			if (selectedFile != null) { 
-				boolean success = JREVersions.remove(selectedFile);
+				boolean success = JDKDirectories.removeFromList(selectedFile);
 				if (success) {
 					DialogBoxes.informationDialog("JDK removed from Zenit", "The JDK " + selected
 							+ " has been removed from Zenit");
@@ -159,7 +159,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 			}
 		}
 		if (selectedFile != null) {
-			JREVersions.setDefaultJDKFile(selectedFile);
+			JDKDirectories.setDefaultJDKFile(selectedFile);
 			updateList();
 		}
 	}

@@ -10,9 +10,14 @@ import java.util.NoSuchElementException;
 
 import main.java.zenit.filesystem.RunnableClass;
 
+/**
+ * The MetadataDecoder class is responsible for decoding metadata from a given file
+ * and populating a Metadata object with the extracted information. The metadata file
+ * is expected to follow a specific structure for parsing.
+ */
 public class MetadataDecoder {
-    
-    public static void decode (File metadataFile, Metadata metadata) {
+    //TODO separate into smaller methods
+    public static void decode(File metadataFile, Metadata metadata) {
         try {
             //Read lines from file
             LinkedList <String> lines = readMetadata(metadataFile);
@@ -32,7 +37,7 @@ public class MetadataDecoder {
                     //Sourcepath
                 }
                 else if (line.equals("SOURCEPATH")) {
-                    metadata.setSourcepath(lines.removeFirst());
+                    metadata.setSourcePath(lines.removeFirst());
                     
                     //JRE version
                 }
@@ -104,7 +109,7 @@ public class MetadataDecoder {
         }
     }
     
-    private static LinkedList <String> readMetadata (File metadataFile) throws IOException {
+    private static LinkedList <String> readMetadata(File metadataFile) throws IOException {
         
         if (! metadataFile.exists()) {
             throw new IOException("Metadata don't exist");

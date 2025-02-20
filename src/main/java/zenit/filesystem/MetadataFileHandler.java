@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 
-import main.java.zenit.filesystem.jreversions.JREVersions;
+import main.java.zenit.filesystem.jreversions.JDKDirectories;
 import main.java.zenit.filesystem.metadata.Metadata;
 
+/**
+ * The MetadataFileHandler class extends FileHandler and provides utility methods for managing
+ * metadata files associated with projects. It includes functionality for creating, updating,
+ * and modifying metadata files used in the project structure.
+ */
 public class MetadataFileHandler extends FileHandler {
-	
+	//TODO: Update this version number when a new version is released
 	public final static String LATEST_VERSION = "2.2.1";
 
 	protected static File createMetadataFile(File projectFile) throws IOException {
@@ -22,8 +27,8 @@ public class MetadataFileHandler extends FileHandler {
 		Metadata metadata = new Metadata(metadataFile);
 		metadata.setVersion(LATEST_VERSION);
 		metadata.setDirectory("bin");
-		metadata.setSourcepath("src");
-		File JDK = JREVersions.getDefaultJDKFile();
+		metadata.setSourcePath("src");
+		File JDK = JDKDirectories.getDefaultJDKFile();
 		if (JDK != null) {
 			metadata.setJREVersion(JDK.getPath());
 		}
@@ -45,11 +50,11 @@ public class MetadataFileHandler extends FileHandler {
 		if (metadata.getDirectory() == null) {
 			metadata.setDirectory("bin");
 		}
-		if (metadata.getSourcepath() == null) {
-			metadata.setSourcepath("src");
+		if (metadata.getSourcePath() == null) {
+			metadata.setSourcePath("src");
 		}
 		if (metadata.getJREVersion() == null || metadata.getJREVersion().equals("unknown")) {
-			String JRE = JREVersions.getDefaultJDKFile().getPath();
+			String JRE = JDKDirectories.getDefaultJDKFile().getPath();
 			metadata.setJREVersion(JRE);
 		}
 		if (metadata.getRunnableClasses() == null) {
@@ -95,7 +100,7 @@ public class MetadataFileHandler extends FileHandler {
 		}
 		
 		Metadata metadata = new Metadata(projectFile.getMetadata());
-		metadata.setSourcepath(sourcepath);
+		metadata.setSourcePath(sourcepath);
 		metadata.encode();
 		
 		return sourcepath;

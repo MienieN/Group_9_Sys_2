@@ -27,9 +27,9 @@ public class NewFolderController extends AnchorPane {
 	@FXML private ListView<String> filePath;
 	@FXML private TextField textFieldName;
 	
-	public NewFolderController(File workspace, boolean darkmode) {
+	public NewFolderController(File workspace, boolean darkMode) {
 		this.workspace = workspace;
-		this.darkMode = darkmode;
+		this.darkMode = darkMode;
 	}
 	
 	public void start() {
@@ -125,19 +125,18 @@ public class NewFolderController extends AnchorPane {
 		var styleSheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();
 		var lightMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle-lm.css").toExternalForm();
-		
-		// TODO Switch case?
+
 		if (isDarkMode) {
 			if (styleSheets.contains(lightMode)) {
 				styleSheets.remove(lightMode);
 			}
-			
+
 			styleSheets.add(darkMode);
 		} else {
 			if (styleSheets.contains(darkMode)) {
 				styleSheets.remove(darkMode);
 			}
 			styleSheets.add(lightMode);
-		}	
+		}
 	}
 }

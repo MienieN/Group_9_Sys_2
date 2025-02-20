@@ -23,6 +23,7 @@ import javafx.stage.StageStyle;
 import main.java.zenit.filesystem.FileController;
 import main.java.zenit.filesystem.ProjectFile;
 import main.java.zenit.filesystem.RunnableClass;
+import main.java.zenit.filesystem.jreversions.JDKDirectories;
 import main.java.zenit.filesystem.metadata.Metadata;
 import main.java.zenit.filesystem.metadata.MetadataVerifier;
 import main.java.zenit.ui.DialogBoxes;
@@ -123,7 +124,7 @@ public class ProjectMetadataController extends AnchorPane {
 		if (directory != null) {
 			updateText(directoryPathList, directory);
 		}
-		String sourcepath = metadata.getSourcepath();
+		String sourcepath = metadata.getSourcePath();
 		if (sourcepath != null) {
 			updateText(sourcepathList, sourcepath);
 		}
@@ -132,7 +133,7 @@ public class ProjectMetadataController extends AnchorPane {
 
 		File JREVersion = new File(metadata.getJREVersion());
 		
-		List<String> JDKs = main.java.zenit.filesystem.jreversions.JREVersions.readString();
+		List<String> JDKs = JDKDirectories.extractJDKDirectoryNameAsString();
 		if (JREVersion != null) {
 			JREVersions.getItems().addAll(JDKs);
 			JREVersions.getSelectionModel().select(JREVersion.getName());
@@ -177,7 +178,7 @@ public class ProjectMetadataController extends AnchorPane {
 			externalLibrariesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		}
 		
-		metadata = new Metadata(metadata.getMetadataFile());
+		metadata = new Metadata(metadata.getFile());
 		runnableClasses = metadata.getRunnableClasses();
 		if (runnableClasses != null) {
 			runnableClassesList.getItems().clear();
@@ -232,7 +233,7 @@ public class ProjectMetadataController extends AnchorPane {
 		File directory = dc.showDialog(propertyStage);
 		
 		if (directory != null) {
-			String sourcepath = fileController.changeSourcepath(directory, projectFile, internal);
+			String sourcepath = fileController.changeSourcePath(directory, projectFile, internal);
 			updateText(sourcepathList, sourcepath);
 		}
 	}
@@ -240,7 +241,7 @@ public class ProjectMetadataController extends AnchorPane {
 	@FXML
 	private void changeJREVersion() {
 		String JDKName = JREVersions.getSelectionModel().getSelectedItem();
-		String JDK = main.java.zenit.filesystem.jreversions.JREVersions.getFullPathFromName(JDKName);
+		String JDK = JDKDirectories.getFullPathFromName(JDKName);
 		metadata.setJREVersion(JDK);
 		metadata.encode();
 	}
@@ -254,7 +255,7 @@ public class ProjectMetadataController extends AnchorPane {
 		if (selectedFiles != null) {
 			boolean success = fileController.addInternalLibraries(selectedFiles, projectFile);
 			if (success) {
-				metadata = new Metadata(metadata.getMetadataFile());
+				metadata = new Metadata(metadata.getFile());
 				updateLists();
 			} else {
 				ProjectInfoErrorHandling.addInternalLibraryFail();
@@ -269,7 +270,7 @@ public class ProjectMetadataController extends AnchorPane {
 		if (selectedLibraries != null) {
 			boolean success = fileController.removeInternalLibraries(selectedLibraries, projectFile);
 			if (success) {
-				metadata = new Metadata(metadata.getMetadataFile());
+				metadata = new Metadata(metadata.getFile());
 				updateLists();
 			} else {
 				ProjectInfoErrorHandling.removeInternalLibraryFail();
@@ -286,7 +287,7 @@ public class ProjectMetadataController extends AnchorPane {
 		if (selectedFiles != null) {
 			boolean success = fileController.addExternalLibraries(selectedFiles, projectFile);
 			if (success) {
-				metadata = new Metadata(metadata.getMetadataFile());
+				metadata = new Metadata(metadata.getFile());
 				updateLists();
 			} else {
 				ProjectInfoErrorHandling.addExternalLibraryFail();
@@ -301,7 +302,7 @@ public class ProjectMetadataController extends AnchorPane {
 		if (selectedLibraries != null) {
 			boolean success = fileController.removeExternalLibraries(selectedLibraries, projectFile);
 			if (success) {
-				metadata = new Metadata(metadata.getMetadataFile());
+				metadata = new Metadata(metadata.getFile());
 				updateLists();
 			} else {
 				ProjectInfoErrorHandling.removeExternalLibraryFail();

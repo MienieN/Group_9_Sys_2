@@ -5,24 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleAreaErrorStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleAreaErrorStream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleAreaOutputStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleAreaOutputStream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FolderHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FolderHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/JavaFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/JavaFileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/MetadataFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/MetadataFileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKVerifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKVerifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JREVersions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKDirectories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/Metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/Metadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataVerifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataVerifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/setup/SetupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/setup/SetupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsControllerStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsControllerStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectMetadataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectMetadataController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectRunnableClassesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectRunnableClassesController.java" afterDir="false" />
     </list>
-    <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ConsoleRedirect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ConsoleRedirect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/TextAreaOutputStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/TextAreaOutputStream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/Zenit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/Zenit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFolderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFolderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/util/StringUtilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/util/StringUtilities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/util/Tuple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/util/Tuple.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/zencodearea/Syntax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/zencodearea/Syntax.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/zencodearea/ZenCodeArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/zencodearea/ZenCodeArea.java" afterDir="false" />
-    </list>
+    <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,38 +39,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-    &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;Williamstara&quot;
-    }
-    }</component>
-  <component name="GithubPullRequestsUISettings">{
-    &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/MienieN/Group_9_Sys_2.git&quot;,
-    &quot;accountId&quot;: &quot;b5631bbb-6360-4f5d-b270-92aadd4a3dcd&quot;
-    }
-    }</component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/zenit/console/ConsoleArea.java">
-      <ranges>
-        <range start1="5" end1="5" start2="5" end2="11" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="6" end1="7" start2="12" end2="12" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="10" end1="11" start2="15" end2="15" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="14" end1="24" start2="18" end2="43" changelist="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" />
-        <range start1="25" end1="25" start2="44" end2="49" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="29" end1="29" start2="53" end2="58" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="33" end1="33" start2="62" end2="67" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="37" end1="38" start2="71" end2="77" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="42" end1="42" start2="81" end2="86" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="46" end1="48" start2="90" end2="97" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="51" end1="51" start2="100" end2="105" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="56" end1="57" start2="110" end2="111" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="86" end1="86" start2="140" end2="145" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-        <range start1="90" end1="90" start2="149" end2="155" changelist="b677fe4a-76a7-4311-a39f-3396213a60e4" />
-      </ranges>
-    </file>
-  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Williamstara"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/MienieN/Group_9_Sys_2.git",
+    "accountId": "b5631bbb-6360-4f5d-b270-92aadd4a3dcd"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 6
     }</component>
@@ -130,6 +113,7 @@
       <workItem from="1739194216168" duration="7000" />
       <workItem from="1739880854091" duration="109000" />
       <workItem from="1739966664902" duration="1467000" />
+      <workItem from="1740034356100" duration="5557000" />
     </task>
     <servers />
   </component>

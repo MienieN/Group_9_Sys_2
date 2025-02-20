@@ -8,14 +8,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import main.java.zenit.filesystem.jreversions.JREVersions;
+import main.java.zenit.filesystem.jreversions.JDKDirectories;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JREVersionsControllerStart extends AnchorPane {
-
 	private Stage stage;
 	private List<File> JVMs;
 	private boolean projectCreated = false, darkMode;
@@ -56,47 +56,46 @@ public class JREVersionsControllerStart extends AnchorPane {
 		ifDarkModeChanged(darkMode);
 		updateList();
 	}
-	
-	// TODO Simplify
+
 	private void updateList() {
-		JVMs = JREVersions.read();
-		ArrayList<String> JVMsString = new ArrayList<String>();
-		
-		for (File JVM : JVMs) {
-			JVMsString.add(JVM.getName());
-		}
-		
+		JVMs = JDKDirectories.readJDKInstallationDirectoriesFromFile();
+		List<String> JVMsString = getJVMNames(JVMs);
+
 		JDKList.getItems().clear();
 		JDKList.getItems().addAll(JVMsString);
-		
-		File defaultJDK = JREVersions.getDefaultJDKFile();
-		
+
+		File defaultJDK = JDKDirectories.getDefaultJDKFile();
 		if (defaultJDK != null) {
-			String defaultName = defaultJDK.getName() + " [default]";
-			JDKList.getItems().remove(defaultJDK.getName());
-			JDKList.getItems().add(defaultName);
+			updateDefaultJDK(defaultJDK);
 		}
-		
-		JDKList.getItems().sort((o1,o2)->{
-			return o1.compareTo(o2);
-		});
+
+		JDKList.getItems().sort(String::compareTo);
 	}
-	
+
+	private List<String> getJVMNames(List<File> JVMs) {
+		return JVMs.stream().map(File::getName).collect(Collectors.toList());
+	}
+
+	private void updateDefaultJDK(File defaultJDK) {
+		String defaultJDKName = defaultJDK.getName() + " [default]";
+		JDKList.getItems().remove(defaultJDKName);
+		JDKList.getItems().add(defaultJDKName);
+	}
+
 	@FXML
 	private void addJRE() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		directoryChooser.setInitialDirectory(JREVersions.getJVMDirectory());
+		directoryChooser.setInitialDirectory(JDKDirectories.getJVMDirectory());
 		directoryChooser.setTitle("Select JDK to add");
-		
+
 		File selected = directoryChooser.showDialog(stage);
-		
+
 		if (selected != null) {
-			boolean success = JREVersions.append(selected);
+			boolean success = JDKDirectories.appendToList(selected);
 			if (success) {
 				updateList();
 			} else {
-				DialogBoxes.errorDialog("JDK doesn't contain java or javac", "", "The selected JDK doesn't"
-						+ "contain the needed java or javac executables");
+				showErrorDialog("JDK doesn't contain java or javac", "", "The selected JDK doesn't contain the needed java or javac executables");
 			}
 		}
 	}
@@ -106,60 +105,64 @@ public class JREVersionsControllerStart extends AnchorPane {
 		projectCreated = true;
 		if (stage != null) { stage.close(); }
 	}
-	
-	// TODO Separate concerns and simplify
+
 	@FXML
 	private void removeJRE() {
 		String selected = JDKList.getSelectionModel().getSelectedItem();
-		File selectedFile = null;
-		
-		if (selected != null && selected.endsWith(" [default]")) {
-			DialogBoxes.errorDialog("Can't remove default JDK", "", "Can't remove the default"
-					+ "JDK, choose another default JDK to remove this one");
+
+		if (selected == null) {
+			showErrorDialog("No JDK selected", "", "Select a JDK to remove from Zenit");
 			return;
 		}
-		
-		if (selected != null) {
-			for (File JVM : JVMs) {
-				if (JVM.getPath().endsWith(selected)) {
-					selectedFile = JVM;
-					break;
-				}
-			}
-			if (selectedFile != null) { 
-				boolean success = JREVersions.remove(selectedFile);
-				if (success) {
-					DialogBoxes.informationDialog("JDK removed from Zenit", "The JDK " + selected
-							+ " has been removed from Zenit");
-					updateList();
-				} else {
-					DialogBoxes.errorDialog("Couldn't remove JDK", "", "The JDK " + selected +
-							" couldn't be removed from Zenit");
-				}
-			}
-		} else {
-			DialogBoxes.errorDialog("No JDK selected", "", "Select a JDK to remove from Zenit");
+
+		if (selected.endsWith(" [default]")) {
+			showErrorDialog("Can't remove default JDK", "", "Can't remove the default JDK, choose another default JDK to remove this one");
+			return;
+		}
+
+		File selectedFile = findSelectedFile(selected);
+		if (selectedFile != null) {
+			removeJDK(selected, selectedFile);
 		}
 	}
-	
-	// TODO Simplify
+
+	private File findSelectedFile(String selected) {
+	    for (File JVM : JVMs) {
+	        if (JVM.getPath().endsWith(selected)) {
+	            return JVM;
+	        }
+	    }
+	    return null;
+	}
+
+	private void removeJDK(String selected, File selectedFile) {
+		boolean success = JDKDirectories.removeFromList(selectedFile);
+		if (success) {
+			DialogBoxes.informationDialog("JDK removed from Zenit", "The JDK " + selected + " has been removed from Zenit");
+			updateList();
+		} else {
+			showErrorDialog("Couldn't remove JDK", "", "The JDK " + selected + " couldn't be removed from Zenit");
+		}
+	}
+
+	/**
+	 * This method selects a default JRE from the list,
+	 * checks if it is already the default, and if not,
+	 * sets it as the default JRE and updates the list.
+	 */
 	@FXML
 	private void selectDefaultJRE() {
 		String selected = JDKList.getSelectionModel().getSelectedItem();
-		File selectedFile = null;
 		
 		if (selected != null && selected.endsWith(" [default]")) { return; }
-		
-		if (selected != null) {
-			for (File JVM : JVMs) {
-				if (JVM.getPath().endsWith(selected)) {
-					selectedFile = JVM;
-					break;
-				}
-			}
-		}
+
+		File selectedFile = JVMs.stream()
+				.filter(JVM -> JVM.getPath().endsWith(selected))
+				.findFirst()
+				.orElse(null);
+
 		if (selectedFile != null) {
-			JREVersions.setDefaultJDKFile(selectedFile);
+			JDKDirectories.setDefaultJDKFile(selectedFile);
 			updateList();
 		}
 	}
@@ -168,8 +171,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 		var styleSheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();
 		var lightMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle-lm.css").toExternalForm();
-		
-		// TODO Kinda ugly, simplify if possible
+
 		if (isDarkMode) {
 			if (styleSheets.contains(lightMode)) {
 				styleSheets.remove(lightMode);
@@ -182,5 +184,9 @@ public class JREVersionsControllerStart extends AnchorPane {
 			}
 			styleSheets.add(lightMode);
 		}	
+	}
+
+	private void showErrorDialog(String title, String header, String content) {
+		DialogBoxes.errorDialog(title, header, content);
 	}
 }

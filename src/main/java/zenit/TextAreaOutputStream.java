@@ -53,19 +53,17 @@ public class TextAreaOutputStream extends OutputStream {
 	 */
 	@Override
 	public void write(int inputByte) throws IOException {
-		// TODO this could be a switch statement
-		if (inputByte == '\n') {
-			textArea.appendText(stringBuilder.toString() + "\n");
-			stringBuilder.setLength(0);
-			return;
+		switch (inputByte) {
+			case '\n':
+				textArea.appendText(stringBuilder.toString() + "\n");
+				stringBuilder.setLength(0);
+				return;
+			case '\r':
+				return;
+			default:
+				stringBuilder.append((char) inputByte);
+				textArea.appendText(Character.toString((char) inputByte));
 		}
-		
-		if (inputByte == '\r') {
-			return;
-		}
-		
-		stringBuilder.append((char) inputByte);
-		textArea.appendText(Character.toString((char) inputByte));
 	}
 	
 	/**

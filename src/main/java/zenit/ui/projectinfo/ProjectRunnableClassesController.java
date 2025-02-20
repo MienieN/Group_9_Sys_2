@@ -105,7 +105,7 @@ public class ProjectRunnableClassesController extends AnchorPane {
 	private void addNode(File file, TreeItem<String> parent) {
 		String name = file.getName();
 		boolean runnable = false;
-		if (file.getName().endsWith(".java") && fc.containMainMethod(file)) {
+		if (file.getName().endsWith(".java") && fc.checkIfClassFileContainsMainMethod(file)) {
 			name += " [runnable]";
 			runnable = true;
 		} else if (file.getName().endsWith(".java")) {

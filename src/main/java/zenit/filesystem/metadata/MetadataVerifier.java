@@ -4,6 +4,12 @@ import java.io.File;
 
 import main.java.zenit.filesystem.MetadataFileHandler;
 
+/**
+ * The MetadataVerifier class provides functionality to verify the validity
+ * and consistency of a Metadata object. Verification involves checking
+ * whether the associated metadata file exists and whether the metadata
+ * version matches the latest expected version.
+ */
 public class MetadataVerifier {
 	
 	public static final int VERIFIED = 0;
@@ -26,7 +32,7 @@ public class MetadataVerifier {
 	private static boolean metadataFileMissing(Metadata metadata) {
 		File metadataFile = null;
 		if (metadata != null) {
-			metadataFile = metadata.getMetadataFile();
+			metadataFile = metadata.getFile();
 		}
 		if (metadataFile == null || !metadataFile.exists() || metadataFile.isDirectory()) {
 			return true;

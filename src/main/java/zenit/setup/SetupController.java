@@ -23,7 +23,7 @@ import javafx.stage.StageStyle;
 
 import main.java.zenit.Zenit;
 import main.java.zenit.filesystem.WorkspaceHandler;
-import main.java.zenit.filesystem.jreversions.JREVersions;
+import main.java.zenit.filesystem.jreversions.JDKDirectories;
 import main.java.zenit.ui.DialogBoxes;
 
 public class SetupController extends AnchorPane {
@@ -92,7 +92,7 @@ public class SetupController extends AnchorPane {
 		
 		//Load OS default JDKs if none are saved
 		if (!JDKDat.exists()) {
-			JREVersions.createNew();
+			JDKDirectories.createNew();
 		}
 		
 		//Load in set workspace if it exist
@@ -128,10 +128,10 @@ public class SetupController extends AnchorPane {
 
 	private void updateList() {
 		//Init list of JDKs
-		List<String> JDKs = JREVersions.readString();
+		List<String> JDKs = JDKDirectories.extractJDKDirectoryNameAsString();
 		
 		//Try to read the default JDK
-		File defaultJDKFile = JREVersions.getDefaultJDKFile();
+		File defaultJDKFile = JDKDirectories.getDefaultJDKFile();
 		if (defaultJDKFile != null) {
 			String defaultJDKName = defaultJDKFile.getName();
 			
@@ -175,7 +175,7 @@ public class SetupController extends AnchorPane {
 	private void addJDK() {
 		DirectoryChooser dc = new DirectoryChooser();
 		dc.setTitle("Choose JDK to add");
-		dc.setInitialDirectory(JREVersions.getJVMDirectory());
+		dc.setInitialDirectory(JDKDirectories.getJVMDirectory());
 		File newJDK = dc.showDialog(stage);
 		
 		if (newJDK != null) {
@@ -183,7 +183,7 @@ public class SetupController extends AnchorPane {
 				DialogBoxes.errorDialog("JDK already exist in list", "", "A JDK with that name"
 						+ " already exist in the list.");
 			} else {
-				if (JREVersions.append(newJDK)) {
+				if (JDKDirectories.appendToList(newJDK)) {
 					updateList();
 				} else {
 					DialogBoxes.errorDialog("Not a valid JDK folder", "", "The chosen folder is not"
@@ -214,9 +214,9 @@ public class SetupController extends AnchorPane {
 				}
 			}
 			
-			String removeJDKPath = JREVersions.getFullPathFromName(removeJDKName);
+			String removeJDKPath = JDKDirectories.getFullPathFromName(removeJDKName);
 			File removeJDKFile = new File(removeJDKPath);
-			JREVersions.remove(removeJDKFile);
+			JDKDirectories.removeFromList(removeJDKFile);
 		
 			updateList();
 		} else {
@@ -230,9 +230,9 @@ public class SetupController extends AnchorPane {
 		String defaultJDKName = jdkList.getSelectionModel().getSelectedItem();
 		
 		if (defaultJDKName != null) {
-			String defaultJDKPath = JREVersions.getFullPathFromName(defaultJDKName);
+			String defaultJDKPath = JDKDirectories.getFullPathFromName(defaultJDKName);
 			File deaultJDKFile = new File(defaultJDKPath);
-			JREVersions.setDefaultJDKFile(deaultJDKFile);
+			JDKDirectories.setDefaultJDKFile(deaultJDKFile);
 		
 			updateList();
 		} else {

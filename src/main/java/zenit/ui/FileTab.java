@@ -2,6 +2,8 @@ package main.java.zenit.ui;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -57,73 +59,74 @@ public class FileTab extends Tab {
 		
 		Platform.runLater(zenCodeArea::requestFocus);
 	}
-	
+
 	public void setStyle(int row, int column, String style) {
-		int columnLength = zenCodeArea.getParagraph(row-1).getText().length();
-		
-		if (column >= columnLength) {
-			Platform.runLater(()->
-			zenCodeArea.setStyle(row-1,column-1,column,Arrays.asList(style)));
-		} else {
-			Platform.runLater(()->
-			zenCodeArea.setStyle(row-1,column,column+1,Arrays.asList(style)));
-		}
+		int columnLength = zenCodeArea.getParagraph(row - 1).getText().length();
+		int endColumn = (column >= columnLength) ? column : column + 1;
+
+		Platform.runLater(() -> zenCodeArea.setStyle(row - 1, column - 1, endColumn, Arrays.asList(style)));
 	}
 	
 	public void addTextPropertyListener(ChangeListener<? super String> listener) {
 		zenCodeArea.textProperty().addListener(listener);
 	}
-	
-	// TODO Separate concerns and simplify
+
 	public void shortcutsTrigger() {
 		if (file == null) { return; }
-		
+
 		String text = zenCodeArea.getText();
 		int caretPosition = zenCodeArea.getCaretPosition();
-		
-		if (caretPosition >= 6 && text.substring(caretPosition - 6, caretPosition).equals("sysout")) {
-			zenCodeArea.replaceText(caretPosition - 6, caretPosition, "System.out.println();");
-			zenCodeArea.moveTo(caretPosition + 13);
-		}
-		else if (caretPosition >= 6 && text.substring(caretPosition - 6, caretPosition).equals("syserr")) {
-			zenCodeArea.replaceText(caretPosition - 6, caretPosition, "System.err.println();");
-			zenCodeArea.moveTo(caretPosition + 13);
-		}
-		else if (caretPosition >= 4 && text.substring(caretPosition - 4, caretPosition).equals("main")) {
-			zenCodeArea.replaceText(
-				caretPosition - 4, caretPosition, "public static void main(String[]args) {\n \n}"
-			);
-			zenCodeArea.moveTo(caretPosition + 37);
-		}
-		else if (caretPosition >= 2 && text.substring(caretPosition - 2, caretPosition).equals("pv")) {
-			zenCodeArea.replaceText(caretPosition - 2, caretPosition, "public void ");
-			zenCodeArea.moveTo(caretPosition + 10);
-		}
+		Map<String, String> shortcuts = initializeShortcuts();
+
+		shortcuts.forEach((shortcut, replacement) -> {
+			if (caretPosition >= shortcut.length() && text.endsWith(shortcut)) {
+				replaceShortcutText(caretPosition, shortcut, replacement);
+				return;
+			}
+		});
 	}
-	
-	// TODO Simplify if possible
+
+	private void replaceShortcutText(int caretPosition, String shortcut, String replacement) {
+		zenCodeArea.replaceText(caretPosition - shortcut.length(), caretPosition, replacement);
+		zenCodeArea.moveTo(caretPosition + replacement.length() - shortcut.length());
+	}
+
+	private Map<String, String> initializeShortcuts() {
+		Map<String, String> shortcuts = new HashMap<>();
+		shortcuts.put("sysout", "System.out.println();");
+		shortcuts.put("syserr", "System.err.println();");
+		shortcuts.put("main", "public static void main(String[] args) {\n\n}");
+		shortcuts.put("pv", "public void ");
+		return shortcuts;
+	}
+
 	public void commentsShortcutsTrigger() {
 		if (file == null) { return; }
-		
-		String text = zenCodeArea.getText();
+
 		int caretPosition = zenCodeArea.getCaretPosition();
-		
-		if (caretPosition >= 2 && text.substring(
-			caretPosition - 2, caretPosition).equals("/*")) 
-		{
-			zenCodeArea.replaceText(caretPosition - 2, caretPosition, "/*\n* \n*/");
-			zenCodeArea.moveTo(caretPosition + 3);
+		String text = zenCodeArea.getText();
+
+		switch (text.substring(Math.max(0, caretPosition - 3), caretPosition)) {
+			case "/*":
+				handleBlockComment(caretPosition);
+				break;
+			case "/**":
+				handleJavadocComment(caretPosition);
+				break;
+			default:
+				zenCodeArea.replaceText(caretPosition, caretPosition, "\n");
+				break;
 		}
-		else if (caretPosition >= 3 && text.substring(
-			caretPosition - 3, caretPosition).equals("/**")) 
-		{
-			zenCodeArea.replaceText(caretPosition - 3, caretPosition, "/**\n* \n* @author \n*/");
-			zenCodeArea.moveTo(caretPosition + 3);
-			
-		}
-		else {
-			zenCodeArea.replaceText(caretPosition, caretPosition, "\n");
-		}
+	}
+
+	private void handleBlockComment(int caretPosition) {
+		zenCodeArea.replaceText(caretPosition - 2, caretPosition, "/*\n* \n*/");
+		zenCodeArea.moveTo(caretPosition + 3);
+	}
+
+	private void handleJavadocComment(int caretPosition) {
+		zenCodeArea.replaceText(caretPosition - 3, caretPosition, "/**\n* \n* @author \n*/");
+		zenCodeArea.moveTo(caretPosition + 3);
 	}
 	
 	public void navigateToCorrectTabIndex() {
@@ -198,7 +201,6 @@ public class FileTab extends Tab {
 	
 	public int showConfirmDialog() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		
 		alert.setTitle("Save?");
 		alert.setHeaderText("The file has been modified. Would you like to save?");
 		alert.setContentText("Save?");
@@ -210,15 +212,21 @@ public class FileTab extends Tab {
 		alert.getButtonTypes().setAll(cancelButton, okButton, noButton);
 		
 		var wrapper = new Object() { int response; };
-		
-		// TODO possible switch case?
+
 		alert.showAndWait().ifPresent(result -> {
-			if (result == cancelButton) {
-				wrapper.response = 0;
-			} else if (result == noButton) {
-				wrapper.response = 1;
-			} else if (result == okButton) {
-				wrapper.response = 2;
+			switch (result.getButtonData()) {
+				case CANCEL_CLOSE:
+					wrapper.response = 0;
+					break;
+				case NO:
+					wrapper.response = 1;
+					break;
+				case OK_DONE:
+					wrapper.response = 2;
+					break;
+				default:
+					wrapper.response = 0;
+					break;
 			}
 		});
 		return wrapper.response;

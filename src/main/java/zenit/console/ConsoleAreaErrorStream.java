@@ -12,7 +12,6 @@ public class ConsoleAreaErrorStream extends OutputStream {
 	private final StringBuilder stringBuilder = new StringBuilder();
 	private static final int NEWLINE_CHAR = '\n', CARRIAGE_RETURN_CHAR = '\r';
 	
-
 	/**
 	 * Constructs a ConsoleAreaErrorStream that redirects error output to the specified ConsoleArea.
 	 *
@@ -22,6 +21,7 @@ public class ConsoleAreaErrorStream extends OutputStream {
 		this.consoleArea = consoleArea;
 	}
 
+	// Methods:
 	/**
 	 * Flushes the current content of the StringBuilder to the associated ConsoleArea as error output.
 	 * This method clears the StringBuilder after writing its content to ensure no residual data is retained.
@@ -29,15 +29,13 @@ public class ConsoleAreaErrorStream extends OutputStream {
 	 */
 	@Override
 	public void flush() {
-		consoleArea.errorPrint(stringBuilder.toString());
+		consoleArea.printError(stringBuilder.toString());
 		stringBuilder.setLength(0);
 	}
 	
-    /**
-	 * Closes this output stream and releases any resources associated with it.
-	 * If an IOException occurs during the closing process, it is handled using
-	 * the {@code handleIOException} method to ensure any errors are appropriately
-	 * logged or managed without interrupting the program flow.
+	/**
+	 * Closes the ConsoleAreaErrorStream, releasing any resources associated with it.
+	 * This method ensures that the underlying OutputStream is closed properly.
 	 */
 	@Override
     public void close() {
@@ -45,19 +43,9 @@ public class ConsoleAreaErrorStream extends OutputStream {
             super.close();
         }
         catch (IOException e) {
-            handleIOException(e);
+			System.err.println("Failed to close ConsoleAreaErrorStream: " + e.getMessage());
+			e.printStackTrace();
         }
-    }
-    
-    /**
-     Handles the IOException thrown during resource closing by logging the exception.
-     This avoids cluttering the closing logic with error handling.
-     
-     @param exception the IOException to handle
-     */
-    private void handleIOException(IOException exception) {
-        System.err.println("Failed to close ConsoleAreaErrorStream: " + exception.getMessage());
-        exception.printStackTrace();
     }
 	
     /**
@@ -74,7 +62,7 @@ public class ConsoleAreaErrorStream extends OutputStream {
             handleNewLine();
         }
         else if (byteToWrite != CARRIAGE_RETURN_CHAR) {
-            appendSingleByte((char) byteToWrite);
+            appendSingleCharacter((char) byteToWrite);
         }
     }
 	
@@ -87,7 +75,7 @@ public class ConsoleAreaErrorStream extends OutputStream {
 	 * and the method leverages the {@code errorPrint} method of the {@code ConsoleArea} to handle the rendering.
 	 */
 	private void handleNewLine() {
-        consoleArea.errorPrint(stringBuilder.toString() + "\n");
+        consoleArea.printError(stringBuilder.toString() + "\n"); //TODO can we remove the toString()?
         stringBuilder.setLength(0); // Clear the stringBuilder
     }
 	
@@ -97,9 +85,9 @@ public class ConsoleAreaErrorStream extends OutputStream {
 	 *
 	 * @param charToAppend the character to be appended and displayed as error output
 	 */
-	private void appendSingleByte(char charToAppend) {
+	private void appendSingleCharacter(char charToAppend) {
         stringBuilder.append(charToAppend);
-        consoleArea.errorPrint(String.valueOf(charToAppend)); // Use String.valueOf for conversion
+        consoleArea.printError(String.valueOf(charToAppend)); // Use String.valueOf for conversion
     }
 	
 	/**
@@ -114,6 +102,6 @@ public class ConsoleAreaErrorStream extends OutputStream {
 	 */
 	@Override
 	public void write(byte[] bytes, int off, int len) throws IOException {
-		consoleArea.errorPrint(new String(bytes, off, len));
+		consoleArea.printError(new String(bytes, off, len));
 	}
 }

@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/maven.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/maven.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/DebugErrorBufferTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/DebugErrorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/util/StringUtilitiesTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/util/TupleTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,12 +33,12 @@
     &quot;assignee&quot;: &quot;Williamstara&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/MienieN/Group_9_Sys_2.git&quot;,
-    &quot;accountId&quot;: &quot;4add3a3d-07a6-42be-831d-aa2df88ec300&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/MienieN/Group_9_Sys_2.git",
+    "accountId": "f10e583a-3bae-46bc-a406-7dfd74386b33"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -46,9 +50,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Unnamed.executor": "Run",
+    "JUnit.DebugErrorTest.testGetRow.executor": "Run",
+    "JUnit.TerminalControllerTest.testTabPaneNotNull.executor": "Run",
+    "JUnit.ZenitTest.testTest (1).executor": "Run",
     "JUnit.ZenitTest.testTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "JonatanAT",
@@ -70,14 +78,65 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="main.java.zenit.util" />
+      <recent name="main.java.zenit.javacodecompiler" />
+      <recent name="main.java.zenit.terminal" />
       <recent name="main.java.zenit" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ZenitTest.testTest">
+  <component name="RunManager" selected="JUnit.DebugErrorTest.testGetRow">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
       <option name="VM_PARAMETERS" value="--module-path lib/windowsFX/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DebugErrorTest.testGetRow" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.zenit.javacodecompiler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.java.zenit.javacodecompiler" />
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.javacodecompiler.DebugErrorTest" />
+      <option name="METHOD_NAME" value="testGetRow" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TerminalControllerTest.testTabPaneNotNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.zenit.terminal.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.java.zenit.terminal" />
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.terminal.TerminalControllerTest" />
+      <option name="METHOD_NAME" value="testTabPaneNotNull" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ZenitTest.testTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.zenit.zenit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.zenit.zenit" />
+      <option name="MAIN_CLASS_NAME" value="main.zenit.zenit.ZenitTest" />
+      <option name="METHOD_NAME" value="testTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -100,7 +159,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DebugErrorTest.testGetRow" />
         <item itemvalue="JUnit.ZenitTest.testTest" />
+        <item itemvalue="JUnit.TerminalControllerTest.testTabPaneNotNull" />
+        <item itemvalue="JUnit.ZenitTest.testTest (1)" />
       </list>
     </recent_temporary>
   </component>

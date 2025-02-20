@@ -59,63 +59,70 @@ public class NewFileController extends AnchorPane {
 		}
 	}
 
-	// TODO break it up?
+	// YRJA: Broke this down into smaller methods for readability
 	private void initialize() {
+		initializeLogoFilePathAndEnding();
+		initializeHeader();
+	}
+
+	private void initializeLogoFilePathAndEnding() {
 		logo.setImage(new Image(getClass().getResource("/zenit/setup/zenit.png").toExternalForm()));
 		logo.setFitWidth(45);
-		
+
 		filePath.getItems().clear();
 		filePath.getItems().add(workspace.getPath());
 		filePath.getSelectionModel().selectFirst();
-		
+
 		fileEnding.getItems().add(".txt");
 		fileEnding.getItems().add(".java");
 		fileEnding.getSelectionModel().select(".java");
-		
-	    header.setOnMousePressed(new EventHandler<MouseEvent>() {
-		   @Override
-		   public void handle(MouseEvent event) {
-			   xOffset = event.getSceneX();
-			   yOffset = event.getSceneY();
-		   }
+	}
+
+	private void initializeHeader() {
+		header.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				xOffset = event.getSceneX();
+				yOffset = event.getSceneY();
+			}
 		});
 
-	    	//move around here
-	    header.setOnMouseDragged(new EventHandler<MouseEvent>() {
-		   @Override
-		   public void handle(MouseEvent event) {
-			   stage.setX(event.getScreenX() - xOffset);
-			   stage.setY(event.getScreenY() - yOffset);
-		   }
+		header.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				stage.setX(event.getScreenX() - xOffset);
+				stage.setY(event.getScreenY() - yOffset);
+			}
 		});
 	}
 	
 	@FXML
 	private void create() {
 		String filename = textFieldName.getText();
-		
-		// TODO switch case?
+
 		if (!filename.equals("")) {
 			filename += fileEnding.getSelectionModel().getSelectedItem();
-			
-			String filePath = this.filePath.getSelectionModel().getSelectedItem() + File.separator
-					+ filename;
+			String filePath = this.filePath.getSelectionModel().getSelectedItem() + File.separator + filename;
 			newFile = new File(filePath);
 			try {
 				if (!newFile.createNewFile()) {
-					DialogBoxes.errorDialog("File name already exist", "", "A file with the name "
-				+ filename + " already exist. Please input a different name.");
+					showErrorDialog("File name already exist", "A file with the name " + filename
+							+ " already exist. Please input a different name.");
 					newFile = null;
 				}
 			} catch (IOException e) {
-				DialogBoxes.errorDialog("Couldn't create new file", "", "Couldn't create new file");
+				showErrorDialog("Couldn't create new file", "Couldn't create new file");
 				newFile = null;
 			}
 			stage.close();
 		} else {
-			DialogBoxes.errorDialog("No name selected", "", "No name has been given to the new file"
-					+ ". Please input a new name to create file.");
+			showErrorDialog("No name selected", "No name has been given to the new file. " +
+					"Please input a new name to create file.");
 		}
+	}
+
+	private void showErrorDialog(String title, String content) {
+		DialogBoxes.errorDialog(title, "", content);
 	}
 	
 	@FXML

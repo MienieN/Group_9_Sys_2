@@ -15,7 +15,7 @@ public class DialogBoxes {
 		return inputDialog(stage, title, header, content, textInput, 0, 0);
 	}
 
-	public static String inputDialog(Stage stage, String title, String header, String content, //TODO stage unused
+	public static String inputDialog(Stage stage, String title, String header, String content,
 			String textInput, int startSelection, int stopSelection) {
 		TextInputDialog dialog = new TextInputDialog(textInput);
 		dialog.setTitle(title);

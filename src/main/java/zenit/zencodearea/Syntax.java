@@ -12,11 +12,7 @@ public class Syntax {
 		styles = styleMap;
 	}
 
-	public Map<String, String> getStyles() {
-		return styles;
-	}
+	public Map<String, String> getStyles() { return styles; }
 
-	public Grammar getGrammar() {
-		return grammar;
-	}
+	public Grammar getGrammar() { return grammar; }
 }

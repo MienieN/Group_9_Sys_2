@@ -21,20 +21,18 @@ import javafx.stage.StageStyle;
 public class NewFileController extends AnchorPane {
 	
 	private Stage stage;
-	private boolean darkmode;
+	private File workspace, newFile;
+	private boolean darkMode;
+	private double xOffset = 0, yOffset = 0;
 	@FXML private ImageView logo;
 	@FXML private AnchorPane header;
-	@FXML private ListView<String> filepath;
+	@FXML private ListView<String> filePath;
 	@FXML private ComboBox<String> fileEnding;
-	@FXML private TextField tfName;
-    private double xOffset = 0;
-    private double yOffset = 0;
-    private File workspace;
-    private File newFile;
+	@FXML private TextField textFieldName;
 	
-	public NewFileController(File workspace, boolean darkmode) {
+	public NewFileController(File workspace, boolean darkMode) {
 		this.workspace = workspace;
-		this.darkmode = darkmode;
+		this.darkMode = darkMode;
 	}
 	
 	public void start() {
@@ -53,53 +51,54 @@ public class NewFileController extends AnchorPane {
 			stage.setScene(scene);
 			
 			initialize();
-			ifDarkModeChanged(darkmode);
+			ifDarkModeChanged(darkMode);
 			stage.showAndWait();
 				
 		} catch (IOException e) {
-			
+			System.out.println("Error in NewFileController start() = " + e);
 		}
 	}
 
+	// TODO break it up?
 	private void initialize() {
-		
 		logo.setImage(new Image(getClass().getResource("/zenit/setup/zenit.png").toExternalForm()));
 		logo.setFitWidth(45);
 		
-		filepath.getItems().clear();
-		filepath.getItems().add(workspace.getPath());
-		filepath.getSelectionModel().selectFirst();
+		filePath.getItems().clear();
+		filePath.getItems().add(workspace.getPath());
+		filePath.getSelectionModel().selectFirst();
 		
 		fileEnding.getItems().add(".txt");
 		fileEnding.getItems().add(".java");
 		fileEnding.getSelectionModel().select(".java");
 		
 	    header.setOnMousePressed(new EventHandler<MouseEvent>() {
-	    	   @Override
-	    	   public void handle(MouseEvent event) {
-	    	       xOffset = event.getSceneX();
-	    	       yOffset = event.getSceneY();
-	    	   }
-	    	});
+		   @Override
+		   public void handle(MouseEvent event) {
+			   xOffset = event.getSceneX();
+			   yOffset = event.getSceneY();
+		   }
+		});
 
 	    	//move around here
 	    header.setOnMouseDragged(new EventHandler<MouseEvent>() {
-	    	   @Override
-	    	   public void handle(MouseEvent event) {
-	    	       stage.setX(event.getScreenX() - xOffset);
-	    	       stage.setY(event.getScreenY() - yOffset);
-	    	   }
-	    	});
+		   @Override
+		   public void handle(MouseEvent event) {
+			   stage.setX(event.getScreenX() - xOffset);
+			   stage.setY(event.getScreenY() - yOffset);
+		   }
+		});
 	}
 	
 	@FXML
 	private void create() {
-		String filename = tfName.getText();
+		String filename = textFieldName.getText();
 		
+		// TODO switch case?
 		if (!filename.equals("")) {
 			filename += fileEnding.getSelectionModel().getSelectedItem();
 			
-			String filePath = this.filepath.getSelectionModel().getSelectedItem() + File.separator
+			String filePath = this.filePath.getSelectionModel().getSelectedItem() + File.separator
 					+ filename;
 			newFile = new File(filePath);
 			try {
@@ -112,7 +111,6 @@ public class NewFileController extends AnchorPane {
 				DialogBoxes.errorDialog("Couldn't create new file", "", "Couldn't create new file");
 				newFile = null;
 			}
-			
 			stage.close();
 		} else {
 			DialogBoxes.errorDialog("No name selected", "", "No name has been given to the new file"
@@ -121,9 +119,7 @@ public class NewFileController extends AnchorPane {
 	}
 	
 	@FXML
-	private void cancel() {
-		stage.close();
-	}
+	private void cancel() { stage.close(); }
 	
 	@FXML
 	private void browse() {
@@ -133,9 +129,9 @@ public class NewFileController extends AnchorPane {
 		File chosen = dc.showDialog(stage);
 		
 		if (chosen != null) {
-			filepath.getItems().clear();
-			filepath.getItems().add(chosen.getPath());
-			filepath.getSelectionModel().selectFirst();
+			filePath.getItems().clear();
+			filePath.getItems().add(chosen.getPath());
+			filePath.getSelectionModel().selectFirst();
 		}
 	}
 	
@@ -158,7 +154,5 @@ public class NewFileController extends AnchorPane {
 		}	
 	}
 	
-	public File getNewFile() {
-		return newFile;
-	}
+	public File getNewFile() { return newFile; }
 }

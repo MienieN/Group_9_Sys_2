@@ -11,17 +11,17 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import main.java.zenit.filesystem.jreversions.JREVersions;
+import main.java.zenit.filesystem.jreversions.JDKDirectories;
 
 public class JREVersionsController extends AnchorPane {
-	
 	private Stage stage;
-	private boolean darkmode;
 	private List<File> JVMs;
-	@FXML
-	private ListView<String> JDKList;
+	private boolean darkMode;
+	@FXML private ListView<String> JDKList;
 	
-	public JREVersionsController(boolean darkmode) { this.darkmode = darkmode; }
+	public JREVersionsController(boolean darkMode) {
+		this.darkMode = darkMode;
+	}
 	
 	public void start() {
 		try {
@@ -39,17 +39,20 @@ public class JREVersionsController extends AnchorPane {
 			
 			initialize();
 			
-		} catch (IOException e) { e.printStackTrace(); }
+		} catch (IOException e) {
+			System.out.println("Error JREVersionsController start() = " + e);
+		}
 	}
 	
 	private void initialize() {	
-		ifDarkModeChanged(darkmode);
+		ifDarkModeChanged(darkMode);
 		updateList();
 		stage.show();
 	}
 	
+	// TODO Simplify if possible
 	private void updateList() {
-		JVMs = JREVersions.read();
+		JVMs = JDKDirectories.readJDKInstallationDirectoriesFromFile();
 		ArrayList<String> JVMsString = new ArrayList<String>();
 		
 		for (File JVM : JVMs) {
@@ -59,7 +62,7 @@ public class JREVersionsController extends AnchorPane {
 		JDKList.getItems().clear();
 		JDKList.getItems().addAll(JVMsString);
 		
-		File defaultJDK = JREVersions.getDefaultJDKFile();
+		File defaultJDK = JDKDirectories.getDefaultJDKFile();
 		
 		if (defaultJDK != null) {
 			String defaultName = defaultJDK.getName() + " [default]";
@@ -74,14 +77,14 @@ public class JREVersionsController extends AnchorPane {
 	
 	@FXML
 	private void addJRE() {
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setInitialDirectory(JREVersions.getJVMDirectory());
-		dc.setTitle("Select JDK to add");
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setInitialDirectory(JDKDirectories.getJVMDirectory());
+		directoryChooser.setTitle("Select JDK to add");
 		
-		File selected = dc.showDialog(stage);
+		File selected = directoryChooser.showDialog(stage);
 		
 		if (selected != null) {
-			boolean success = JREVersions.append(selected);
+			boolean success = JDKDirectories.appendToList(selected);
 			if (success) {
 				updateList();
 			} else {
@@ -91,6 +94,7 @@ public class JREVersionsController extends AnchorPane {
 		}
 	}
 	
+	// TODO Separate concerns and simplify
 	@FXML
 	private void removeJRE() {
 		String selected = JDKList.getSelectionModel().getSelectedItem();
@@ -110,7 +114,7 @@ public class JREVersionsController extends AnchorPane {
 				}
 			}
 			if (selectedFile != null) { 
-				boolean success = JREVersions.remove(selectedFile);
+				boolean success = JDKDirectories.removeFromList(selectedFile);
 				if (success) {
 					DialogBoxes.informationDialog("JDK removed from Zenit", "The JDK " + selected
 							+ " has been removed from Zenit");
@@ -125,6 +129,7 @@ public class JREVersionsController extends AnchorPane {
 		}
 	}
 	
+	// TODO simplify if possible
 	@FXML
 	private void selectDefaultJRE() {
 		String selected = JDKList.getSelectionModel().getSelectedItem();
@@ -143,7 +148,7 @@ public class JREVersionsController extends AnchorPane {
 			}
 		}
 		if (selectedFile != null) {
-			JREVersions.setDefaultJDKFile(selectedFile);
+			JDKDirectories.setDefaultJDKFile(selectedFile);
 			updateList();
 		}
 	}

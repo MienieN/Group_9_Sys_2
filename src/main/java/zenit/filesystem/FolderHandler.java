@@ -5,8 +5,24 @@ import java.io.IOException;
 
 import main.java.zenit.filesystem.helpers.FileNameHelpers;
 
+/**
+ * The FolderHandler class provides methods for handling folder-related operations.
+ * This includes creating new folders, renaming existing folders, and recursively
+ * deleting folders and their contents.
+ * <p>
+ * The methods in this class are protected and static, intended to be utilized by
+ * subclasses or other components within the same package that need folder management functionality.
+ * </p>
+ */
 public class FolderHandler {
 	
+	/**
+	 * Creates a new folder at the specified file path.
+	 * If the folder cannot be created, an IOException is thrown.
+	 *
+	 * @param file the File object representing the folder to be created
+	 * @throws IOException if the folder could not be created
+	 */
 	protected static void createNewFolder(File file) throws IOException {
 		boolean success = file.mkdirs();
 		if (!success) {

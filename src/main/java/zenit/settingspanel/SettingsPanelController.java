@@ -334,7 +334,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 				settingsPanelStylesheets.add(settingsPanelDarkMode);
 				consoleController.getStylesheets().remove(lightModeConsole);
 				consoleController.getStylesheets().add(darkModeConsole);
-				consoleController.changeAllConsoleAreaColors("-fx-background-color:#444");
+				consoleController.changeAllConsoleAreaBackgroundColors("-fx-background-color:#444");
 
 				stylesheets.clear();
 				stylesheets.add(darkModeKeywords);
@@ -345,7 +345,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 				settingsPanelStylesheets.add(settingsPanelLightMode);
 				consoleController.getStylesheets().remove(darkModeConsole);
 				consoleController.getStylesheets().add(lightModeConsole);
-				consoleController.changeAllConsoleAreaColors("-fx-background-color:#989898");
+				consoleController.changeAllConsoleAreaBackgroundColors("-fx-background-color:#989898");
 
 
 				stylesheets.clear();

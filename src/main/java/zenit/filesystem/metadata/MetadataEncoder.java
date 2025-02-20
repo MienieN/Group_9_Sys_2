@@ -9,8 +9,13 @@ import java.util.ArrayList;
 
 import main.java.zenit.filesystem.RunnableClass;
 
+/**
+ * The MetadataEncoder class provides functionality to encode metadata information
+ * into a specified file in a structured format. Metadata includes details such as
+ * version, directory, source path, JRE version, runnable classes, and library dependencies.
+ */
 public class MetadataEncoder {
-
+//TODO separate into smaller methods
 	public static boolean encode(File metadataFile, Metadata metadata) {
 		ArrayList<String> lines = new ArrayList<String>();
 		
@@ -31,7 +36,7 @@ public class MetadataEncoder {
 		}
 		
 		//Sourcepath
-		line = metadata.getSourcepath();
+		line = metadata.getSourcePath();
 		if (line != null) {
 			lines.add("SOURCEPATH");
 			lines.add(line);

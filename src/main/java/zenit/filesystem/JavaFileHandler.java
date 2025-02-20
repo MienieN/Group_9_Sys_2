@@ -13,6 +13,12 @@ import main.java.zenit.exceptions.TypeCodeException;
 import main.java.zenit.filesystem.helpers.CodeSnippets;
 import main.java.zenit.filesystem.helpers.FileNameHelpers;
 
+/**
+ * The JavaFileHandler class extends the FileHandler class and provides specific utility methods
+ * for creating, reading, saving, renaming, and deleting Java files. This class ensures appropriate
+ * handling of files with a ".java" extension and supports encoding settings inherited from FileHandler.
+ * It includes additional functionality for generating default Java code snippets when creating files.
+ */
 public class JavaFileHandler extends FileHandler {
 
 	protected static File createFile(File file, String content, int typeCode) throws IOException {
@@ -34,7 +40,7 @@ public class JavaFileHandler extends FileHandler {
 			//Write content to file
 			if (content == null) {
 				try {
-					content = CodeSnippets.newSnippet(typeCode, file.getName(), FileNameHelpers.getPackagenameFromFile(file));
+					content = CodeSnippets.newSnippet(typeCode, file.getName(), FileNameHelpers.getPackageNameFromFile(file));
 				} catch (TypeCodeException ex) {
 					ex.printStackTrace();
 				}
@@ -70,15 +76,17 @@ public class JavaFileHandler extends FileHandler {
 	}
 	
 	protected static void saveFile(File file, String content) throws IOException {
-		try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(file), textEncoding))) {
-			br.write(content);
-			br.flush();
-		} catch (IOException ex) {
+			writer.write(content);
+			writer.flush();
+		}
+		catch (IOException ex) {
 			throw new IOException(ex.getMessage());
 		}
 	}
 	
+	//TODO this is a duplicate of the method in FolderHandler, should be refactored
 	protected static File renameFile(File oldFile, String newFilename) throws IOException {
 		
 		File tempFile = FileNameHelpers.getFilepathWithoutTopFile(oldFile); //Removes file name
@@ -100,7 +108,7 @@ public class JavaFileHandler extends FileHandler {
 		return newFile;
 	}
 
-	protected static void deleteFile(File file) throws IOException {
+	protected static void failedToDeleteFile(File file) throws IOException {
 		if (!file.delete()) {
 			throw new IOException("Failed to delete " + file);
 		}

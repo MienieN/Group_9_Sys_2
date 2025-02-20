@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 
-import javafx.application.Platform;
-import main.java.zenit.ConsoleRedirect;
-import main.java.zenit.console.ConsoleArea;
 import main.java.zenit.console.ConsoleController;
 import main.java.zenit.filesystem.RunnableClass;
 import main.java.zenit.filesystem.metadata.Metadata;
@@ -74,7 +71,7 @@ public class JavaSourceCodeCompiler {
 			
 			JDKPath = metadata.getJREVersion();
 			directory = metadata.getDirectory();
-			sourcepath = metadata.getSourcepath();
+			sourcepath = metadata.getSourcePath();
 			internalLibraries = metadata.getInternalLibraries();
 			externalLibraries = metadata.getExternalLibraries();	
 		}

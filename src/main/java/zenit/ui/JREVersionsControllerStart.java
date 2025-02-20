@@ -8,7 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import main.java.zenit.filesystem.jreversions.JREVersions;
+import main.java.zenit.filesystem.jreversions.JDKDirectories;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,17 +17,18 @@ import java.util.List;
 public class JREVersionsControllerStart extends AnchorPane {
 
 	private Stage stage;
-	private boolean darkmode;
 	private List<File> JVMs;
-	private boolean projectCreated = false;
-	@FXML
-	private ListView<String> JDKList;
-	@FXML
-	private Button createProjectButton;
+	private boolean projectCreated = false, darkMode;
+	@FXML private ListView<String> JDKList;
+	@FXML private Button createProjectButton;
+	
+	public boolean isProjectCreated() {
+		return projectCreated;
+	}
 
-	public boolean isProjectCreated() { return projectCreated; }
-
-	public JREVersionsControllerStart(boolean darkmode) { this.darkmode = darkmode; }
+	public JREVersionsControllerStart(boolean darkmode) {
+		this.darkMode = darkmode;
+	}
 
 	public void start() {
 		if (stage != null && stage.isShowing()) { return; }
@@ -44,19 +45,21 @@ public class JREVersionsControllerStart extends AnchorPane {
 			stage.setScene(scene);
 
 			initialize();
-
 			stage.showAndWait();
 
-		} catch (IOException e) { e.printStackTrace(); }
+		} catch (IOException e) {
+			System.out.println("Error JREVersionsControllerStart start() = " + e);
+		}
 	}
 	
 	private void initialize() {	
-		ifDarkModeChanged(darkmode);
+		ifDarkModeChanged(darkMode);
 		updateList();
 	}
 	
+	// TODO Simplify
 	private void updateList() {
-		JVMs = JREVersions.read();
+		JVMs = JDKDirectories.readJDKInstallationDirectoriesFromFile();
 		ArrayList<String> JVMsString = new ArrayList<String>();
 		
 		for (File JVM : JVMs) {
@@ -66,7 +69,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 		JDKList.getItems().clear();
 		JDKList.getItems().addAll(JVMsString);
 		
-		File defaultJDK = JREVersions.getDefaultJDKFile();
+		File defaultJDK = JDKDirectories.getDefaultJDKFile();
 		
 		if (defaultJDK != null) {
 			String defaultName = defaultJDK.getName() + " [default]";
@@ -81,14 +84,14 @@ public class JREVersionsControllerStart extends AnchorPane {
 	
 	@FXML
 	private void addJRE() {
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setInitialDirectory(JREVersions.getJVMDirectory());
-		dc.setTitle("Select JDK to add");
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setInitialDirectory(JDKDirectories.getJVMDirectory());
+		directoryChooser.setTitle("Select JDK to add");
 		
-		File selected = dc.showDialog(stage);
+		File selected = directoryChooser.showDialog(stage);
 		
 		if (selected != null) {
-			boolean success = JREVersions.append(selected);
+			boolean success = JDKDirectories.appendToList(selected);
 			if (success) {
 				updateList();
 			} else {
@@ -104,6 +107,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 		if (stage != null) { stage.close(); }
 	}
 	
+	// TODO Separate concerns and simplify
 	@FXML
 	private void removeJRE() {
 		String selected = JDKList.getSelectionModel().getSelectedItem();
@@ -123,7 +127,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 				}
 			}
 			if (selectedFile != null) { 
-				boolean success = JREVersions.remove(selectedFile);
+				boolean success = JDKDirectories.removeFromList(selectedFile);
 				if (success) {
 					DialogBoxes.informationDialog("JDK removed from Zenit", "The JDK " + selected
 							+ " has been removed from Zenit");
@@ -138,6 +142,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 		}
 	}
 	
+	// TODO Simplify
 	@FXML
 	private void selectDefaultJRE() {
 		String selected = JDKList.getSelectionModel().getSelectedItem();
@@ -154,27 +159,28 @@ public class JREVersionsControllerStart extends AnchorPane {
 			}
 		}
 		if (selectedFile != null) {
-			JREVersions.setDefaultJDKFile(selectedFile);
+			JDKDirectories.setDefaultJDKFile(selectedFile);
 			updateList();
 		}
 	}
 	
 	public void ifDarkModeChanged(boolean isDarkMode) {
-		var stylesheets = stage.getScene().getStylesheets();
+		var styleSheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();
 		var lightMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle-lm.css").toExternalForm();
 		
+		// TODO Kinda ugly, simplify if possible
 		if (isDarkMode) {
-			if (stylesheets.contains(lightMode)) {
-				stylesheets.remove(lightMode);
+			if (styleSheets.contains(lightMode)) {
+				styleSheets.remove(lightMode);
 			}
 			
-			stylesheets.add(darkMode);
+			styleSheets.add(darkMode);
 		} else {
-			if (stylesheets.contains(darkMode)) {
-				stylesheets.remove(darkMode);
+			if (styleSheets.contains(darkMode)) {
+				styleSheets.remove(darkMode);
 			}
-			stylesheets.add(lightMode);
+			styleSheets.add(lightMode);
 		}	
 	}
 }

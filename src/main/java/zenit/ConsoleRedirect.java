@@ -6,26 +6,27 @@ import main.java.zenit.console.ConsoleAreaOutputStream;
 import main.java.zenit.console.ConsoleAreaErrorStream;
 
 public class ConsoleRedirect {
-
-	public ConsoleRedirect(ConsoleArea ta) {
+	/**
+	 Redirects the system's standard output and error streams to a specified {@code ConsoleArea}.
+	 This allows all console output to be displayed in a custom UI component instead of the default system console.
+	 * @param consoleArea the {@code ConsoleArea} where console output and error messages will be redirected.
+	 */
+	public ConsoleRedirect(ConsoleArea consoleArea) {
 		try {
 		
-			ConsoleAreaOutputStream socat = new ConsoleAreaOutputStream(ta);
-			ConsoleAreaErrorStream tacos = new ConsoleAreaErrorStream(ta);
+			ConsoleAreaOutputStream outputStream = new ConsoleAreaOutputStream(consoleArea);
+			ConsoleAreaErrorStream errorStream = new ConsoleAreaErrorStream(consoleArea);
 
-			PrintStream outPrintStream = new PrintStream(socat);
-			PrintStream errPrintStream = new PrintStream(tacos);
+			PrintStream consoleOut = new PrintStream(outputStream);
+			PrintStream consoleErr = new PrintStream(errorStream);
 
-			System.setOut(outPrintStream);
-			System.setErr(errPrintStream);
+			System.setOut(consoleOut);
+			System.setErr(consoleErr);
 
-			/* 
-			 * TODO
-			 * System.setIn(in);
-			 */
+			// TODO System.setIn(in);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Error in ConsoleRedirect = " + e);
 		}
 	}	
 }

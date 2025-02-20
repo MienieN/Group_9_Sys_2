@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.regex.Matcher;
 
 import main.java.zenit.filesystem.jreversions.JDKVerifier;
-import main.java.zenit.filesystem.jreversions.JREVersions;
+import main.java.zenit.filesystem.jreversions.JDKDirectories;
 
 public class CommandBuilder {
 
@@ -32,7 +32,7 @@ public class CommandBuilder {
 			this.JDK = JDKVerifier.getExecutablePath(JDK, tool);
 		//If default JDK is set
 		} else {
-			String defaultJDK = JREVersions.getDefaultJDKFile().getPath();
+			String defaultJDK = JDKDirectories.getDefaultJDKFile().getPath();
 			if (defaultJDK != null) {
 				this.JDK = JDKVerifier.getExecutablePath(defaultJDK, tool);
 			}

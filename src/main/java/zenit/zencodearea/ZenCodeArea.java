@@ -21,8 +21,8 @@ import org.fxmisc.wellbehaved.event.InputMap;
 
 public class ZenCodeArea extends CodeArea {
 	private ExecutorService executor;
-//	private int fontSize;
-//	private String font;
+	//private int fontSize;
+	//private String font;
 
 	private static final String[] KEYWORDS = new String[] {
 		"abstract", "assert", "boolean", "break", "byte",
@@ -36,7 +36,6 @@ public class ZenCodeArea extends CodeArea {
 		"switch", "synchronized", "this", "throw", "throws",
 		"transient", "true", "try", "void", "volatile", "while"
 	};
-
 	private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
 	private static final String PAREN_PATTERN = "\\(|\\)";
 	private static final String BRACE_PATTERN = "\\{|\\}";
@@ -44,7 +43,6 @@ public class ZenCodeArea extends CodeArea {
 	private static final String SEMICOLON_PATTERN = "\\;";
 	private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
 	private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
-
 	private static final Pattern PATTERN = Pattern.compile(
 		"(?<KEYWORD>" + KEYWORD_PATTERN + ")"
 		+ "|(?<PAREN>" + PAREN_PATTERN + ")"
@@ -55,10 +53,9 @@ public class ZenCodeArea extends CodeArea {
 		+ "|(?<COMMENT>" + COMMENT_PATTERN + ")"
 	);
 
-	public ZenCodeArea() {
-		this(14, "Times new Roman");
-	}
+	public ZenCodeArea() { this(14, "Times new Roman"); }
 	
+	// TODO Too complex
 	public ZenCodeArea(int textSize, String font) {
 		setParagraphGraphicFactory(LineNumberFactory.get(this));
 
@@ -80,8 +77,8 @@ public class ZenCodeArea extends CodeArea {
 		}).subscribe(this::applyHighlighting);
 		computeHighlightingAsync();
 
-//		fontSize = textSize;
-//		this.font = font;
+		//fontSize = textSize;
+		//this.font = font;
 		setStyle("-fx-font-size: " + textSize +";-fx-font-family: " + font);
 	}
 	
@@ -90,14 +87,9 @@ public class ZenCodeArea extends CodeArea {
 		applyHighlighting(highlighting);
 	}
 	
-//	public int getFontSize() {
-//		return fontSize;	
-//	}
-//	
-//	
-//	public String getFont() {
-//		return font;	
-//	}
+	// public int getFontSize() { return fontSize; }
+
+	// public String getFont() { return font; }
 
 	private Task<StyleSpans<Collection<String>>> computeHighlightingAsync() {
 		String text = getText();
@@ -110,7 +102,6 @@ public class ZenCodeArea extends CodeArea {
 		executor.execute(task);
 		return task;
 	}
-
 	
 	private void applyHighlighting(StyleSpans<Collection<String>> highlighting) {
 		setStyleSpans(0, highlighting);
@@ -121,9 +112,10 @@ public class ZenCodeArea extends CodeArea {
 		Nodes.addInputMap(this, im);
 	}
 
+	// TODO Break it down?
 	private static StyleSpans<Collection<String>> computeHighlighting(String text) {
 		Matcher matcher = PATTERN.matcher(text);
-		int lastKwEnd = 0;
+		int lastMatchedEnd = 0;
 		StyleSpansBuilder<Collection<String>> spansBuilder
 		= new StyleSpansBuilder<>();
 		while(matcher.find()) {
@@ -137,16 +129,11 @@ public class ZenCodeArea extends CodeArea {
 											matcher.group("COMMENT") != null ? "comment" :
 												null; /* never happens */ 
 			assert styleClass != null;
-			spansBuilder.add(
-					Collections.emptyList(), matcher.start() - lastKwEnd
-					);
-			spansBuilder.add(
-					Collections.singleton(styleClass), matcher.end() - matcher.start()
-					);
-			lastKwEnd = matcher.end();
+			spansBuilder.add(Collections.emptyList(), matcher.start() - lastMatchedEnd);
+			spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+			lastMatchedEnd = matcher.end();
 		}
-		spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
-
+		spansBuilder.add(Collections.emptyList(), text.length() - lastMatchedEnd);
 		return spansBuilder.create();
 	}
 

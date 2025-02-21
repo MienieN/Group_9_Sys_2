@@ -521,7 +521,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 			consoleArea = new ConsoleArea(file.getName(), null, "-fx-background-color:#989898");
 		}
 		consoleArea.setFileName(file.getName());
-		consoleController.newConsole(consoleArea);
+		consoleController.createNewConsoleArea(consoleArea);
 		openConsoleComponent();
 		
 		try {

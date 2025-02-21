@@ -25,7 +25,6 @@ import javafx.scene.text.Font;
 import main.java.zenit.ConsoleRedirect;
 import main.java.zenit.ui.MainController;
 
-//TODO: create a separate class for the terminal configurations
 /**
  * The ConsoleController class manages the interaction between console and terminal
  * components in the application. It handles initialization, creation, and switching
@@ -53,24 +52,71 @@ public class ConsoleController implements Initializable {
 	@FXML private AnchorPane rootAnchor, rootNode;
 	@FXML private FontIcon iconCloseConsoleInstance, iconTerminateProcess, iconCloseTerminalInstance;
 	
+	// Console Methods:
 	/**
-	 * Sets the main controller for this ConsoleController. The main controller acts as a
-	 * central manager to coordinate actions between different components.
-	 *
-	 * @param mainController the instance of MainController to be set as the main controller
+	 * Creates a placeholder console pane to display when there is no active console.
+	 * <p>
+	 * This method initializes an AnchorPane named `noConsolePane`, sets its dimensions and properties
+	 * to fill its parent anchor pane, and populates it with a centered label displaying the message
+	 * "No Console To Display". The label is styled with a font size of 14 and black text color.
+	 * </p>
+	 * <p>
+	 * The `noConsolePane` is assigned a unique identifier "empty" for styling or identification purposes
+	 * and is added to `rootAnchor`, bringing it to the front of the display hierarchy.
+	 * </p>
 	 */
-	public void setMainController(MainController mainController) {
-		this.mainController = mainController;
+	private void createEmptyConsolePane() {
+		noConsolePane = new AnchorPane();
+		fillAnchor(noConsolePane);
 		
+		Label label = new Label("No Console To Display");
+		noConsolePane.getChildren().add(label);
+		
+		label.setFont(new Font(14));
+		label.setTextFill(Color.BLACK);
+		label.setMaxWidth(Double.MAX_VALUE);
+		
+		AnchorPane.setLeftAnchor(label, 0.0);
+		AnchorPane.setRightAnchor(label, 0.0);
+		
+		label.setAlignment(Pos.CENTER);
+		
+		noConsolePane.setId("empty");
+		rootAnchor.getChildren().add(noConsolePane);
+		
+		noConsolePane.toFront();
 	}
 	
 	/**
-	 * Retrieves the list of stylesheets currently associated with the root node.
+	 * Creates and configures a new console area component within the application.
+	 * <br>
+	 * This method initializes a new `AnchorPane` to host the provided `ConsoleArea`, sets specific
+	 * IDs to the components for style or reference purposes, and adjusts their layout properties
+	 * using the `fillAnchor` method. The newly created console area is added to the `consoleList`
+	 * and displayed in the `consoleChoiceBox`. The `ConsoleRedirect` object is instantiated to handle
+	 * output redirection for the newly added console area. It also ensures the console tabs are visible.
 	 *
-	 * @return a List of Strings representing the file paths or URLs of the stylesheets.
+	 * @param consoleArea the `ConsoleArea` instance to be initialized and added to the application.
+	 *                    This object represents the interactive area for console output.
 	 */
-	public List<String> getStylesheets() {
-		return rootNode.getStylesheets();
+	public void createNewConsoleArea(ConsoleArea consoleArea) {
+		consoleAnchorPane = new AnchorPane();
+		consoleArea.setId("consoleArea");
+		consoleAnchorPane.setId("consoleAnchor");
+		
+		fillAnchor(consoleArea);
+		fillAnchor(consoleAnchorPane);
+		
+		consoleAnchorPane.getChildren().add(consoleArea);
+		rootAnchor.getChildren().add(consoleAnchorPane);
+		
+		consoleList.add(consoleArea);
+		
+		consoleChoiceBox.getItems().add(consoleArea);
+		consoleChoiceBox.getSelectionModel().select(consoleArea);
+		
+		new ConsoleRedirect(consoleArea);
+		showConsoleTab();
 	}
 	
 	/**
@@ -115,48 +161,32 @@ public class ConsoleController implements Initializable {
 		iconCloseTerminalInstance.setDisable(true);
 		
 		if (consoleAnchorPane != null) {
-				consoleAnchorPane.toFront();
+			consoleAnchorPane.toFront();
 		}
 		
-		if(consoleList.size() == 0) {
+		if(consoleList.isEmpty()) {
 			createEmptyConsolePane();
 		}
 	}
 	
 	/**
-	 * Creates a placeholder console pane to display when there is no active console.
+	 * Clears the content of the currently active console.
 	 * <p>
-	 * This method initializes an AnchorPane named `noConsolePane`, sets its dimensions and properties
-	 * to fill its parent anchor pane, and populates it with a centered label displaying the message
-	 * "No Console To Display". The label is styled with a font size of 14 and black text color.
+	 * This method uses the `clear()` method of the `activeConsole` field
+	 * to completely remove all text or output displayed in the active console instance.
+	 * It is typically invoked when the user wants to reset the active console view.
 	 * </p>
 	 * <p>
-	 * The `noConsolePane` is assigned a unique identifier "empty" for styling or identification purposes
-	 * and is added to `rootAnchor`, bringing it to the front of the display hierarchy.
+	 * Assumes that `activeConsole` is not null. If `activeConsole` is null,
+	 * invoking this method will result in a `NullPointerException`.
 	 * </p>
 	 */
-	private void createEmptyConsolePane() {
-		noConsolePane = new AnchorPane();
-		fillAnchor(noConsolePane);
-		
-		Label label = new Label("No Console To Display");
-		noConsolePane.getChildren().add(label);
-		
-		label.setFont(new Font(14));
-		label.setTextFill(Color.BLACK);
-		label.setMaxWidth(Double.MAX_VALUE);
-		
-		AnchorPane.setLeftAnchor(label, 0.0);
-		AnchorPane.setRightAnchor(label, 0.0);
-		
-		label.setAlignment(Pos.CENTER);
-		
-		noConsolePane.setId("empty");
-		rootAnchor.getChildren().add(noConsolePane);
-		
-		noConsolePane.toFront();
+	public void clearConsole() {
+		activeConsole.clear();
 	}
 	
+	
+	// Terminal Methods:
 	/**
 	 * Switches the display to show terminal tabs and hides console tabs.
 	 * <p>
@@ -198,38 +228,6 @@ public class ConsoleController implements Initializable {
 		
 		iconCloseTerminalInstance.setVisible(true);
 		iconCloseTerminalInstance.setDisable(false);
-	}
-	
-	/**
-	 * Creates and configures a new console area component within the application.
-	 * <br>
-	 * This method initializes a new `AnchorPane` to host the provided `ConsoleArea`, sets specific
-	 * IDs to the components for style or reference purposes, and adjusts their layout properties
-	 * using the `fillAnchor` method. The newly created console area is added to the `consoleList`
-	 * and displayed in the `consoleChoiceBox`. The `ConsoleRedirect` object is instantiated to handle
-	 * output redirection for the newly added console area. It also ensures the console tabs are visible.
-	 *
-	 * @param consoleArea the `ConsoleArea` instance to be initialized and added to the application.
-	 *                    This object represents the interactive area for console output.
-	 */
-	public void newConsole(ConsoleArea consoleArea) {
-		consoleAnchorPane = new AnchorPane();
-		consoleArea.setId("consoleArea");
-		consoleAnchorPane.setId("consoleAnchor");
-		
-		fillAnchor(consoleArea);
-		fillAnchor(consoleAnchorPane);
-		
-		consoleAnchorPane.getChildren().add(consoleArea);
-		rootAnchor.getChildren().add(consoleAnchorPane);
-		
-		consoleList.add(consoleArea);
-		
-		consoleChoiceBox.getItems().add(consoleArea);
-		consoleChoiceBox.getSelectionModel().select(consoleArea);
-		
-		new ConsoleRedirect(consoleArea);	
-		showConsoleTab();
 	}
 	
 	/**
@@ -284,10 +282,12 @@ public class ConsoleController implements Initializable {
 		windowsConfig.setFontFamily("consolas");
 		windowsConfig.setFontSize(12);
 		windowsConfig.setScrollbarVisible(false);
-
+		
 		return (System.getProperty("os.name").startsWith("W") ? windowsConfig : new TerminalConfig());
 	}
 	
+	
+	// Utility Methods:
 	/**
 	 * Sets all anchor constraints of the specified Node to fill its parent AnchorPane completely.
 	 *
@@ -300,24 +300,6 @@ public class ConsoleController implements Initializable {
 		AnchorPane.setLeftAnchor(node, 0.0);
 	}
 	
-	//TODO: try using the original method rather than having to repeat this here
-	/**
-	 * Clears the content of the currently active console.
-	 * <p>
-	 * This method uses the `clear()` method of the `activeConsole` field
-	 * to completely remove all text or output displayed in the active console instance.
-	 * It is typically invoked when the user wants to reset the active console view.
-	 * </p>
-	 * <p>
-	 * Assumes that `activeConsole` is not null. If `activeConsole` is null,
-	 * invoking this method will result in a `NullPointerException`.
-	 * </p>
-	 */
-	public void clearConsole() {
-		activeConsole.clear();
-	}
-	
-	//TODO: try using the original method rather than having to repeat this here
 	/**
 	 * Closes the currently active console component.
 	 * <p>
@@ -346,79 +328,202 @@ public class ConsoleController implements Initializable {
 		}
 	}
 	
+	/**
+	 * <p>
+	 * Initializes the ConsoleController by setting up necessary event listeners and handlers,
+	 * and ensuring the UI is prepared to display console and terminal interactions.
+	 * This method is invoked automatically after the controller is loaded by the FXMLLoader.
+	 * </p>
+	 * @param location the location used to resolve relative paths for the root object,
+	 *                 or null if the location is not known.
+	 * @param resources the resources used to localize the root object,
+	 *                  or null if the root object was not localized.
+	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		consoleChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-						
-			if(newValue != null) {
-				for(ConsoleArea console : consoleList) {
-					if(newValue.equals(console)) {
-						console.getParent().toFront();
-						activeConsole = console;
-					}
-				}
+	public void initialize(URL location, ResourceBundle resources) {
+		setupConsoleChoiceBoxListener();	// Sets up listener for changes in the console choice box
+		setupTerminalChoiceBoxListener();	// Sets up listener for changes in the terminal choice box
+		closeConsoleButtonHandler();		// Configures the handler for closing the currently selected console instance
+		closeTerminalButtonHandler();	    // Configures the handler for closing the currently selected terminal instance
+		createNewConsoleAreaHandler();		// Configures the handler for creating a new console instance
+		terminateProcessHandler();			// Configures the handler for terminating the process in the active console
+		showConsoleTab();					// Ensures that the console tab is displayed initially
+	}
+	
+	/**
+	 * Sets up a listener for the `consoleChoiceBox` to monitor changes in the selected console.
+	 *<p>
+	 * When the user selects a new console from the choice box, this listener ensures that the
+	 * selected console becomes the active console. The method uses the `selectedItemProperty()`
+	 * of the `consoleChoiceBox`'s `SelectionModel` to add a change listener that updates the
+	 * active console to the newly selected console.
+	 *	</p>
+	 *	<p>
+	 * If the new console is not null, the `setActiveConsole` method is invoked to update
+	 * the application's internal state and display to reflect the newly selected console.
+	 * </p>
+	 */
+	private void setupConsoleChoiceBoxListener(){
+		consoleChoiceBox.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldConsole, newConsole) -> {
+			if (newConsole != null) {
+				setAsActiveConsole(newConsole);
 			}
-			
 		});
-		
-		terminalChoiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-			if(newValue != null) {
-				for(Terminal t : terminalList) {
-					if(newValue.equals(t)) {
-						t.getParent().toFront();
-						activeTerminal = t;
-						t.onTerminalFxReady(()-> {
-							t.focusCursor();
-						});
-					}
-				}
+	}
+	
+	/**
+	 * Sets the specified console as the active console in the application.
+	 * <p>
+	 * This method iterates through the list of available consoles (`consoleList`)
+	 * and identifies the console that matches the given `newConsole` parameter.
+	 * Once identified, the parent node of that console is brought to the front of the
+	 * display hierarchy, and the selected console is assigned to the `activeConsole` field.
+	 * This method ensures that only one console is actively displayed and interacted with at a time.
+	 *
+	 * @param newConsole the console to be activated. Must match an existing console
+	 *                   in the `consoleList`. If the specified console is not found,
+	 *                   the method does nothing.
+	 */
+	private void setAsActiveConsole (ConsoleArea newConsole) {
+		for (ConsoleArea console : consoleList) {
+			if (newConsole.equals(console)) {
+				console.getParent().toFront();
+				activeConsole = console;
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * Configures a listener for the terminalChoiceBox to handle changes in the selection.
+	 * When the selected item changes, this listener updates the active terminal
+	 * by invoking the setActiveTerminal method with the newly selected terminal.
+	 */
+	private void setupTerminalChoiceBoxListener() {
+		terminalChoiceBox.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldTerminal, newTerminal) -> {
+			if (newTerminal != null) {
+				setAsActiveTerminal(newTerminal);
 			}
 		});
-		
-		showConsoleTab();
-		
-		//Console
-		iconCloseConsoleInstance.setOnMouseClicked(e -> {
+	}
+	
+	/**
+	 * Sets the given terminal as the active terminal. This method iterates through
+	 * the list of terminals and, if a match is found, brings the parent window of
+	 * the terminal to the front, updates the active terminal reference, and focuses
+	 * the cursor in the terminal.
+	 *
+	 * @param selectedTerminal the terminal to be set as the active terminal
+	 */
+	private void setAsActiveTerminal (Terminal selectedTerminal) {
+		for (Terminal terminal : terminalList) {
+			if (selectedTerminal.equals(terminal)) {
+				terminal.getParent().toFront();
+				activeTerminal = terminal;
+				terminal.focusCursor();
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * Sets up the event handler for the close console icon. When the close icon is clicked,
+	 * the currently active console is removed from the UI and the list of consoles. The
+	 * console dropdown is updated accordingly. If all consoles are removed, a new empty
+	 * console pane will be created automatically to maintain the UI structure.
+	 */
+	private void closeConsoleButtonHandler () {
+		iconCloseConsoleInstance.setOnMouseClicked(event -> {
+			if (activeConsole != null) {
 				rootAnchor.getChildren().remove(activeConsole.getParent());
 				consoleList.remove(activeConsole);
 				consoleChoiceBox.getItems().remove(activeConsole);
 				consoleChoiceBox.getSelectionModel().selectLast();
-
-				if(consoleList.size() == 0) {
+				if (consoleList.isEmpty()) {
 					createEmptyConsolePane();
 				}
+			}
 		});
-		
-		//Terminal
-		iconCloseTerminalInstance.setOnMouseClicked(e ->{
-			
-			if(terminalList.size() > 1) {
+	}
+	
+	/**
+	 * Handles the event for closing the currently active terminal instance when the close button is clicked.
+	 * If the active terminal is not null and there is more than one terminal in the terminal list,
+	 * the method removes the active terminal's parent node from the root container, removes the active terminal
+	 * from the terminal list, and updates the terminal selection choice box to exclude the removed terminal.
+	 * The selection is then set to the last terminal in the choice box.
+	 */
+	private void closeTerminalButtonHandler () {
+		iconCloseTerminalInstance.setOnMouseClicked(event -> {
+			if (activeTerminal != null && terminalList.size() > 1) {
 				rootAnchor.getChildren().remove(activeTerminal.getParent());
 				terminalList.remove(activeTerminal);
 				terminalChoiceBox.getItems().remove(activeTerminal);
 				terminalChoiceBox.getSelectionModel().selectLast();
 			}
 		});
-		
-		
-		btnNewConsole.setOnMouseClicked(e -> {
-			if(mainController.isDarkmode()) {
-				newConsole(new ConsoleArea("Console(" + consoleList.size() + ")", null, "-fx-background-color:#444"));
-			}else {
-				newConsole(new ConsoleArea("Console(" + consoleList.size() + ")", null, "-fx-background-color:#989898"));
-			}
+	}
+	
+	/**
+	 * Sets up a new console handler by configuring the action to be performed
+	 * when the associated button is clicked. When triggered, a new console area
+	 * is created with a dynamically assigned name, background color based on
+	 * the application's current theme, and added to the list of consoles.
+	 * <p>
+	 * This method determines the appropriate background color for the new
+	 * console area depending on whether dark mode is enabled in the main controller.
+	 * It assigns a mouse click event handler to the associated button to execute
+	 * the creation and addition process for the new console area.
+	 * </p>
+	 */
+	private void createNewConsoleAreaHandler () {
+		btnNewConsole.setOnMouseClicked(event -> {
+			String backgroundColor = mainController.isDarkmode() ? "-fx-background-color:#444" : "-fx-background-color:#989898";
+			createNewConsoleArea(new ConsoleArea("Console(" + consoleList.size() + ")", null, backgroundColor));
 		});
-		
-		iconTerminateProcess.setOnMouseClicked(e -> {
+	}
+	
+	/**
+	 * Sets up the event handler for terminating a process when the terminate icon is clicked.
+	 * <p>
+	 * This method assigns a mouse click event listener to the terminate icon. When the icon
+	 * is clicked, it iterates through the list of console items to find the active console.
+	 * Upon locating the active console, the associated process is terminated by invoking
+	 * the destroy method.
+	 * </p>
+	 */
+	private void terminateProcessHandler () {
+		iconTerminateProcess.setOnMouseClicked(event -> {
 			for(var item : consoleList) {
 				if(item.equals(activeConsole)) {
-					if(item != null) {
-						item.getProcess().destroy();
-					}	
-				}
+                    item.getProcess().destroy();
+                }
 			}
-							
 		});
+	}
+	
+	
+	// Getters:
+	/**
+	 * Retrieves the list of stylesheets currently associated with the root node.
+	 *
+	 * @return a List of Strings representing the file paths or URLs of the stylesheets.
+	 */
+	public List<String> getStylesheets() {
+		return rootNode.getStylesheets();
+	}
+	
+	
+	// Setters:
+	/**
+	 * Sets the main controller for this ConsoleController. The main controller acts as a
+	 * central manager to coordinate actions between different components.
+	 *
+	 * @param mainController the instance of MainController to be set as the main controller
+	 */
+	public void setMainController(MainController mainController) {
+		this.mainController = mainController;
 	}
 }

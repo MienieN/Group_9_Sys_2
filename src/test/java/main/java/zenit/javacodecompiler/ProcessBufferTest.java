@@ -15,7 +15,7 @@ class ProcessBufferTest {
     }
 
     @Test
-    void testIsempty(){
+    void testIsEmptyAtStart(){
         assertTrue(processBuffer.isEmpty());
     }
 
@@ -30,9 +30,16 @@ class ProcessBufferTest {
     void testGet() throws IOException{
         Process mockprocess = new ProcessBuilder("cmd", "/c", "echo", "test").start(); //this is for windows and our tests runs on "windows-latest"
         processBuffer.put(mockprocess);
-        assertAll("Check to see if the process matches with get and that the buffer is empty after running the get()",
-                () -> assertEquals(mockprocess, processBuffer.get(),"Should match"),
-                () -> assertTrue(processBuffer.isEmpty()));
+        assertEquals(mockprocess, processBuffer.get(), "Should match");
     }
 
+    @Test
+    void testEmptyAfterGet() throws IOException {
+        Process mockprocess = new ProcessBuilder("cmd", "/c", "echo", "test").start(); //this is for windows and our tests runs on "windows-latest"
+        processBuffer.put(mockprocess);
+        processBuffer.get();
+        assertTrue(processBuffer.isEmpty());
+    }
+
+    //Might have to add more tests, Not sure everything is covered.
 }

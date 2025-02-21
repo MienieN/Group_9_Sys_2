@@ -26,6 +26,12 @@ class StringUtilitiesTest {
     }
 
     @Test
+    void testCountLeadingSpacesOnlySpace(){
+        String str = " ";
+        assertEquals(1, stringUtilities.countLeadingSpaces(str));
+    }
+
+    @Test
     void testCountLeadingSpacesStringSpaceAtStart(){
         String str = " test";
         assertEquals(1, stringUtilities.countLeadingSpaces(str));

@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessBufferTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/maven.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/maven.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessTesterTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessBufferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessBufferTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/main/java/zenit/util/StringUtilitiesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/util/StringUtilitiesTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +48,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Unnamed.executor": "Run",
+    "JUnit.DebugErrorBufferTest.executor": "Run",
     "JUnit.DebugErrorTest.testGetRow.executor": "Run",
     "JUnit.ProcessBufferTest.testIsempty.executor": "Run",
     "JUnit.TerminalControllerTest.testTabPaneNotNull.executor": "Run",
@@ -65,8 +67,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.45747125",
     "vue.rearranger.settings.migration": "true"
   }
@@ -82,11 +84,26 @@
       <recent name="main.java.zenit" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProcessBufferTest.testIsempty">
+  <component name="RunManager" selected="Application.Unnamed">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
       <option name="VM_PARAMETERS" value="--module-path lib/windowsFX/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DebugErrorBufferTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.zenit.javacodecompiler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.java.zenit.javacodecompiler" />
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.javacodecompiler.DebugErrorBufferTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -139,22 +156,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ZenitTest.testTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="zenit" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.zenit.zenit.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="main.zenit.zenit" />
-      <option name="MAIN_CLASS_NAME" value="main.zenit.zenit.ZenitTest" />
-      <option name="METHOD_NAME" value="testTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ZenitTest.testTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="zenit" />
       <extension name="coverage">
@@ -173,11 +174,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DebugErrorBufferTest" />
         <item itemvalue="JUnit.ProcessBufferTest.testIsempty" />
         <item itemvalue="JUnit.DebugErrorTest.testGetRow" />
         <item itemvalue="JUnit.ZenitTest.testTest" />
         <item itemvalue="JUnit.TerminalControllerTest.testTabPaneNotNull" />
-        <item itemvalue="JUnit.ZenitTest.testTest (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -200,5 +201,8 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Group_9_Sys_2$Unnamed.ic" NAME="Unnamed Coverage Results" MODIFIED="1740132346665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

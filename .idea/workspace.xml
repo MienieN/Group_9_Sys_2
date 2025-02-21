@@ -5,31 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/CommentUncommentProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FolderHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FolderHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/JavaFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/JavaFileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/MetadataFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/MetadataFileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKVerifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKVerifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JREVersions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKDirectories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/Metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/Metadata.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataVerifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataVerifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/setup/SetupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/setup/SetupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsControllerStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsControllerStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectMetadataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectMetadataController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectRunnableClassesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectRunnableClassesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/NewFileController.java" afterDir="false" />
     </list>
     <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -39,18 +33,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Williamstara"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Williamstara&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/MienieN/Group_9_Sys_2.git",
-    "accountId": "b5631bbb-6360-4f5d-b270-92aadd4a3dcd"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MienieN/Group_9_Sys_2.git&quot;,
+    &quot;accountId&quot;: &quot;b5631bbb-6360-4f5d-b270-92aadd4a3dcd&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 6
     }</component>
@@ -59,26 +53,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Unnamed.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Sprint__2__Refactoring__variable__and__method__names",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/MAU/Term 4/Sys 2/Group_9_Sys_2 - Copy",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Global Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.45747125",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Refactor-MainController&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/MAU/Term 4/Sys 2/Group_9_Sys_2 - Copy&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.45747125&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
@@ -92,8 +87,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -114,6 +108,8 @@
       <workItem from="1739880854091" duration="109000" />
       <workItem from="1739966664902" duration="1467000" />
       <workItem from="1740034356100" duration="5557000" />
+      <workItem from="1740139684758" duration="3618000" />
+      <workItem from="1740143429894" duration="5343000" />
     </task>
     <servers />
   </component>

@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/DebugErrorBufferTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/DebugErrorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/util/StringUtilitiesTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/util/TupleTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessBufferTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/maven.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/maven.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,12 +30,12 @@
     &quot;assignee&quot;: &quot;Williamstara&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/MienieN/Group_9_Sys_2.git",
-    "accountId": "f10e583a-3bae-46bc-a406-7dfd74386b33"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MienieN/Group_9_Sys_2.git&quot;,
+    &quot;accountId&quot;: &quot;f10e583a-3bae-46bc-a406-7dfd74386b33&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -51,6 +48,7 @@
   "keyToString": {
     "Application.Unnamed.executor": "Run",
     "JUnit.DebugErrorTest.testGetRow.executor": "Run",
+    "JUnit.ProcessBufferTest.testIsempty.executor": "Run",
     "JUnit.TerminalControllerTest.testTabPaneNotNull.executor": "Run",
     "JUnit.ZenitTest.testTest (1).executor": "Run",
     "JUnit.ZenitTest.testTest.executor": "Run",
@@ -78,13 +76,13 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="main.java.zenit.util" />
       <recent name="main.java.zenit.javacodecompiler" />
+      <recent name="main.java.zenit.util" />
       <recent name="main.java.zenit.terminal" />
       <recent name="main.java.zenit" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DebugErrorTest.testGetRow">
+  <component name="RunManager" selected="JUnit.ProcessBufferTest.testIsempty">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
@@ -104,6 +102,22 @@
       <option name="PACKAGE_NAME" value="main.java.zenit.javacodecompiler" />
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.javacodecompiler.DebugErrorTest" />
       <option name="METHOD_NAME" value="testGetRow" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProcessBufferTest.testIsempty" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.zenit.javacodecompiler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.java.zenit.javacodecompiler" />
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.javacodecompiler.ProcessBufferTest" />
+      <option name="METHOD_NAME" value="testIsempty" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -159,6 +173,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ProcessBufferTest.testIsempty" />
         <item itemvalue="JUnit.DebugErrorTest.testGetRow" />
         <item itemvalue="JUnit.ZenitTest.testTest" />
         <item itemvalue="JUnit.TerminalControllerTest.testTabPaneNotNull" />

@@ -10,7 +10,7 @@ class ProcessTesterTest {
 
     @Test
     void testProcessTester() throws IOException, InterruptedException {
-        Process process = new ProcessBuilder("ping", "127.0.0.1", "-n", "5").start();
+        Process process = new ProcessBuilder("ping", "127.0.0.1", "-n", "5").start(); //runs the ping command on the local host 5 times.
 
         ProcessTester processTester = new ProcessTester(process);
         processTester.start(); //processTester.run() says it should be replaced with start();

@@ -32,5 +32,4 @@ class DebugErrorBufferTest {
     void testIsEmpty(){
         assertTrue(debugErrorBuffer.isEmpty());
     }
-
 }

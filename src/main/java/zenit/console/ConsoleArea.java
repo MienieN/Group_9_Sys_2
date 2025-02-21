@@ -18,7 +18,7 @@ public class ConsoleArea extends InlineCssTextArea {
 	 * Initializes the instance with default values and applies default settings such as making it uneditable
 	 * and applying the default stylesheet.
 	 */
-	public ConsoleArea(){ //TODO is this constructor necessary?
+	public ConsoleArea(){ //TODO safe to remove?
 		this("UNKNOWN", null, "");
 	}
     
@@ -181,6 +181,7 @@ public class ConsoleArea extends InlineCssTextArea {
 	public void setID(String ID) {
 		this.ID = ID;
 	}
+	
 	
 	// ToString:
 	/**

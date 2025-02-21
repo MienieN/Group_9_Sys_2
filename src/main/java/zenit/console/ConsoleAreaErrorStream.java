@@ -21,6 +21,7 @@ public class ConsoleAreaErrorStream extends OutputStream {
 		this.consoleArea = consoleArea;
 	}
 
+	
 	// Methods:
 	/**
 	 * Flushes the current content of the StringBuilder to the associated ConsoleArea as error output.
@@ -70,9 +71,10 @@ public class ConsoleAreaErrorStream extends OutputStream {
 	 * Processes a new line in the error stream by flushing the current content of the {@code stringBuilder}
 	 * to the associated {@code consoleArea} as error output. This method explicitly appends a newline character
 	 * to the output and clears the {@code stringBuilder} to prepare for future data.
-	 *
+	 * <p>
 	 * The error output is displayed in the {@code consoleArea} with a specific style (e.g., red text color),
 	 * and the method leverages the {@code errorPrint} method of the {@code ConsoleArea} to handle the rendering.
+	 * </p>
 	 */
 	private void handleNewLine() {
         consoleArea.printError(stringBuilder.toString() + "\n"); //TODO can we remove the toString()?

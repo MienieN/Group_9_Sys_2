@@ -37,7 +37,7 @@ import main.java.zenit.ui.MainController;
  * Implemented using JavaFX, it responds to JavaFX annotations and UI controls.
  * </p>
  */
-public class ConsoleController implements Initializable {
+public class ConsoleAndTerminalController implements Initializable {
 	private MainController mainController;
 	private final ArrayList<ConsoleArea> consoleList = new ArrayList<ConsoleArea>();
 	private final ArrayList<Terminal> terminalList = new ArrayList<Terminal>();
@@ -45,7 +45,7 @@ public class ConsoleController implements Initializable {
 	private ConsoleArea activeConsole;
 	private Terminal activeTerminal;
 	
-	@FXML private TabPane consoleTabPane; //TODO: remove?
+	@FXML private TabPane consoleTabPane; //TODO: check if safe for removal
 	@FXML private Button btnTerminal, btnConsole, btnNewTerminal,btnNewConsole, btnClearConsole;
 	@FXML private ChoiceBox<ConsoleArea> consoleChoiceBox;
 	@FXML private ChoiceBox<Terminal> terminalChoiceBox;

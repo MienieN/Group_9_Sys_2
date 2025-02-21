@@ -1,6 +1,4 @@
 package main.java.zenit.exceptions;
-
-//TODO: Implement the TypeCodeException class or remove it if not needed.
 /**
  * A custom exception class representing errors related to type codes.
  * This exception is typically used to indicate issues or invalid states

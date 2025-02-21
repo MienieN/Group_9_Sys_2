@@ -25,6 +25,7 @@ public class ConsoleAreaOutputStream extends OutputStream {
 		this.consoleArea = consoleArea;
 	}
 	
+	
 	// Methods:
 	/**
 	 * Flushes the current content of the StringBuilder to the associated ConsoleArea.
@@ -106,7 +107,7 @@ public class ConsoleAreaOutputStream extends OutputStream {
 	 * </p>
 	 */
 	private void handleNewLineCharacter() {
-		consoleArea.outPrint(stringBuilder.toString() + "\n");
+		consoleArea.outPrint(stringBuilder.toString() + "\n"); //TODO safely remove toString()?
 		stringBuilder.setLength(0);
 	}
 	

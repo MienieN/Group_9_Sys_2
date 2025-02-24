@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 
-import main.java.zenit.console.ConsoleAndTerminalController;
+import main.java.zenit.console.ConsoleController;
 import main.java.zenit.filesystem.RunnableClass;
 import main.java.zenit.filesystem.metadata.Metadata;
 import main.java.zenit.ui.MainController;
@@ -16,7 +16,7 @@ public class JavaSourceCodeCompiler {
 	protected boolean inBackground;
 	protected Buffer<?> buffer;
 	protected MainController cont;
-	protected ConsoleAndTerminalController consoleAndTerminalController;
+	protected ConsoleController consoleController;
 
 	public JavaSourceCodeCompiler(File file, boolean inBackground) {
 		this(file, null, inBackground, null, null);

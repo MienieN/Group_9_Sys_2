@@ -48,11 +48,10 @@ import main.java.zenit.ui.tree.TreeContextMenu;
 import main.java.zenit.util.Tuple;
 import main.java.zenit.ui.projectinfo.ProjectMetadataController;
 import main.java.zenit.zencodearea.ZenCodeArea;
-
+// TODO Divide this into two separate controllers.
 public class MainController extends VBox implements ThemeCustomizable {
 	private Stage stage;
 	private FileController fileController;
-	private NewFileController newFileController;
 	private ProjectMetadataController projectMetadataController;
 	private String zenCodeAreasFontFamily, activeStylesheet;
 	private LinkedList<ZenCodeArea> activeZenCodeAreas;
@@ -73,94 +72,56 @@ public class MainController extends VBox implements ThemeCustomizable {
 	@FXML private Label statusBarLeftLabel, statusBarRightLabel;
 	@FXML private FXMLLoader loader;
 
-	/**
-	 * Initializes the workspace, sets up the file controller, and loads the main FXML layout.
-	 * @param stage the primary stage for this application
-	 */
+	// TODO BREAK THIS UP WHAT THE FUCK IS THIS
 	public MainController(Stage stage) {
 		this.stage = stage;
 		this.zenCodeAreasTextSize = 12;
 		this.zenCodeAreasFontFamily = "Menlo";
-		this.activeZenCodeAreas = new LinkedList<>();
+		this.activeZenCodeAreas = new LinkedList<ZenCodeArea>();
 		this.customThemeCSS = new File("/customtheme/mainCustomTheme.css");
-		this.newFileController = new NewFileController(fileController.getWorkspace(), isDarkMode, this.treeView);
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/zenit/ui/Main.fxml"));
-			File workspace = initializeWorkspace(); // Initialize workspace
-			this.fileController = new FileController(workspace); // Set up the file controller
-			setFileController(fileController);
-
-			if (workspace != null) {
-				fileController.changeWorkspace(workspace); // Change to the initialized workspace
+			File workspace = null;
+			try {
+				workspace = WorkspaceHandler.readWorkspace();
+			} catch (IOException ex) {
+				JREVersionsControllerStart jdkSelector = new JREVersionsControllerStart(false);
+				jdkSelector.start();
+				if (!jdkSelector.isProjectCreated()) { return; }
+				
+				workspace = WorkspaceHandler.setUpNewWorkspace();
+				this.fileController = new FileController(workspace);
+				File newProject = fileController.createProject("New Project");
 			}
 
-			setupLoader(loader);
-			setupScene(loader);
+			FileController fileController = new FileController(workspace);
+			setFileController(fileController);
+
+			if (workspace != null) { fileController.changeWorkspace(workspace); }
+
+			loader.setRoot(this);
+			loader.setController(this);
+			loader.load();
+
+			Scene scene = new Scene(this);
+			scene.getStylesheets().add(getClass().getResource("/zenit/ui/mainStyle.css").toString());
+
+			scene.getStylesheets().add(getClass().getResource("/zenit/ui/keywords.css").toExternalForm());
+			this.stage.setScene(scene);
+			this.stage.setTitle("Zenit - " + workspace.getPath());
+
 			initialize();
-			setupStage();
+			
+			this.stage.show();
+			KeyboardShortcuts.setupMain(scene, this);
+
+			this.activeStylesheet = getClass().getResource("/zenit/ui/mainStyle.css").toExternalForm();
+			this.stage.setOnCloseRequest(event -> quit());
+
 		} catch (Exception e) {
 			System.out.println("Error in MainController = " + e);
 		}
-	}
-
-	/**
-	 * Initializes the workspace by reading the existing workspace or setting up a new one.
-	 * If no workspace is found, it starts the JRE version selector and creates a new project.
-	 *
-	 * @return the File object representing the initialized workspace, or null if the workspace is not created
-	 * @throws IOException if an I/O error occurs during workspace initialization
-	 */
-	private File initializeWorkspace() throws IOException {
-		File workspace = WorkspaceHandler.readWorkspace();
-		if (workspace == null) {
-			JREVersionsControllerStart jdkSelector = new JREVersionsControllerStart(false);
-			jdkSelector.start();
-			if (!jdkSelector.isProjectCreated()) {
-				return null; // Return null if the project is not created
-			}
-
-			workspace = WorkspaceHandler.setUpNewWorkspace();
-			this.fileController = new FileController(workspace);
-			fileController.createProject("New Project");
-		}
-		return workspace;
-	}
-
-	/**
-	 * Sets up the FXMLLoader by setting the root and controller to this instance and loading the FXML file.
-	 *
-	 * @param loader the FXMLLoader instance to be set up
-	 * @throws IOException if an I/O error occurs during loading
-	 */
-	private void setupLoader(FXMLLoader loader) throws IOException {
-		loader.setRoot(this);
-		loader.setController(this);
-		loader.load();
-	}
-
-	/**
-	 * Sets up the scene by applying stylesheets and setting the stage title.
-	 * The scene is created using the current instance as the root.
-	 *
-	 * @param loader the FXMLLoader instance used to load the FXML file
-	 */
-	private void setupScene(FXMLLoader loader) {
-		Scene scene = new Scene(this);
-		scene.getStylesheets().add(getClass().getResource("/zenit/ui/mainStyle.css").toString());
-		scene.getStylesheets().add(getClass().getResource("/zenit/ui/keywords.css").toExternalForm());
-		this.stage.setScene(scene);
-		this.stage.setTitle("Zenit - " + fileController.getWorkspace().getPath());
-		this.activeStylesheet = getClass().getResource("/zenit/ui/mainStyle.css").toExternalForm();
-	}
-
-	/**
-	 * Sets up the stage by showing it, setting up keyboard shortcuts, and defining the close request action.
-	 */
-	private void setupStage() {
-		this.stage.show();
-		KeyboardShortcuts.setupMain(this.stage.getScene(), this);
-		this.stage.setOnCloseRequest(event -> quit());
 	}
 
 	public FXMLLoader getFXMLLoader() {
@@ -170,31 +131,20 @@ public class MainController extends VBox implements ThemeCustomizable {
 	public void setFileController(FileController fileController) {
 		this.fileController = fileController;
 	}
-
-	/**
-	 * Returns the currently selected file tree item.
-	 * @return the currently selected file tree item
-	 */
+	
 	public FileTreeItem<String> getSelectedFileTreeItem() {
-		return newFileController.getSelectedFileTreeItem();
+		return (FileTreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 	}
-
-	/**
-	 * Deletes the currently selected file from the file tree view.
-	 * If a file is selected, it is deleted from the file system and removed from the tree view.
-	 */
+	
 	public void deleteFileFromTreeView() {
 		var selectedItem = getSelectedFileTreeItem();
+		
 		if (selectedItem != null) {
 			deleteFile(selectedItem.getFile());
 			selectedItem.getParent().getChildren().remove(selectedItem);
 		}
 	}
-
-	/**
-	 * This  method sets up the initial state of the user interface components, including clearing status labels,
-	 * configuring buttons, initializing the file tree, and setting the main controller for the console and terminal controller.
-	 */
+	
 	public void initialize() {
 		statusBarLeftLabel.setText("");
 		statusBarRightLabel.setText("");
@@ -221,9 +171,10 @@ public class MainController extends VBox implements ThemeCustomizable {
 	}
 
 	public void updateZenCodeAreasAppearance() {
-        for (ZenCodeArea activeZenCodeArea : activeZenCodeAreas) {
-            activeZenCodeArea.updateAppearance(zenCodeAreasFontFamily, zenCodeAreasTextSize);
-        }
+		// TODO Enhanced for loop
+		for (int i = 0; i < activeZenCodeAreas.size(); i++) {
+			activeZenCodeAreas.get(i).updateAppearance(zenCodeAreasFontFamily, zenCodeAreasTextSize);
+		}
 	}
 
 	public Stage getStage() { return stage; }
@@ -233,18 +184,12 @@ public class MainController extends VBox implements ThemeCustomizable {
 		activeZenCodeAreas.add(zenCodeArea);
 		return zenCodeArea;
 	}
-
-	/**
-	 * Initializes the tree view with the workspace as the root. Populates the tree with files
-	 * and directories, sets up a context menu, and sorts the children alphabetically.
-	 */
+	
 	private void initTree() {
 		FileTreeItem<String> rootItem = new FileTreeItem<String>(fileController.getWorkspace(), "workspace",
 				FileTreeItem.WORKSPACE);
 		File workspace = fileController.getWorkspace();
-		if (workspace != null) {
-			FileTree.createNodes(rootItem, workspace);
-		}
+		if (workspace != null) { FileTree.createNodes(rootItem, workspace); }
 		
 		treeView.setRoot(rootItem);
 		treeView.setShowRoot(false);
@@ -259,15 +204,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 			return (t1.getValue().compareTo(t2.getValue()));
 		});
 	}
-
-	/**
-	 * This method creates a new file in the specified parent directory with the given type code.
-	 * It prompts the user to enter a file name and creates the file with the specified type code.
-	 * If the file is created successfully, it is opened in a new tab.
-	 * @param parent the parent directory in which to create the file
-	 * @param typeCode the type code of the file to create
-	 * @return the created file, or null if the file was not created
-	 */
+	
 	public File createFile(File parent, int typeCode) {
 		File file = null;
 		String className = DialogBoxes.inputDialog(null, "New file", "Create new file", "Enter new file name",
@@ -301,74 +238,40 @@ public class MainController extends VBox implements ThemeCustomizable {
 		return saveFile(true);
 	}
 
-	/**
-	 * Internal method to handle the common logic for saving a file.
-	 *
-	 * @param backgroundCompile whether to compile the file in the background
-	 * @param file the file to save
-	 * @param text the text to save in the file
-	 * @return true if the file was successfully saved, false otherwise
-	 */
-	private boolean saveFileInternal(boolean backgroundCompile, File file, String text) {
-		boolean didWrite = fileController.writeFile(file, text);
+	private boolean saveFile(boolean backgroundCompile) {
+		FileTab tab = getSelectedTab();
+		if (tab == null) { return false; }
+		
+		File file = tab.getFile();
+		if (file == null) { file = chooseFile(); }
 
+		boolean didWrite = fileController.writeFile(file, tab.getFileText());
+
+		if (didWrite) {
+			tab.update(file);
+			FileTree.createParentNode((FileTreeItem<String>) treeView.getRoot(), file);
+			
+			if (backgroundCompile) { backgroundCompiling(file); }
+		} else { System.out.println("Did not write."); }
+		return didWrite;
+	}
+	
+	private boolean saveFile(boolean backgroundCompile, File file, String text) {
+		if (file == null) { return saveFile(backgroundCompile); }
+
+		boolean didWrite = fileController.writeFile(file, text);
+		
 		if (didWrite) {
 			FileTreeItem<String> root = FileTree.getTreeItemFromFile((FileTreeItem<String>) treeView.getRoot(), file.getParentFile());
 			System.out.println(root);
 			FileTree.createParentNode(root, file);
 			treeView.refresh();
 			treeView.layout();
-
-			if (backgroundCompile) {
-				backgroundCompiling(file);
-			}
-		} else {
-			System.out.println("Did not write.");
-		}
-		return didWrite;
+			
+			if (backgroundCompile) { backgroundCompiling(file); }
+		} return didWrite;
 	}
-
-	/**
-	 * Saves the currently selected file.
-	 *
-	 * @param backgroundCompile whether to compile the file in the background
-	 * @return true if the file was successfully saved, false otherwise
-	 */
-	private boolean saveFile(boolean backgroundCompile) {
-		FileTab tab = getSelectedTab();
-		if (tab == null) {
-			return false;
-		}
-
-		File file = tab.getFile();
-		if (file == null) {
-			file = chooseFile();
-		}
-
-		return saveFileInternal(backgroundCompile, file, tab.getFileText());
-	}
-
-	/**
-	 * Saves the specified file with the given text.
-	 *
-	 * @param backgroundCompile whether to compile the file in the background
-	 * @param file the file to save
-	 * @param text the text to save in the file
-	 * @return true if the file was successfully saved, false otherwise
-	 */
-	private boolean saveFile(boolean backgroundCompile, File file, String text) {
-		if (file == null) {
-			return saveFile(backgroundCompile);
-		}
-
-		return saveFileInternal(backgroundCompile, file, text);
-	}
-
-	/**
-	 * This method compiles the specified file in the background.
-	 * If the file is not null, it creates a new JavaSourceCodeCompiler instance and starts the compilation process.
-	 * @param file the file to compile
-	 */
+	
 	private void backgroundCompiling(File file) {
 		File metadataFile = getMetadataFile(file);
 
@@ -401,11 +304,12 @@ public class MainController extends VBox implements ThemeCustomizable {
 
 	@FXML
 	public void newTab(Event event) { addTab(); }
-
+	
 	@FXML
-	private void newFile() {
+	public void newFile() {
+		NewFileController newFileController = new NewFileController(fileController.getWorkspace(), isDarkMode);
 		newFileController.start();
-		File newFile = newFileController.createNewFile();
+		File newFile = newFileController.getNewFile();
 
 		if (newFile != null) {
 			initTree();
@@ -435,56 +339,36 @@ public class MainController extends VBox implements ThemeCustomizable {
 			}
 			File file = fileChooser.showOpenDialog(stage);
 
-			if (file != null) {
-				openFile(file); }
+			if (file != null) { openFile(file); }
 
 		} catch (NullPointerException ex) { ex.printStackTrace(); }
 	}
-
-	/**
-	 * This method opens the specified file in a new tab if it is not already open.
-	 * @param file the file to open
-	 */
+	
 	public void openFile(File file) {
 		if (file != null && getTabFromFile(file) == null) {
+
 			if (supportedFileFormat(file)) {
-				openSupportedFile(file);
+				FileTab selectedTab = addTab();
+				selectedTab.setFile(file, true);
+				selectedTab.setText(file.getName());
 			} else {
-				showUnsupportedFileDialog(file);
+				String fileType = file.getName().substring(file.getName().lastIndexOf('.'));
+				DialogBoxes.errorDialog("Not supported", "File type not supported by Zenit", 
+						"The file type " + fileType + " is not yet supported by this application.");
 			}
-		} else if (file != null) {
+		} else if (file != null && getTabFromFile(file) != null) { // Tab already open
 			tabPane.getSelectionModel().select(getTabFromFile(file));
 		}
 	}
-
-	/**
-	 * This method handles the logic of opening the specified file in a new tab.
-	 * @param file the file to open
-	 */
-	private void openSupportedFile(File file) {
-		FileTab selectedTab = addTab();
-		selectedTab.setFile(file, true);
-		selectedTab.setText(file.getName());
-	}
-
-	/**
-	 * This method shows an error dialog for unsupported file types.
-	 * @param file the file with the unsupported file type
-	 */
-	private void showUnsupportedFileDialog(File file) {
-		String fileType = file.getName().substring(file.getName().lastIndexOf('.'));
-		DialogBoxes.errorDialog("Not supported", "File type not supported by Zenit",
-				"The file type " + fileType + " is not yet supported by this application.");
-	}
-
+	
 	private boolean supportedFileFormat(File file) {
 		boolean supported = false;
-
+		
 		String fileName = file.getName();
 		int periodIndex = fileName.lastIndexOf('.');
 		if (periodIndex >= 0) {
 			String fileType = fileName.substring(periodIndex);
-
+			
 			switch (fileType) {
 				case ".java":
 				case ".txt": supported = true; break;
@@ -516,7 +400,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 	}
 
 	public void deleteFile(File file) {
-		/* TODO: Can we remove this?
+		/*
 		deletedTexts.put(file, FileController.readFile(file));
 		fileHistory.add(0, file);
 		historyIndex++;
@@ -625,7 +509,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 		return null;
 	}
 	
-	// TODO Break it down if possible
+	// TODO Break it down
 	public void compileAndRun(File file) {
 		File metadataFile = getMetadataFile(file);
 		ConsoleArea consoleArea;
@@ -681,7 +565,8 @@ public class MainController extends VBox implements ThemeCustomizable {
 	public void updateStatusLeft(String text) { statusBarLeftLabel.setText(text); }
 
 	public void updateStatusRight(String text) { statusBarRightLabel.setText(text); }
-
+	
+	// TODO complexity is high
 	public static File getMetadataFile(File file) {
 		File[] files = file.listFiles();
 		if (files != null) {
@@ -709,6 +594,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 		return tab;
 	}
 
+	// TODO Break it down
 	@FXML
 	public void closeTab(Event event) {
 		FileTab selectedTab = getSelectedTab();
@@ -777,7 +663,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 			FileTab fileTab = (FileTab) tab;
 			File tabFile = fileTab.getFile();
 
-			if (tabFile != null && file.equals(tabFile)) {
+			if (tabFile != null && file.equals(tabFile)) { // TODO Unnecessary null check before equals
 				return fileTab;
 			}
 		} return null;
@@ -815,24 +701,183 @@ public class MainController extends VBox implements ThemeCustomizable {
 	
 	@Override
 	public String getActiveStylesheet() { return activeStylesheet; }
-
-	// YRJA: Created a class to handle this logic. It's bananas and my brain is fried.
+	
+	// TODO WHAT IS THIS MONSTROSITY OF A METHOD????? Simplify and minimize the use of if statements as much as possible.
 	public void commentAndUncomment() {
 		ZenCodeArea zenCodeArea = getSelectedTab().getZenCodeArea();
-		int caretPosition = zenCodeArea.getCaretPosition();
+		
+		int caretPos = zenCodeArea.getCaretPosition();
 		int caretColumn = zenCodeArea.getCaretColumn();
 		int length = zenCodeArea.getLength();
+		int whereToReplaceFirstLine = caretPos - caretColumn;
+		int rowNumber = zenCodeArea.getCurrentParagraph();
+		int paragraphLength = zenCodeArea.getParagraphLength(rowNumber);
+		
+		List<Integer> whereToReplaceList = new ArrayList<>();
 		IndexRange zen = zenCodeArea.getSelection();
 		int endOfSelection = zen.getEnd();
 		int startOfSelection = zen.getStart();
+		boolean topDown = true;
+		int n = 1;
+		int whereToReplace = whereToReplaceFirstLine;
+		
+		whereToReplaceList.add(whereToReplaceFirstLine);
+		
+		//If the selection starts at least one row above the end of the selection
+		// TODO Too many conditions for one if. Max 2.Break it down into more ifs or switches.
+		if (caretPos == endOfSelection && whereToReplaceFirstLine > startOfSelection) {
+			topDown = true;
+			do {
+				whereToReplace = whereToReplace - 1 - zenCodeArea.getParagraphLength(rowNumber - n);
+				n++;
+				whereToReplaceList.add(whereToReplace);
+			} while (whereToReplace > startOfSelection);
+		}
+		
+		//If the selection starts at least one row below the end of the selection
+		// TODO Too many conditions for one if. Max 2. Break it down into more ifs or switches.
+		if (caretPos == startOfSelection && whereToReplace + paragraphLength < endOfSelection) {
+			topDown = false;
+			do {
+				whereToReplace = whereToReplace + 1 + zenCodeArea.getParagraphLength(rowNumber + n - 1);
+				n++;
+				whereToReplaceList.add(whereToReplace);
+				
+			} while (whereToReplace + zenCodeArea.getParagraphLength(rowNumber + n - 1) < endOfSelection);
+		}
 
-		// Create an instance of the processor class
-		CommentUncommentProcessor processor = new CommentUncommentProcessor(zenCodeArea, caretPosition, caretColumn, length, startOfSelection, endOfSelection);
+		boolean[] addComment = new boolean[whereToReplaceList.size()];
+		
+		//Comment or uncomment from the top and down then moves the caret to the "new" right position
+		// TODO Reduce the number of ifs in this action. Separate concerns.
+		if (topDown == true) {
+			int stepsToMove = 0;
+			
+			for (int i = 0; i < n; i++) {
+				whereToReplace = whereToReplaceList.get(i);
+				
+				if (caretPos > length - 3) { zenCodeArea.insertText(caretPos, "	  "); }
+				
+				if (zenCodeArea.getText(whereToReplace, whereToReplace + 3).equals("// ")) {
+					
+					if (zenCodeArea.getText(whereToReplace, whereToReplace + 4).equals("// *")) {
+						zenCodeArea.deleteText(whereToReplace, whereToReplace + 2);
+						stepsToMove = stepsToMove - 2;
+						addComment[i] = false;
+					} else {
+						zenCodeArea.replaceText(whereToReplace, whereToReplace + 2, "  ");
+						addComment[i] = false;
+					}
+				} else if (zenCodeArea.getText(whereToReplace, whereToReplace + 3).equals("// ") == false) {
+					
+					if (zenCodeArea.getText(whereToReplace, whereToReplace + 2).equals("//")) {
+						zenCodeArea.deleteText(whereToReplace, whereToReplace + 2);
+						addComment[i] = false;
+						
+						if (whereToReplace == caretPos) { // TODO empty if-body?
+						
+						} else if (whereToReplace + 1 == caretPos) {
+							stepsToMove--;
+						} else {
+							stepsToMove = stepsToMove - 2;
+						}
+					} else if(zenCodeArea.getText(whereToReplace, whereToReplace + 4).equals("    ")) {
+						zenCodeArea.replaceText(whereToReplace, whereToReplace + 2, "//");
+						addComment[i] = false;
+					} else {
+						zenCodeArea.insertText(whereToReplace, "//");
+						stepsToMove = stepsToMove + 2;
+						addComment[i] = true;
+					}		
+				}	
+			}
+			
+			if(whereToReplaceList.size() < 2) {
+				zenCodeArea.moveTo(caretPos + stepsToMove);
+				
+			}else if (addComment[0] && addComment[n - 1]) {
+				zenCodeArea.selectRange(startOfSelection + 2, endOfSelection + stepsToMove);
 
-		// Process the comment/uncomment action
-		processor.process();
+			}else if (addComment[0] && addComment[n - 1] == false) {
+				zenCodeArea.selectRange(startOfSelection + 2, endOfSelection + stepsToMove);
+				
+			}else if (addComment[0] == false && addComment[n - 1]) {
+				zenCodeArea.selectRange(startOfSelection - 2, endOfSelection + stepsToMove + 2);
+				
+			}else {
+				zenCodeArea.selectRange(startOfSelection - 2, endOfSelection + stepsToMove);
+			}
+		}	
+		//Comment or uncomment from below and up
+		if (topDown == false) {
+			
+			for (int i = whereToReplaceList.size() - 1; i >= 0; i--) {
+				whereToReplace = whereToReplaceList.get(i);
+				
+				if (caretPos > length - 3) {
+					zenCodeArea.insertText(caretPos, "	  ");
+					zenCodeArea.moveTo(caretPos);
+				}
+				
+				if (zenCodeArea.getText(whereToReplace, whereToReplace + 3).equals("// ")) {
+
+					if (zenCodeArea.getText(whereToReplace, whereToReplace + 4).equals("// *")) {
+						zenCodeArea.deleteText(whereToReplace, whereToReplace + 2);
+						addComment[i] = false;
+						
+					} else {
+						zenCodeArea.replaceText(whereToReplace, whereToReplace + 2, "  ");
+						zenCodeArea.moveTo(caretPos);
+						addComment[i] = false;
+					}
+					
+				} else if (zenCodeArea.getText(whereToReplace, whereToReplace + 3).equals("// ") == false) {
+					
+					if (zenCodeArea.getText(whereToReplace, whereToReplace + 2).equals("//")) {
+						zenCodeArea.deleteText(whereToReplace, whereToReplace + 2);
+						addComment[i] = false;
+						
+						if (whereToReplace == caretPos) {
+							zenCodeArea.moveTo(caretPos);
+							
+						} else if (whereToReplace + 1 == caretPos) {
+							zenCodeArea.moveTo(caretPos - 1);
+							
+						} else {
+							zenCodeArea.moveTo(caretPos - 2);
+						}
+							
+					} else {
+						zenCodeArea.insertText(whereToReplace, "//");
+						zenCodeArea.moveTo(caretPos + 2);
+						addComment[i] = true;
+					}		
+				}	
+
+			if (addComment[0] && addComment[whereToReplaceList.size() - 1]) {
+				zenCodeArea.selectRange(rowNumber + whereToReplaceList.size() - 1,
+				endOfSelection - whereToReplaceList.get(whereToReplaceList.size() - 1) + 2,
+				rowNumber, caretColumn + 2);
+				
+			} else if(addComment[0] && addComment[whereToReplaceList.size() - 1] == false) {
+				zenCodeArea.selectRange(rowNumber + whereToReplaceList.size() - 1,
+				endOfSelection - whereToReplaceList.get(whereToReplaceList.size() - 1) - 2,
+				rowNumber, caretColumn + 2);
+				
+			} else if(addComment[0] == false && addComment[whereToReplaceList.size() - 1]) {
+				zenCodeArea.selectRange(rowNumber + whereToReplaceList.size() - 1,
+				endOfSelection - whereToReplaceList.get(whereToReplaceList.size() - 1) + 2,
+				rowNumber, caretColumn - 2);
+				
+			} else {
+				zenCodeArea.selectRange(rowNumber + whereToReplaceList.size() - 1,
+				endOfSelection - whereToReplaceList.get(whereToReplaceList.size() - 1) - 2,
+				rowNumber, caretColumn - 2);
+				}
+			}	
+		}
 	}
-
+	
 	public void chooseAndImportLibraries(ProjectFile projectFile) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select jar file to import");

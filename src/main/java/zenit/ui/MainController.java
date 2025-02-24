@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.LinkedList;
-
+import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -28,7 +28,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import main.java.zenit.Zenit;
 import main.java.zenit.console.ConsoleArea;
-import main.java.zenit.console.ConsoleController;
+import main.java.zenit.console.ConsoleAndTerminalController;
 import main.java.zenit.filesystem.FileController; // Aggregation
 import main.java.zenit.filesystem.ProjectFile;
 import main.java.zenit.filesystem.RunnableClass;
@@ -69,7 +69,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 	@FXML private TabPane tabPane;
 	@FXML private TreeView<String> treeView;
 	@FXML private Button btnRun, btnStop;
-	@FXML private ConsoleController consoleController;
+	@FXML private ConsoleAndTerminalController consoleAndTerminalController;
 	@FXML private Label statusBarLeftLabel, statusBarRightLabel;
 	@FXML private FXMLLoader loader;
 
@@ -83,13 +83,13 @@ public class MainController extends VBox implements ThemeCustomizable {
 		this.zenCodeAreasFontFamily = "Menlo";
 		this.activeZenCodeAreas = new LinkedList<>();
 		this.customThemeCSS = new File("/customtheme/mainCustomTheme.css");
+		this.newFileController = new NewFileController(fileController.getWorkspace(), isDarkMode, this.treeView);
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/zenit/ui/Main.fxml"));
 			File workspace = initializeWorkspace(); // Initialize workspace
 			this.fileController = new FileController(workspace); // Set up the file controller
 			setFileController(fileController);
-			this.newFileController = new NewFileController(fileController.getWorkspace(), isDarkMode, this.treeView);
 
 			if (workspace != null) {
 				fileController.changeWorkspace(workspace); // Change to the initialized workspace
@@ -203,11 +203,11 @@ public class MainController extends VBox implements ThemeCustomizable {
 		btnRun.setOnAction(event -> compileAndRun());
 		btnStop.setOnAction(event -> terminate());
 		initTree();
-		consoleController.setMainController(this);
+		consoleAndTerminalController.setMainController(this);
 	}
 
 	public void openSettingsPanel() {
-		new SettingsPanelController(this, zenCodeAreasTextSize, zenCodeAreasFontFamily, consoleController);
+		new SettingsPanelController(this, zenCodeAreasTextSize, zenCodeAreasFontFamily, consoleAndTerminalController);
 	}
 
 	public synchronized void setFontSize(int newFontSize) {
@@ -637,7 +637,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 			consoleArea = new ConsoleArea(file.getName(), null, "-fx-background-color:#989898");
 		}
 		consoleArea.setFileName(file.getName());
-		consoleController.createNewConsoleArea(consoleArea);
+		consoleAndTerminalController.createNewConsoleArea(consoleArea);
 		openConsoleComponent();
 		
 		try {

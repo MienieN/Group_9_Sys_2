@@ -37,7 +37,7 @@ import main.java.zenit.ui.MainController;
  * Implemented using JavaFX, it responds to JavaFX annotations and UI controls.
  * </p>
  */
-public class ConsoleAndTerminalController implements Initializable {
+public class ConsoleController implements Initializable {
 	private MainController mainController;
 	private final ArrayList<ConsoleArea> consoleList = new ArrayList<ConsoleArea>();
 	private final ArrayList<Terminal> terminalList = new ArrayList<Terminal>();

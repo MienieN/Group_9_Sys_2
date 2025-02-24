@@ -29,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import main.java.zenit.console.ConsoleAndTerminalController;
+import main.java.zenit.console.ConsoleController;
 import main.java.zenit.ui.MainController;
 import main.java.zenit.zencodearea.ZenCodeArea;
 
@@ -118,11 +118,11 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	private AnchorPane pnlCustomCSS;
 	@FXML
 	private AnchorPane pnlCustomTheme;
-	private ConsoleAndTerminalController consoleAndTerminalController;
+	private ConsoleController consoleController;
 	
-	public SettingsPanelController(MainController mainController, int oldFontSize, String oldFontFamily, ConsoleAndTerminalController consoleAndTerminalController) {
+	public SettingsPanelController(MainController mainController, int oldFontSize, String oldFontFamily, ConsoleController consoleController) {
 		this.mainController = mainController;
-		this.consoleAndTerminalController = consoleAndTerminalController;
+		this.consoleController = consoleController;
 		oldSize = oldFontSize;
 		oldFont = oldFontFamily;
 		addedCSSLines = new LinkedList<String>();
@@ -332,9 +332,9 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 
 				settingsPanelStylesheets.clear();
 				settingsPanelStylesheets.add(settingsPanelDarkMode);
-				consoleAndTerminalController.getStylesheets().remove(lightModeConsole);
-				consoleAndTerminalController.getStylesheets().add(darkModeConsole);
-				consoleAndTerminalController.changeAllConsoleAreaBackgroundColors("-fx-background-color:#444");
+				consoleController.getStylesheets().remove(lightModeConsole);
+				consoleController.getStylesheets().add(darkModeConsole);
+				consoleController.changeAllConsoleAreaBackgroundColors("-fx-background-color:#444");
 
 				stylesheets.clear();
 				stylesheets.add(darkModeKeywords);
@@ -343,9 +343,9 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 			} else {
 				settingsPanelStylesheets.clear();
 				settingsPanelStylesheets.add(settingsPanelLightMode);
-				consoleAndTerminalController.getStylesheets().remove(darkModeConsole);
-				consoleAndTerminalController.getStylesheets().add(lightModeConsole);
-				consoleAndTerminalController.changeAllConsoleAreaBackgroundColors("-fx-background-color:#989898");
+				consoleController.getStylesheets().remove(darkModeConsole);
+				consoleController.getStylesheets().add(lightModeConsole);
+				consoleController.changeAllConsoleAreaBackgroundColors("-fx-background-color:#989898");
 
 
 				stylesheets.clear();

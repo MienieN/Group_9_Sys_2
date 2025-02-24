@@ -91,7 +91,7 @@ public class JREVersionsController extends AnchorPane {
 		File selected = directoryChooser.showDialog(stage);
 		
 		if (selected != null) {
-			boolean success = JDKDirectories.appendToList(selected);
+			boolean success = JDKDirectories.appendToTrackedDirectoriesList(selected);
 			if (success) {
 				updateList();
 			} else {
@@ -122,7 +122,7 @@ public class JREVersionsController extends AnchorPane {
 			return;
 		}
 
-		boolean success = JDKDirectories.removeFromList(selectedFile);
+		boolean success = JDKDirectories.removeFromTrackedDirectoriesList(selectedFile);
 		if (success) {
 			DialogBoxes.informationDialog("JDK removed from Zenit", "The JDK " + selected + " has been removed from Zenit");
 			updateList();

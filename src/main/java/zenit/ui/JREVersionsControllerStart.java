@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import main.java.zenit.filesystem.jreversions.JDKDirectories;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,7 +90,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 		File selected = directoryChooser.showDialog(stage);
 
 		if (selected != null) {
-			boolean success = JDKDirectories.appendToList(selected);
+			boolean success = JDKDirectories.appendToTrackedDirectoriesList(selected);
 			if (success) {
 				updateList();
 			} else {
@@ -136,7 +135,7 @@ public class JREVersionsControllerStart extends AnchorPane {
 	}
 
 	private void removeJDK(String selected, File selectedFile) {
-		boolean success = JDKDirectories.removeFromList(selectedFile);
+		boolean success = JDKDirectories.removeFromTrackedDirectoriesList(selectedFile);
 		if (success) {
 			DialogBoxes.informationDialog("JDK removed from Zenit", "The JDK " + selected + " has been removed from Zenit");
 			updateList();

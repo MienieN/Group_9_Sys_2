@@ -92,7 +92,7 @@ public class SetupController extends AnchorPane {
 		
 		//Load OS default JDKs if none are saved
 		if (!JDKDat.exists()) {
-			JDKDirectories.createNew();
+			JDKDirectories.createNewFileWithDefaultJVMDirectories();
 		}
 		
 		//Load in set workspace if it exist
@@ -183,7 +183,7 @@ public class SetupController extends AnchorPane {
 				DialogBoxes.errorDialog("JDK already exist in list", "", "A JDK with that name"
 						+ " already exist in the list.");
 			} else {
-				if (JDKDirectories.appendToList(newJDK)) {
+				if (JDKDirectories.appendToTrackedDirectoriesList(newJDK)) {
 					updateList();
 				} else {
 					DialogBoxes.errorDialog("Not a valid JDK folder", "", "The chosen folder is not"
@@ -216,7 +216,7 @@ public class SetupController extends AnchorPane {
 			
 			String removeJDKPath = JDKDirectories.getFullPathFromName(removeJDKName);
 			File removeJDKFile = new File(removeJDKPath);
-			JDKDirectories.removeFromList(removeJDKFile);
+			JDKDirectories.removeFromTrackedDirectoriesList(removeJDKFile);
 		
 			updateList();
 		} else {

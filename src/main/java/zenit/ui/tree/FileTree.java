@@ -2,57 +2,87 @@ package main.java.zenit.ui.tree;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import javafx.scene.control.TreeItem;
 import main.java.zenit.filesystem.ProjectFile;
 
 public class FileTree {
+	/**
+	 * Iterates through files, filtering valid files, creating FileTreeItem objects,
+	 * and recursively calling itself for directories.
+	 * @param parent The parent FileTreeItem
+	 * @param file The file to iterate through
+	 */
 	public static void createNodes(FileTreeItem<String> parent, File file) {
-		int type = 0;
-		
 		if (file.listFiles() == null) { return; }
-		
+
 		var items = new ArrayList<FileTreeItem<String>>();
-		
-		File[] files = file.listFiles();
-		String itemName;
-		for (int index = 0; index < files.length; index++) {
-			itemName = files[index].getName();
-			
-			if (!itemName.startsWith(".") && !itemName.equals("bin") && !itemName.endsWith(".class")) { //Doesn't include hidden files
-				type = calculateType(parent, files[index]);
-				FileTreeItem<String> item = new FileTreeItem<String> (files[index], itemName, type);
+		for (File child : file.listFiles()) {
+			if (isValidFile(child)) {
+				FileTreeItem<String> item = createFileTreeItem(parent, child);
 				items.add(item);
-				
-				if (files[index].isDirectory()) { createNodes(item, files[index]); }
+				if (child.isDirectory()) { createNodes(item, child); }
 			}
 		}
-		items.sort((a, b) -> a.getFile().getName().compareToIgnoreCase(b.getFile().getName()));
-		
-		for (var item : items) { parent.getChildren().add(item); }
+		items.sort(Comparator.comparing(a -> a.getFile().getName().toLowerCase()));
+		parent.getChildren().addAll(items);
 	}
-	
+
+	/**
+	 * A helper method to check if a file should be included.
+	 * @param file The file to check
+	 * @return True if the file is valid, false otherwise
+	 */
+	private static boolean isValidFile(File file) {
+		String name = file.getName();
+		return !name.startsWith(".") && !name.equals("bin") && !name.equals(".class");
+	}
+
+	/**
+	 * A helper method to create a FileTreeItem with the appropriate type.
+	 * @param parent The parent FileTreeItem
+	 * @param file The file to create the FileTreeItem from
+	 * @return The created FileTreeItem
+	 */
+	private static FileTreeItem<String> createFileTreeItem(FileTreeItem<String> parent, File file) {
+		int type = calculateType(parent, file);
+		return new FileTreeItem<>(file, file.getName(), type);
+	}
+
+	/**
+	 * This method is responsible for adding a new FileTreeItem to the parent node's children,
+	 * ensuring that the new item is correctly placed and sorted.
+	 * @param parent The parent node
+	 * @param file The file to create a new node from
+	 */
 	public static void createParentNode(FileTreeItem<String> parent, File file) {
-		if (parent == null || file == null) { return; }
-		
-		if (fileExistsInTree(file, parent)) { return; }
+		if (parent == null || file == null || fileExistsInTree(file, parent)) {
+			return;
+		}
 		
 		int type = calculateType(parent, file);
-		
 		FileTreeItem<String> item = new FileTreeItem<String> (file, file.getName(), type);
 		parent.getChildren().add(item);
-		parent.getChildren().sort((a, b) -> {
-			try {
-				var fa = (FileTreeItem<String>) a;
-				var fb = (FileTreeItem<String>) b;
-				
-				return fa.getFile().getName().compareToIgnoreCase(fb.getFile().getName());
-			}
-			catch (ClassCastException ex) {
-				return 0;
-			}
-		});
-		
-		if (file.isDirectory()) { createNodes(item, file); }
+		sortChildren(parent);
+
+		if (file.isDirectory()) {
+			createNodes(item, file);
+		}
+	}
+
+	/**
+	 * This method sorts the parent's children alphabetically by their file names in a case-insensitive manner.
+	 * EXPLANATION OF LAMBDA EXPRESSION:
+	 * parent.getChildren() retrieves the list of children nodes of the parent.
+	 * .sort(...) sorts this list in place.
+	 * Comparator.comparing(...) creates a comparator that compares the items based on a specific key.
+	 * a -> ((FileTreeItem<String>) a).getFile().getName().toLowerCase() is a lambda expression that:
+	 * 		Casts each child node a to FileTreeItem<String>.
+	 * 		Retrieves the File object associated with the FileTreeItem.
+	 * 		Gets the name of the file and converts it to lowercase for case-insensitive comparison.
+	 */
+	private static void sortChildren(FileTreeItem<String> parent) {
+		parent.getChildren().sort(Comparator.comparing(a -> ((FileTreeItem<String>) a).getFile().getName().toLowerCase()));
 	}
 	
 	public static void changeFileForNodes(FileTreeItem<String> parent, File file) {
@@ -72,94 +102,98 @@ public class FileTree {
 			}
 		}
 	}
-	
+
+	/**
+	 * Recursive function that searches for a FileTreeItem in a tree structure based on a given File.
+	 * It starts from the root node and traverses through its children to find a node that matches
+	 * the files' absolute path.
+	 * @param root The root node of the tree
+	 * @param file The file to search for
+	 * @return The FileTreeItem that matches the file, or null if not found
+	 */
 	public static FileTreeItem<String> getTreeItemFromFile(FileTreeItem<String> root, File file) {
-		if (root == null || file == null) { return null; }
-		
-		if (root.getFile().getAbsolutePath().equals(file.getAbsolutePath())) { return root; }
-		
-		for (var foo : root.getChildren()) {
-			var bar = getTreeItemFromFile((FileTreeItem<String>) foo, file);
-			
-			if (bar != null && bar.getFile().getAbsolutePath().equals(file.getAbsolutePath())) { return bar; }
+		if (root == null || file == null) {
+			return null; // If the root or file is null.
 		}
-		return null;
+		
+		if (root.getFile().getAbsolutePath().equals(file.getAbsolutePath())) {
+			return root; // If the root's file matches the given file's absolute path.
+		}
+
+		// Iterate through the children of the root and recursively call the function on each child.
+		for (TreeItem<String> child : root.getChildren()) {
+			FileTreeItem<String> result = getTreeItemFromFile((FileTreeItem<String>) child, file);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null; // No match found.
 	}
-	
+
+	/**
+	 * Removes the specified file from the tree rooted at the given root node.
+	 * @param root The root node of the tree
+	 * @param file The file to remove
+	 * @return true if the file was removed, false otherwise
+	 */
 	public static boolean removeFromFile(FileTreeItem<String> root, File file) {
 		if (file == null) {
+			System.out.println("not removed");
 			return false;
 		}
 		
 		var item = getTreeItemFromFile(root, file);
-		
-		if (item != null) {
-			boolean removed = root.getChildren().remove(item);
-			System.out.println("removed: " + removed);
-			return removed;
-		}
-		
-		System.out.println("not removed");
-		return false;
+		boolean removed = item != null && root.getChildren().remove(item);
+		System.out.println("removed: " + removed);
+		return removed;
 	}
-	
+
+	/**
+	 * Calculates the type of file based on its parent and its own properties.
+	 * @param parent The parent FileTreeItem
+	 * @param file The file to calculate the type for
+	 * @return The type of the file
+	 */
 	private static int calculateType(FileTreeItem<String> parent, File file) {
-		int type = 0;
-		
 		String itemName = file.getName();
 		ProjectFile projectFile = new ProjectFile(file);
-		
-		//Project
+		int type;
+
 		if (projectFile.getMetadata() != null) {
 			type = FileTreeItem.PROJECT;
-		}
-		//Package
-		else if (parent.getValue().equals("src") && file.isDirectory()) {
-			type = FileTreeItem.PACKAGE;
-		}
-		else if (itemName.equals("src")) {
+		} else if (itemName.equals("src")) {
 			type = FileTreeItem.SRC;
-		}
-		//Folder
-		else if (projectFile.getMetadata() == null && file.isDirectory()) {
+		} else if (parent.getValue().equals("src") && file.isDirectory()) {
+			type = FileTreeItem.PACKAGE;
+		} else if (file.isDirectory()) {
 			type = FileTreeItem.FOLDER;
-		}
-
-		//Java-file
-		else if (itemName.endsWith(".java")) {
+		} else if (itemName.endsWith(".java")) {
 			type = FileTreeItem.CLASS;
-		} 
-		//Text-file
-		else if (itemName.endsWith(".txt")) {
-			type = FileTreeItem.FILE;
-		}
-		else if (file.isFile() && itemName.indexOf('.') == -1) {
+		} else if (itemName.endsWith(".txt") || itemName.indexOf('.') == -1) {
 			type = FileTreeItem.FILE;
 		} else {
 			type = FileTreeItem.INCOMPATIBLE;
 		}
-		
+
 		return type;
 	}
-	
+
+	/**
+	 * Checks if a file exists in the tree rooted at the given root node.
+	 * @param file The file to search for
+	 * @param root The root node of the tree
+	 * @return true if the file exists in the tree, false otherwise
+	 */
 	private static boolean fileExistsInTree(File file, FileTreeItem<String> root) {
 		if (root == null || file == null) {
 			return false;
 		}
 
-		File rootFile = root.getFile();
-		
-		if (rootFile.getAbsolutePath().contentEquals(file.getAbsolutePath())) {
+		if (root.getFile().getAbsolutePath().equals(file.getAbsolutePath())) {
 			return true;
 		}
-		
-		for (var child : root.getChildren()) {
-			var fileTreeItem = (FileTreeItem<String>) child;
 
-			if (fileExistsInTree(file, fileTreeItem)) {
-				return true;
-			}
-		}
-		return false;
+		return root.getChildren().stream()
+				.anyMatch(child -> fileExistsInTree(file, (FileTreeItem<String>) child));
 	}
 }

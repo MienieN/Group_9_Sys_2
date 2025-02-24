@@ -7,24 +7,30 @@ import javafx.scene.input.MouseEvent;
 import main.java.zenit.ui.MainController;
 
 public class TreeClickListener implements EventHandler<MouseEvent> {
-	private MainController controller;
-	private TreeView<String> treeView;
+	private final MainController controller;
+	private final TreeView<String> treeView;
 	
 	public TreeClickListener(MainController controller, TreeView<String> treeView) {
 		this.controller = controller;
 		this.treeView = treeView;
 	}
 
+	/**
+	 * Handles mouse click events on the tree view.
+	 * If a file (not a directory) is double-clicked with the primary mouse button, it opens the file.
+	 * Updates the status bar with the path of the selected file.
+	 *
+	 * @param mouseEvent The mouse event that triggered the handler
+	 */
 	@Override
 	public void handle(MouseEvent mouseEvent) {
 		FileTreeItem<String> selectedItem = (FileTreeItem<String>) 
 				treeView.getSelectionModel().getSelectedItem();
 
-		if (selectedItem != null && !selectedItem.getFile().isDirectory() && 
-				mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
-			controller.openFile(selectedItem.getFile());
-		}
 		if (selectedItem != null) {
+			if (!selectedItem.getFile().isDirectory() && mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
+				controller.openFile(selectedItem.getFile());
+			}
 			controller.updateStatusLeft(selectedItem.getFile().getPath());
 		}
 	}

@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessTesterTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessBufferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessBufferTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/main/java/zenit/util/StringUtilitiesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/util/StringUtilitiesTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,34 +43,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Unnamed.executor": "Run",
-    "JUnit.DebugErrorBufferTest.executor": "Run",
-    "JUnit.DebugErrorTest.testGetRow.executor": "Run",
-    "JUnit.ProcessBufferTest.testIsempty.executor": "Run",
-    "JUnit.TerminalControllerTest.testTabPaneNotNull.executor": "Run",
-    "JUnit.ZenitTest.testTest (1).executor": "Run",
-    "JUnit.ZenitTest.testTest.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "JonatanAT",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Jonatan/Desktop/Group_9_Sys_2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.45747125",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DebugErrorBufferTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DebugErrorTest.testGetRow.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProcessBufferTest.testIsempty.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TerminalControllerTest.testTabPaneNotNull.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZenitTest.testTest (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZenitTest.testTest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;JonatanAT&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jonatan/Desktop/Group_9_Sys_2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.45747125&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />

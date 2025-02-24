@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessBufferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/javacodecompiler/ProcessBufferTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,6 +170,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="JUnit.DebugErrorBufferTest" />
+      <item itemvalue="JUnit.DebugErrorTest.testGetRow" />
+      <item itemvalue="JUnit.ProcessBufferTest.testIsempty" />
+      <item itemvalue="JUnit.TerminalControllerTest.testTabPaneNotNull" />
+      <item itemvalue="JUnit.ZenitTest.testTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.DebugErrorBufferTest" />

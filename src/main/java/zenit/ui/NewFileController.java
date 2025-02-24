@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,9 +17,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.java.zenit.ui.tree.FileTreeItem;
 
 public class NewFileController extends AnchorPane {
+	
 	private Stage stage;
 	private File workspace, newFile;
 	private boolean darkMode;
@@ -30,12 +29,10 @@ public class NewFileController extends AnchorPane {
 	@FXML private ListView<String> filePath;
 	@FXML private ComboBox<String> fileEnding;
 	@FXML private TextField textFieldName;
-	@FXML private TreeView<String> treeView;
 	
-	public NewFileController(File workspace, boolean darkMode, TreeView<String> treeView) {
+	public NewFileController(File workspace, boolean darkMode) {
 		this.workspace = workspace;
 		this.darkMode = darkMode;
-		this.treeView = treeView;
 	}
 	
 	public void start() {
@@ -98,8 +95,9 @@ public class NewFileController extends AnchorPane {
 			}
 		});
 	}
-
-	public File createNewFile() {
+	
+	@FXML
+	private void create() {
 		String filename = textFieldName.getText();
 
 		if (!filename.equals("")) {
@@ -116,22 +114,15 @@ public class NewFileController extends AnchorPane {
 				showErrorDialog("Couldn't create new file", "Couldn't create new file");
 				newFile = null;
 			}
-			return newFile;
+			stage.close();
 		} else {
 			showErrorDialog("No name selected", "No name has been given to the new file. " +
 					"Please input a new name to create file.");
-			return null;
 		}
 	}
 
 	private void showErrorDialog(String title, String content) {
 		DialogBoxes.errorDialog(title, "", content);
-	}
-
-	@FXML
-	private void create() {
-		createNewFile();
-		stage.close();
 	}
 	
 	@FXML
@@ -171,8 +162,4 @@ public class NewFileController extends AnchorPane {
 	}
 	
 	public File getNewFile() { return newFile; }
-
-	public FileTreeItem<String> getSelectedFileTreeItem() {
-		return (FileTreeItem<String>) treeView.getSelectionModel().getSelectedItem();
-	}
 }

@@ -76,7 +76,7 @@ public class JDKDirectories {
      * @return the File object representing the specified file.
      * @throws IOException if an I/O error occurs during file creation.
      */
-    private static File getOrCreateJDKFile() throws IOException {
+    public static File getOrCreateJDKFile() throws IOException {
         File file = new File("res/JDK/JDK.dat");
         if (! file.exists()) {
             file.createNewFile();
@@ -114,7 +114,7 @@ public class JDKDirectories {
      * @return a list of File objects representing the directories within the specified javaFolder.
      *         If no directories are found or javaFolder is invalid, the returned list will be empty.
      */
-    private static ArrayList <File> collectJVMDirectories(File javaFolder) {
+    public static ArrayList <File> collectJVMDirectories(File javaFolder) {
         ArrayList <File> JVMsList = new ArrayList <>();
         
         if (javaFolder != null && javaFolder.exists()) {

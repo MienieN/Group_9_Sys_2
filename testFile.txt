@@ -1,0 +1,4 @@
+This is a test file containing some text to test the SearchTest class.
+To test this class I have decided that this textFile should contain the word test a number of times.
+The number of times the word test should be found in this text should now be 6 since it counts the sneaky Test in SearchTest because the default value of caseSensetive is false.
+Well now it should be 8!

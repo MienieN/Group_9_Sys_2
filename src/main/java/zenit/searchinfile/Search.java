@@ -147,6 +147,11 @@ public class Search {
 		return i;
 	}
 
+	//Method only used for testing.
+	public void setCaseSensetive(boolean bool){
+		this.caseSensetive = bool;
+	}
+
 	private void notCaseSensetive() {
 		
 		while (txtscan.hasNextLine()) {

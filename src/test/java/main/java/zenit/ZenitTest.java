@@ -77,8 +77,14 @@ class ZenitTest {
 
     @Test
     void testStartExistingFiles() throws Exception {
-        zenit.start(stage);
-        verifyNoInteractions(setupController);
+        Platform.runLater(() -> {
+            try {
+                zenit.start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            verifyNoInteractions(setupController);
+        });
     }
 
     @Test

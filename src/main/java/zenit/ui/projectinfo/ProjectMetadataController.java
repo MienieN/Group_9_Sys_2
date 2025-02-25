@@ -1,6 +1,7 @@
 package main.java.zenit.ui.projectinfo;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -56,7 +57,7 @@ public class ProjectMetadataController extends AnchorPane {
 		this.mc = mc;
 	}
 
-	public void start() {
+	private boolean setupSceneAndStage() {
 		try {
 			//setup scene
 			FXMLLoader loader = new FXMLLoader();
@@ -70,46 +71,67 @@ public class ProjectMetadataController extends AnchorPane {
 			propertyStage.setResizable(false);
 			propertyStage.setScene(scene);
 			propertyStage.initStyle(StageStyle.UNDECORATED);
-			
-			//gets metadata file
-			File metadataFile = projectFile.getMetadata();
-			if (metadataFile != null) {
-				metadata = new Metadata(metadataFile);
-			} else {
-				metadata = null;
-			}
-			
-			//Verifies metadata
-			int verification = MetadataVerifier.verify(metadata);
-			
-			if (verification == MetadataVerifier.VERIFIED) {
+
+			return true;
+		} catch (IOException e) {
+			System.out.println("Error setupSceneAndStage() = " + e);
+		}
+        return false;
+    }
+
+	private boolean verifyMetadataFile(File mdf) {
+		int verification = MetadataVerifier.verify(metadata);
+		File metadataFile = mdf;
+		int returnCode;
+
+		switch (verification) {
+			case MetadataVerifier.VERIFIED:
 				initialize();
 				ifDarkModeChanged(darkmode);
 				propertyStage.show();
-				
-			//If no metadata file is found
-			} else if (verification == MetadataVerifier.METADATA_FILE_MISSING) {
-				int returnCode = ProjectInfoErrorHandling.metadataMissing();
+				break;
+			case MetadataVerifier.METADATA_FILE_MISSING: // no metadata file is found
+				returnCode = ProjectInfoErrorHandling.metadataMissing();
 				if (returnCode == 1) {
 					metadataFile = projectFile.addMetadata();
 					metadata = new Metadata(metadataFile);
 					initialize();
 					ifDarkModeChanged(darkmode);
 					propertyStage.show();
-				}	
-				
-			//If metadata file is outdated
-			} else if (verification == MetadataVerifier.METADATA_OUTDATED) {
-				int returnCode = ProjectInfoErrorHandling.metadataOutdated();
+				}
+				break;
+			case MetadataVerifier.METADATA_OUTDATED: // metadata file is outdated
+				returnCode = ProjectInfoErrorHandling.metadataOutdated();
 				if (returnCode == 1) {
 					metadata = fileController.updateMetadata(metadataFile);
 					initialize();
 					ifDarkModeChanged(darkmode);
 					propertyStage.show();
 				}
+				break;
+            default:
+				return false;
+		}
+		return true;
+	}
+
+	public void start() {
+		try {
+			boolean stageCreated = setupSceneAndStage();
+			if (stageCreated) {
+				File metadataFile = projectFile.getMetadata(); //gets metadata file
+				if (metadataFile != null) {
+					metadata = new Metadata(metadataFile);
+				} else {
+					metadata = null;
+				}
+
+				if (!verifyMetadataFile(metadataFile)) {
+					System.out.println("Something went wrong while verifying metadata file");
+				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Error in ProjectMetadataController.start() = " + e);
 		}
 	}
 

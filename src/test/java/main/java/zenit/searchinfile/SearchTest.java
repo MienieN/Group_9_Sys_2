@@ -8,12 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,7 +36,8 @@ class SearchTest extends ApplicationTest {
 
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() throws IOException, TimeoutException {
+
         MockitoAnnotations.openMocks(this);
         testFile = new File("testFile.txt");
         try (FileWriter writer = new FileWriter(testFile)) {

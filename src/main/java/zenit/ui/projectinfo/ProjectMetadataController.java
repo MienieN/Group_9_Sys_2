@@ -50,7 +50,7 @@ public class ProjectMetadataController extends AnchorPane {
 	@FXML private ComboBox<String> JREVersions;
 	@FXML private Button addInternalLibrary, removeInternalLibrary, addExternalLibrary, removeExternalLibrary, save, run;
 
-	public enum DirectoryType {
+	public enum DirectoryOrSourcepathType {
 		INTERNAL,
 		EXTERNAL
 	}
@@ -347,32 +347,33 @@ public class ProjectMetadataController extends AnchorPane {
 	}
 
 	/**
-	 * Initializes a DirectoryChooser with the project's bin directory as the initial directory and a custom title.
+	 * Initializes a DirectoryChooser with the initial directory set to the project's bin directory.
 	 *
-	 * @return DirectoryChooser object initialized with the project's bin directory and custom title
+	 * @param directoryOrSourcepath a String indicating the type of directory or sourcepath to choose
+	 * @return a DirectoryChooser object initialized with the appropriate title and initial directory
 	 */
-	private DirectoryChooser initializeDirectoryChooser() {
+	private DirectoryChooser initializeDirectoryOrSourcepathChooser(String directoryOrSourcepath) {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		directoryChooser.setInitialDirectory(projectFile.getBin());
-		directoryChooser.setTitle("Choose new directory");
+		directoryChooser.setTitle("Choose new " + directoryOrSourcepath);
 		return directoryChooser;
 	}
 
 	/**
-	 * Converts an integer representation of directory type to a DirectoryType enum.
+	 * Converts an integer representation of directory type to DirectoryOrSourcepathType enum.
 	 *
-	 * @param directoryType the integer representation of directory type (0 for INTERNAL, 1 for EXTERNAL)
-	 * @return DirectoryType enum corresponding to the integer representation
-	 * @throws IllegalArgumentException if an invalid directory type integer is provided
+	 * @param directoryType the integer representation of the directory type
+	 * @return DirectoryOrSourcepathType enum corresponding to the directory type
+	 * @throws IllegalArgumentException if the directory type is not 0 or 1
 	 */
-	private DirectoryType intToDirectoryType(int directoryType) throws IllegalArgumentException {
+	private DirectoryOrSourcepathType intToDirectoryOrSourcepathType(int directoryType) throws IllegalArgumentException {
 		switch (directoryType) {
             case 0:
-                return DirectoryType.INTERNAL;
+                return DirectoryOrSourcepathType.INTERNAL;
             case 1:
-                return DirectoryType.EXTERNAL;
+                return DirectoryOrSourcepathType.EXTERNAL;
             default:
-                throw new IllegalArgumentException("Invalid directory type: " + directoryType);
+                throw new IllegalArgumentException("Invalid type: " + directoryType);
         }
 	}
 
@@ -386,8 +387,8 @@ public class ProjectMetadataController extends AnchorPane {
 	@FXML
 	private void changeDirectory() {
 		try {
-			DirectoryType directoryType = intToDirectoryType(determineDirectoryType());
-			DirectoryChooser directoryChooser = initializeDirectoryChooser();
+			DirectoryOrSourcepathType directoryOrSourcepathType = intToDirectoryOrSourcepathType(determineDirectoryType());
+			DirectoryChooser directoryChooser = initializeDirectoryOrSourcepathChooser("directory");
 			File directory = directoryChooser.showDialog(propertyStage);
 
 			if (directory != null) {
@@ -395,7 +396,7 @@ public class ProjectMetadataController extends AnchorPane {
 					.changeDirectory(
 						directory,
 						projectFile,
-						directoryType == DirectoryType.INTERNAL
+						directoryOrSourcepathType == DirectoryOrSourcepathType.INTERNAL
 					);
 				updateText(directoryPathList, directoryPath);
 			}
@@ -404,28 +405,43 @@ public class ProjectMetadataController extends AnchorPane {
 		}
 	}
 
+	/**
+	 * Determines the type of sourcepath based on user choice.
+	 *
+	 * @return 1 if the user chooses 'Internal', 2 if the user chooses 'External', 0 otherwise
+	 */
+	private int determineSourcepathType() {
+		return DialogBoxes.twoChoiceDialog("Internal sourcepath", "Internal sourcepath",
+				"Do you want the new sourcepath to be internal or external?",
+				"Internal", "External");
+	}
+
+	/**
+	 * Method to handle changing the sourcepath of the project.
+	 * It determines the type of sourcepath (internal or external) based on user choice,
+	 * initializes a DirectoryChooser to select a new directory,
+	 * updates the project file with the new sourcepath if a directory is chosen,
+	 * and updates the displayed sourcepath in the UI.
+	 * If an IllegalArgumentException occurs during the process, an error message is printed.
+	 */
 	@FXML
 	private void changeSourcepath() {
-		int returnValue = DialogBoxes.twoChoiceDialog("Internal sourcepath", "Internal sourcepath",
-				"Do you want the new sourcepath to be internal or external?", 
-				"Internal", "External");
-		boolean internal;
-		if (returnValue == 1) {
-			internal = true;
-		} else if (returnValue == 2) {
-			internal = false;
-		} else {
-			return;
-		}
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setInitialDirectory(projectFile.getSrc());
-		dc.setTitle("Choose new sourcepath");
-		
-		File directory = dc.showDialog(propertyStage);
-		
-		if (directory != null) {
-			String sourcepath = fileController.changeSourcePath(directory, projectFile, internal);
-			updateText(sourcepathList, sourcepath);
+		try {
+			DirectoryOrSourcepathType sourcepathType = intToDirectoryOrSourcepathType(determineSourcepathType());
+			DirectoryChooser directoryChooser = initializeDirectoryOrSourcepathChooser("sourcepath");
+
+			File directory = directoryChooser.showDialog(propertyStage);
+
+			if (directory != null) {
+				String sourcepath = fileController
+						.changeSourcePath(
+								directory,
+								projectFile,
+								sourcepathType == DirectoryOrSourcepathType.INTERNAL);
+				updateText(sourcepathList, sourcepath);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Error changing sourcepath: " + e);
 		}
 	}
 

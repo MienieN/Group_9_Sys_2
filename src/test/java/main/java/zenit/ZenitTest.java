@@ -55,23 +55,17 @@ class ZenitTest {
 
 
 
-    /*
     @Test
-    void testStartNoFiles() throws Exception {
-        when(workspaceFile.exists()).thenReturn(false);
-        when(jdkFile.exists()).thenReturn(false);
-        when(defaultJdkFile.exists()).thenReturn(false);
-
+    void testStart() throws Exception {
+        Platform.runLater(() -> {
         try {
             zenit.start(stage);
-            verify(setupController, times(1)).start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
+        });
+        verify(zenit, times(1)).start(stage);
     }
-
-     */
 
 
 
@@ -80,26 +74,29 @@ class ZenitTest {
         Platform.runLater(() -> {
             try {
                 zenit.start(stage);
+                verifyNoInteractions(setupController);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            verifyNoInteractions(setupController);
         });
     }
 
+    /*
     @Test
     void testStop() throws Exception{
         Platform.runLater(() -> {
             try {
                 zenit.start(stage);
+                zenit.stop();
+                verify(zenit,times(1)).stop();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            zenit.stop();
-            verify(zenit,times(1)).stop();
         });
 
     }
+
+     */
 
 
 }

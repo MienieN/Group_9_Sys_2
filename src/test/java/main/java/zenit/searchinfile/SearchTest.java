@@ -47,6 +47,7 @@ class SearchTest extends ApplicationTest {
                     "\nWell now it should be 8!");
         }
 
+
         Platform.runLater(() ->{
         search = new Search(zenCodeArea, testFile, false, mainController);
         });

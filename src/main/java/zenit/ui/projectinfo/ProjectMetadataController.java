@@ -549,6 +549,13 @@ public class ProjectMetadataController extends AnchorPane {
 		}
 	}
 
+	/**
+	 * Removes selected external libraries from the project.
+	 * Retrieves the list of selected libraries from the externalLibrariesList view component,
+	 * then attempts to remove these libraries using the fileController.
+	 * If removal is successful, updates the metadata and refreshes the lists displayed in the application.
+	 * If removal fails, displays an error message using ProjectInfoErrorHandling.
+	 */
 	@FXML
 	private void removeExternalLibrary() {
 		List<String> selectedLibraries = externalLibrariesList.getSelectionModel().getSelectedItems();
@@ -563,25 +570,53 @@ public class ProjectMetadataController extends AnchorPane {
 			}
 		}
 	}
-	
-	//Advanced settings
-	@FXML
-	private void save() {
-		String pa = taProgramArguments.getText();
-		String vma = taVMArguments.getText();
-		
-		selectedRunnableClass.setPaArguments(pa);
-		selectedRunnableClass.setVmArguments(vma);
-		
+
+	/**
+	 * Sets the program arguments and VM arguments for the selected runnable class.
+	 *
+	 * @param programArgs the program arguments to be set
+	 * @param vmArgs the VM arguments to be set
+	 */
+	private void setArguments(String programArgs, String vmArgs) {
+		selectedRunnableClass.setPaArguments(programArgs);
+		selectedRunnableClass.setVmArguments(vmArgs);
+	}
+
+	/**
+	 * Encodes the metadata using the set runnable classes.
+	 *
+	 * @return true if the metadata is successfully encoded, false otherwise
+	 */
+	private boolean encodeMetadata() {
 		metadata.setRunnableClasses(runnableClasses);
-		boolean encoded = metadata.encode();
-		
-		if (encoded) {
+		return metadata.encode();
+	}
+
+	/**
+	 * Updates the dialogs based on the provided flag.
+	 *
+	 * @param isEncoded Flag indicating if the dialogs should be updated as encoded.
+	 * @return Boolean value representing the success of updating the dialogs.
+	 */
+	private boolean updateDialogs(boolean isEncoded) {
+		if (isEncoded) {
 			taUpdated = false;
 			DialogBoxes.informationDialog("Arguments saved", "Arguments have been saved");
 		} else {
 			DialogBoxes.errorDialog(null, "Arguments not saved", "Arguments couldn't be saved");
-		}	
+		}
+		return true;
+	}
+
+	/**
+	 * Saves the program and VM arguments entered by the user and updates the dialogs with encoded metadata.
+	 */
+	@FXML
+	private void save() {
+		String programArgumentsText = taProgramArguments.getText();
+		String vmArgumentsText = taVMArguments.getText();
+		setArguments(programArgumentsText, vmArgumentsText);
+		updateDialogs(encodeMetadata());
 	}
 
 	@FXML

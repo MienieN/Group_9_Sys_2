@@ -50,6 +50,14 @@ public class ProjectMetadataController extends AnchorPane {
 	@FXML private ComboBox<String> JREVersions;
 	@FXML private Button addInternalLibrary, removeInternalLibrary, addExternalLibrary, removeExternalLibrary, save, run;
 
+	/**
+	 * Constructor for ProjectMetadataController.
+	 *
+	 * @param fc FileController to manage file operations
+	 * @param projectFile ProjectFile representing the project
+	 * @param darkmode boolean indicating if dark mode is enabled
+	 * @param mc MainController for the project
+	 */
 	public ProjectMetadataController(FileController fc, ProjectFile projectFile, boolean darkmode, MainController mc) {
 		this.projectFile = projectFile;
 		fileController = fc;
@@ -57,6 +65,14 @@ public class ProjectMetadataController extends AnchorPane {
 		this.mc = mc;
 	}
 
+	/**
+	 * Sets up the scene and stage for the ProjectMetadataController.
+	 * Loads the ProjectMetadata.fxml file using a FXMLLoader, sets the controller to this instance,
+	 * and initializes the scene with an AnchorPane. Creates a new Stage, sets properties, and displays the scene.
+	 * If any exceptions occur during the setup, an error message is printed.
+	 *
+	 * @return true if the scene and stage were set up successfully, false otherwise
+	 */
 	private boolean setupSceneAndStage() {
 		try {
 			//setup scene
@@ -79,42 +95,76 @@ public class ProjectMetadataController extends AnchorPane {
         return false;
     }
 
-	private boolean verifyMetadataFile(File mdf) {
-		int verification = MetadataVerifier.verify(metadata);
-		File metadataFile = mdf;
-		int returnCode;
-
-		switch (verification) {
-			case MetadataVerifier.VERIFIED:
-				initialize();
-				ifDarkModeChanged(darkmode);
-				propertyStage.show();
-				break;
-			case MetadataVerifier.METADATA_FILE_MISSING: // no metadata file is found
-				returnCode = ProjectInfoErrorHandling.metadataMissing();
-				if (returnCode == 1) {
-					metadataFile = projectFile.addMetadata();
-					metadata = new Metadata(metadataFile);
-					initialize();
-					ifDarkModeChanged(darkmode);
-					propertyStage.show();
-				}
-				break;
-			case MetadataVerifier.METADATA_OUTDATED: // metadata file is outdated
-				returnCode = ProjectInfoErrorHandling.metadataOutdated();
-				if (returnCode == 1) {
-					metadata = fileController.updateMetadata(metadataFile);
-					initialize();
-					ifDarkModeChanged(darkmode);
-					propertyStage.show();
-				}
-				break;
-            default:
-				return false;
-		}
+	/**
+	 * Process the metadata by initializing, checking if dark mode changed, and showing the property stage.
+	 *
+	 * @return true if the metadata processing was successful, false otherwise
+	 */
+	private boolean processMetadata() {
+		initialize();
+		ifDarkModeChanged(darkmode);
+		propertyStage.show();
 		return true;
 	}
 
+	/**
+	 * Handles missing metadata by adding metadata if necessary and processing it.
+	 *
+	 * @param metadataFile the file representing the metadata
+	 * @return true if metadata is added and processed successfully, false otherwise
+	 */
+	private boolean handleMissingMetadata(File metadataFile) {
+		if (ProjectInfoErrorHandling.metadataMissing() == 1) {
+			metadataFile = projectFile.addMetadata();
+			processMetadata();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Handles outdated metadata by updating the metadata file and processing it.
+	 *
+	 * @param metadataFile the File object representing the metadata file to be updated
+	 * @return true if the metadata is updated and processed successfully, false otherwise
+	 */
+	private boolean handleOutdatedMetadata(File metadataFile) {
+		if (ProjectInfoErrorHandling.metadataOutdated() == 1) {
+			metadata = fileController.updateMetadata(metadataFile);
+			processMetadata();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Verifies the metadata file by checking its validity and consistency.
+	 *
+	 * @param metadataFile the File object representing the metadata file to be verified
+	 * @return true if the metadata file is successfully verified, false otherwise
+	 */
+	private boolean verifyMetadataFile(File metadataFile) {
+		int verification = MetadataVerifier.verify(metadata);
+
+		switch (verification) {
+			case MetadataVerifier.VERIFIED:
+				return processMetadata();
+			case MetadataVerifier.METADATA_FILE_MISSING:
+				// no metadata file is found
+				return handleMissingMetadata(metadataFile);
+			case MetadataVerifier.METADATA_OUTDATED:
+				// metadata file is outdated
+				return handleOutdatedMetadata(metadataFile);
+			default:
+				return false;
+		}
+	}
+
+	/**
+	 * Starts the project metadata controller by setting up the scene and stage,
+	 * initializing metadata if available, and verifying the metadata file.
+	 * If any exceptions occur during the process, an error message is printed.
+	 */
 	public void start() {
 		try {
 			boolean stageCreated = setupSceneAndStage();

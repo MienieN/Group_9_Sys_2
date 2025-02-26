@@ -50,6 +50,11 @@ public class ProjectMetadataController extends AnchorPane {
 	@FXML private ComboBox<String> JREVersions;
 	@FXML private Button addInternalLibrary, removeInternalLibrary, addExternalLibrary, removeExternalLibrary, save, run;
 
+	public enum DirectoryType {
+		INTERNAL,
+		EXTERNAL
+	}
+
 	/**
 	 * Constructor for ProjectMetadataController.
 	 *
@@ -330,29 +335,72 @@ public class ProjectMetadataController extends AnchorPane {
 		updateExternalLibrariesList();
 		updateRunnableClassesList();
 	}
-	
-	//Settings
+
+	/**
+	 * Determines the type of directory based on user choice.
+	 *
+	 * @return 1 if the user chooses 'Internal', 2 if the user chooses 'External', 0 otherwise
+	 */
+	private int determineDirectoryType() {
+		return DialogBoxes.twoChoiceDialog("Internal directory", "Internal directory",
+				"Do you want the new directory to be internal or external?", "Internal", "External");
+	}
+
+	/**
+	 * Initializes a DirectoryChooser with the project's bin directory as the initial directory and a custom title.
+	 *
+	 * @return DirectoryChooser object initialized with the project's bin directory and custom title
+	 */
+	private DirectoryChooser initializeDirectoryChooser() {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setInitialDirectory(projectFile.getBin());
+		directoryChooser.setTitle("Choose new directory");
+		return directoryChooser;
+	}
+
+	/**
+	 * Converts an integer representation of directory type to a DirectoryType enum.
+	 *
+	 * @param directoryType the integer representation of directory type (0 for INTERNAL, 1 for EXTERNAL)
+	 * @return DirectoryType enum corresponding to the integer representation
+	 * @throws IllegalArgumentException if an invalid directory type integer is provided
+	 */
+	private DirectoryType intToDirectoryType(int directoryType) throws IllegalArgumentException {
+		switch (directoryType) {
+            case 0:
+                return DirectoryType.INTERNAL;
+            case 1:
+                return DirectoryType.EXTERNAL;
+            default:
+                throw new IllegalArgumentException("Invalid directory type: " + directoryType);
+        }
+	}
+
+	/**
+	 * Method to handle changing the directory of the project.
+	 * It determines the type of directory (internal or external) based on user choice,
+	 * initializes a DirectoryChooser with the project's bin directory as the initial directory,
+	 * prompts the user to select a new directory, and updates the project file with the new directory.
+	 * If the directory selection is successful, it updates the displayed directory path in the UI.
+	 */
 	@FXML
 	private void changeDirectory() {
-		int returnValue = DialogBoxes.twoChoiceDialog("Internal directory", "Internal directory",
-				"Do you want the new directory to be internal or external?", "Internal", "External");
-		boolean internal;
-		if (returnValue == 1) {
-			internal = true;
-		} else if (returnValue == 2) {
-			internal = false;
-		} else {
-			return;
-		}
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setInitialDirectory(projectFile.getBin());
-		dc.setTitle("Choose new directory");
-		
-		File directory = dc.showDialog(propertyStage);
-		
-		if (directory != null) {
-			String directoryPath = fileController.changeDirectory(directory, projectFile, internal);
-			updateText(directoryPathList, directoryPath);
+		try {
+			DirectoryType directoryType = intToDirectoryType(determineDirectoryType());
+			DirectoryChooser directoryChooser = initializeDirectoryChooser();
+			File directory = directoryChooser.showDialog(propertyStage);
+
+			if (directory != null) {
+				String directoryPath = fileController
+					.changeDirectory(
+						directory,
+						projectFile,
+						directoryType == DirectoryType.INTERNAL
+					);
+				updateText(directoryPathList, directoryPath);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Error changing directory: " + e);
 		}
 	}
 

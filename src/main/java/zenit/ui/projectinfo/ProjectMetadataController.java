@@ -619,6 +619,11 @@ public class ProjectMetadataController extends AnchorPane {
 		updateDialogs(encodeMetadata());
 	}
 
+	/**
+	 * Executes the selected runnable class by compiling and running it.
+	 * Retrieves the path of the selected runnable class and the source path of the project file.
+	 * If both paths are not null, it compiles and runs the selected class.
+	 */
 	@FXML
 	private void run() {
 		String runClass = getSelectedRunnableClass().getPath();
@@ -629,19 +634,13 @@ public class ProjectMetadataController extends AnchorPane {
 			mainController.compileAndRun(runFile);
 		}
 	}
-	
-	@FXML
-	private void runnableClassChange() {
-		if (taUpdated) {
-			int choice = DialogBoxes.twoChoiceDialog("Arguments updated", "Arguments have been updated",
-					"Would you like to save the updated arguments?", "Yes, save", "No, discard");
-			if (choice == 1) {
-				save();
-			} else {
-				taUpdated = false;
-			}
-		}
-		
+
+	/**
+	 * Sets the program arguments and VM arguments based on the selected runnable class.
+	 *
+	 * @return true if the program and VM arguments are set successfully, false otherwise
+	 */
+	private boolean setProgramAndVMArguments() {
 		selectedRunnableClass = getSelectedRunnableClass();
 		if (selectedRunnableClass != null) {
 			taProgramArguments.setText(selectedRunnableClass.getPaArguments());
@@ -654,10 +653,37 @@ public class ProjectMetadataController extends AnchorPane {
 			taVMArguments.setText("<select a runnable class>");
 			taVMArguments.setEditable(false);
 		}
+		return true;
 	}
 
+	/**
+	 * Method for changing the runnable class that is called when a button is clicked.
+	 * If the text area is updated, a confirmation dialog is shown to ask whether to save the changes or discard them.
+	 * If the choice is to save, the changes are saved using the 'save' method.
+	 * If the choice is to discard, the 'taUpdated' flag is set to false.
+	 * Finally, the method sets the program and VM arguments.
+	 */
 	@FXML
-	private void argumentsChanged() { taUpdated = true; }
+	private void runnableClassChange() {
+		if (taUpdated) {
+			int choice = DialogBoxes.twoChoiceDialog("Arguments updated", "Arguments have been updated",
+					"Would you like to save the updated arguments?", "Yes, save", "No, discard");
+			if (choice == 1) {
+				save();
+			} else {
+				taUpdated = false;
+			}
+		}
+		setProgramAndVMArguments();
+	}
+
+	/**
+	 * Marks that the arguments have been changed, indicating that the text area has been updated.
+	 */
+	@FXML
+	private void argumentsChanged() {
+		taUpdated = true;
+	}
 	
 	@FXML
 	private void addRunnableClass() {

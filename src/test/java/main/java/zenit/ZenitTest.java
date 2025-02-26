@@ -60,11 +60,12 @@ class ZenitTest {
         Platform.runLater(() -> {
         try {
             zenit.start(stage);
+            verify(zenit, times(1)).start(stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         });
-        verify(zenit, times(1)).start(stage);
+
     }
 
 

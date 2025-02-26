@@ -33,13 +33,13 @@ import main.java.zenit.ui.MainController;
 public class ProjectMetadataController extends AnchorPane {
 	private Stage propertyStage;
 	private FileController fileController;
-	private MainController mc;
+	private MainController mainController;
 	private ProjectFile projectFile;
 	private Metadata metadata;
 	private RunnableClass[] runnableClasses;
 	private RunnableClass selectedRunnableClass;
 	private FileChooser.ExtensionFilter libraryFilter = new FileChooser.ExtensionFilter("Libraries", "*.jar", "*.zip");
-	private boolean darkmode, taUpdated = false;
+	private boolean darkMode, taUpdated = false;
 	private double xOffset = 0, yOffset = 0;
 	
 	@FXML private AnchorPane header;
@@ -55,14 +55,14 @@ public class ProjectMetadataController extends AnchorPane {
 	 *
 	 * @param fc FileController to manage file operations
 	 * @param projectFile ProjectFile representing the project
-	 * @param darkmode boolean indicating if dark mode is enabled
-	 * @param mc MainController for the project
+	 * @param darkMode boolean indicating if dark mode is enabled
+	 * @param mainController MainController for the project
 	 */
-	public ProjectMetadataController(FileController fc, ProjectFile projectFile, boolean darkmode, MainController mc) {
+	public ProjectMetadataController(FileController fc, ProjectFile projectFile, boolean darkMode, MainController mainController) {
 		this.projectFile = projectFile;
 		fileController = fc;
-		this.darkmode = darkmode;
-		this.mc = mc;
+		this.darkMode = darkMode;
+		this.mainController = mainController;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class ProjectMetadataController extends AnchorPane {
 	 */
 	private boolean processMetadata() {
 		initialize();
-		ifDarkModeChanged(darkmode);
+		ifDarkModeChanged(darkMode);
 		propertyStage.show();
 		return true;
 	}
@@ -185,36 +185,74 @@ public class ProjectMetadataController extends AnchorPane {
 		}
 	}
 
-	private void initialize() {
-		
+	/**
+	 * Sets the title and logo for the project settings.
+	 *
+	 * @return true if the title and logo were set successfully, false otherwise
+	 */
+	private boolean setTitleAndLogo() {
 		title.setText(projectFile.getName() + " settings");
-		
 		logo.setImage(new Image(getClass().getResource("/zenit/setup/zenit.png").toExternalForm()));
 		logo.setFitWidth(55);
-		
-		String directory = metadata.getDirectory();
-		if (directory != null) {
-			updateText(directoryPathList, directory);
-		}
-		String sourcepath = metadata.getSourcePath();
-		if (sourcepath != null) {
-			updateText(sourcepathList, sourcepath);
-		}
 
-		updateLists();
+		return true;
+	}
 
+	/**
+	 * Updates the text fields with the directory and source path from the metadata.
+	 *
+	 * @return true if the text fields were updated successfully, false otherwise
+	 */
+	private boolean updateTextFields() {
+		if (metadata.getDirectory() != null) {
+			updateText(directoryPathList, metadata.getDirectory());
+		}
+		if (metadata.getSourcePath() != null) {
+			updateText(sourcepathList, metadata.getSourcePath());
+		}
+		return true;
+	}
+
+	/**
+	 * Initializes and sets the JRE versions based on the retrieved JRE version from the metadata.
+	 *
+	 * @return true if the JRE versions are successfully initialized and set, false otherwise
+	 */
+	private boolean initializeAndSetJREVersions() {
 		File JREVersion = new File(metadata.getJREVersion());
-		
 		List<String> JDKs = JDKDirectories.extractJDKDirectoryNameAsString();
 		if (JREVersion != null) {
 			JREVersions.getItems().addAll(JDKs);
 			JREVersions.getSelectionModel().select(JREVersion.getName());
 		}
-		
+		return true;
+	}
+
+	/**
+	 * Sets the default arguments for program and VM text areas.
+	 *
+	 * @return true after setting the arguments successfully
+	 */
+	private boolean setArguments() {
 		taProgramArguments.setText("<select a runnable class>");
 		taProgramArguments.setEditable(false);
 		taVMArguments.setText("<select a runnable class>");
 		taVMArguments.setEditable(false);
+
+		return true;
+	}
+
+	/**
+	 * Initializes the project settings interface by setting up title and logo, updating text fields,
+	 * updating lists of internal libraries, external libraries, and runnable classes, initializing and setting JRE versions,
+	 * and setting up mouse click and drag events for the header.
+	 */
+	private void initialize() {
+		setTitleAndLogo();
+		updateTextFields();
+		updateLists();
+		initializeAndSetJREVersions();
+		setArguments();
 		
 	    header.setOnMousePressed(new EventHandler<MouseEvent>() {
 	    	   @Override
@@ -234,7 +272,12 @@ public class ProjectMetadataController extends AnchorPane {
 	    	});
 	}
 
-	private void updateLists() {
+	/**
+	 * Updates the internal libraries list by clearing it and adding internal libraries retrieved from metadata.
+	 *
+	 * @return true if the internal libraries list was updated successfully, false otherwise
+	 */
+	private boolean updateInternalLibrariesList() {
 		internalLibrariesList.getItems().clear();
 		String[] internalLibraries = metadata.getInternalLibraries();
 		if (internalLibraries != null) {
@@ -242,14 +285,31 @@ public class ProjectMetadataController extends AnchorPane {
 			internalLibrariesList.getItems().addAll(internalLibraries);
 			internalLibrariesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		}
-		
+		return true;
+	}
+
+	/**
+	 * Updates the external libraries list by clearing it and adding external libraries retrieved from the metadata.
+	 *
+	 * @return true if the external libraries list was updated successfully, false otherwise
+	 */
+	private boolean updateExternalLibrariesList() {
 		externalLibrariesList.getItems().clear();
 		String[] externalLibraries = metadata.getExternalLibraries();
 		if (externalLibraries != null) {
 			externalLibrariesList.getItems().addAll(externalLibraries);
 			externalLibrariesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		}
-		
+		return true;
+	}
+
+	/**
+	 * Updates the list of runnable classes based on the metadata file.
+	 * This method retrieves the list of runnable classes from the metadata and updates the runnableClassesList accordingly.
+	 *
+	 * @return true if the update operation was successful, false otherwise
+	 */
+	private boolean updateRunnableClassesList() {
 		metadata = new Metadata(metadata.getFile());
 		runnableClasses = metadata.getRunnableClasses();
 		if (runnableClasses != null) {
@@ -257,7 +317,18 @@ public class ProjectMetadataController extends AnchorPane {
 			for (RunnableClass runnableClass : runnableClasses) {
 				runnableClassesList.getItems().add(runnableClass.getPath());
 			}
-		}	
+		}
+		return true;
+	}
+
+	/**
+	 * Updates the internal libraries list, external libraries list, and runnable classes list.
+	 * It's helper methods all return booleans for testing purposes.
+	 */
+	private void updateLists() {
+		updateInternalLibrariesList();
+		updateExternalLibrariesList();
+		updateRunnableClassesList();
 	}
 	
 	//Settings
@@ -409,7 +480,7 @@ public class ProjectMetadataController extends AnchorPane {
 		
 		if (runClass != null && srcPath != null) {
 			File runFile = new File(srcPath + runClass);
-			mc.compileAndRun(runFile);
+			mainController.compileAndRun(runFile);
 		}
 	}
 	
@@ -444,7 +515,7 @@ public class ProjectMetadataController extends AnchorPane {
 	
 	@FXML
 	private void addRunnableClass() {
-		new ProjectRunnableClassesController(projectFile, darkmode, fileController).start();
+		new ProjectRunnableClassesController(projectFile, darkMode, fileController).start();
 		updateLists();
 	}
 	

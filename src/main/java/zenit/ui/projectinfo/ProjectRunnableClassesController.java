@@ -24,40 +24,65 @@ import main.java.zenit.ui.DialogBoxes;
 public class ProjectRunnableClassesController extends AnchorPane {
 	private Stage stage;
 	private ProjectFile projectFile;
-	private boolean darkmode;
-	private FileController fc;
+	private FileController fileController;
+	private double xOffset = 0, yOffset = 0;
+	private boolean darkMode;
+
+	@FXML private AnchorPane header;
 	@FXML private ImageView logo;
 	@FXML private TreeView<String> treeView;
-	@FXML private AnchorPane header;
-    private double xOffset = 0;
-    private double yOffset = 0;
-	
-	public ProjectRunnableClassesController(ProjectFile projectFile, boolean darkmode, FileController fc) {
+
+	/**
+	 * Constructor for ProjectRunnableClassesController.
+	 *
+	 * @param projectFile The project file associated with the controller.
+	 * @param darkMode A boolean indicating whether dark mode is enabled.
+	 * @param fileController The file controller used in the project.
+	 */
+	public ProjectRunnableClassesController(ProjectFile projectFile, boolean darkMode, FileController fileController) {
 		this.projectFile = projectFile;
-		this.darkmode = darkmode;
-		this.fc = fc;
+		this.darkMode = darkMode;
+		this.fileController = fileController;
 	}
-	
+
+	/**
+	 * Sets up the scene for the application by loading the FXML file specified in the method and setting the controller.
+	 *
+	 * @return A new JavaFX Scene object with the loaded root AnchorPane.
+	 * @throws IOException if an error occurs during loading the FXML file.
+	 */
+	private Scene setupScene() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/zenit/ui/projectInfo/ProjectRunnableClasses.fxml"));
+		loader.setController(this);
+		AnchorPane root = (AnchorPane) loader.load();
+		return new Scene(root);
+	}
+
+	/**
+	 * Sets up a new stage for the application with the provided scene.
+	 *
+	 * @param scene The scene to be set in the stage.
+	 * @return True if the stage setup was successful, false otherwise.
+	 */
+	private boolean setupStage(Scene scene) {
+		stage = new Stage();
+		stage.setResizable(false);
+		stage.initStyle(StageStyle.UNDECORATED);
+		stage.setScene(scene);
+		return true;
+	}
+
+	/**
+	 * Starts the application by setting up the stage, initializing components, checking if dark mode is enabled, and showing the stage.
+	 */
 	public void start() {
 		try {
-			//setup scene
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/zenit/ui/projectInfo/ProjectRunnableClasses.fxml"));
-			loader.setController(this);
-			AnchorPane root = (AnchorPane) loader.load();
-			Scene scene = new Scene(root);
-
-			//set up stage
-			stage = new Stage();
-			stage.setResizable(false);
-			stage.initStyle(StageStyle.UNDECORATED);
-			stage.setScene(scene);
-			
+			setupStage(setupScene());
 			initialize();
-			ifDarkModeChanged(darkmode);
+			ifDarkModeChanged(darkMode);
 			stage.showAndWait();
-				
-		} catch (IOException e) { }
+		} catch (IOException ignored) { }
 	}
 	
 	private void initialize() {
@@ -105,7 +130,7 @@ public class ProjectRunnableClassesController extends AnchorPane {
 	private void addNode(File file, TreeItem<String> parent) {
 		String name = file.getName();
 		boolean runnable = false;
-		if (file.getName().endsWith(".java") && fc.checkIfClassFileContainsMainMethod(file)) {
+		if (file.getName().endsWith(".java") && fileController.checkIfClassFileContainsMainMethod(file)) {
 			name += " [runnable]";
 			runnable = true;
 		} else if (file.getName().endsWith(".java")) {

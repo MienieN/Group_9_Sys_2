@@ -492,12 +492,21 @@ public class ProjectMetadataController extends AnchorPane {
 		}
 	}
 
+	/**
+	 * Removes the selected internal libraries from the project.
+	 * Retrieves the list of selected libraries from the internalLibrariesList ListView.
+	 * Removes the selected libraries using the FileController's removeInternalLibraries method,
+	 * passing the list of selected libraries and the projectFile.
+	 * If removal is successful, updates the metadata with the new information and updates the UI lists.
+	 * If removal fails, displays an error message using ProjectInfoErrorHandling.removeInternalLibraryFail method.
+	 */
 	@FXML
 	private void removeInternalLibrary() {
 		List<String> selectedLibraries = internalLibrariesList.getSelectionModel().getSelectedItems();
 		
 		if (selectedLibraries != null) {
-			boolean success = fileController.removeInternalLibraries(selectedLibraries, projectFile);
+			boolean success = fileController
+					.removeInternalLibraries(selectedLibraries, projectFile);
 			if (success) {
 				metadata = new Metadata(metadata.getFile());
 				updateLists();
@@ -506,21 +515,37 @@ public class ProjectMetadataController extends AnchorPane {
 			}
 		}
 	}
-	
+
+	/**
+	 * Handles the selected files by adding them as external libraries to the project.
+	 *
+	 * @param files A List of File objects representing the selected files to be added as external libraries
+	 * @return true if the files are successfully added as external libraries and metadata is updated, false otherwise
+	 */
+	private boolean handleSelectedFiles(List<File> files) {
+		boolean success = fileController.addExternalLibraries(files, projectFile);
+		if (success) {
+			metadata = new Metadata(metadata.getFile());
+			updateLists();
+		} else {
+			ProjectInfoErrorHandling.addExternalLibraryFail();
+		}
+		return true;
+	}
+
+	/**
+	 * Opens a file chooser dialog for selecting external libraries to add to the project.
+	 * Only files matching the library filter will be displayed.
+	 * Once files are selected, the method handleSelectedFiles() is called to process them.
+	 */
 	@FXML
 	private void addExternalLibrary() {
-		FileChooser fc = new FileChooser();
-		fc.getExtensionFilters().add(libraryFilter);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().add(libraryFilter);
 
-		List<File> selectedFiles = fc.showOpenMultipleDialog(propertyStage);
+		List<File> selectedFiles = fileChooser.showOpenMultipleDialog(propertyStage);
 		if (selectedFiles != null) {
-			boolean success = fileController.addExternalLibraries(selectedFiles, projectFile);
-			if (success) {
-				metadata = new Metadata(metadata.getFile());
-				updateLists();
-			} else {
-				ProjectInfoErrorHandling.addExternalLibraryFail();
-			}
+			handleSelectedFiles(selectedFiles);
 		}
 	}
 

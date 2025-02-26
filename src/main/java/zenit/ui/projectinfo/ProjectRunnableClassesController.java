@@ -84,41 +84,66 @@ public class ProjectRunnableClassesController extends AnchorPane {
 			stage.showAndWait();
 		} catch (IOException ignored) { }
 	}
-	
-	private void initialize() {
-		logo.setImage(new Image(getClass().getResource("/zenit/setup/zenit.png").toExternalForm()));
-		logo.setFitWidth(55);
-		
+
+	/**
+	 * Sets up the TreeView with sorting functionality based on the values of the TreeItems.
+	 * It creates a root TreeItem from the project source file, sets the TreeView root to it,
+	 * hides the root from being displayed, populates the tree with files from the source directory,
+	 * and then sorts the children of the root based on the values of the TreeItems.
+	 */
+	private boolean setupTreeViewWithSorting() {
 		RunnableClassTreeItem<String> root = new RunnableClassTreeItem<String>(
 				projectFile.getSrc().getName(), projectFile.getSrc(), false);
 		treeView.setRoot(root);
 		treeView.setShowRoot(false);
 		populateTree(projectFile.getSrc());
-		
+
 		root.getChildren().sort((o1,o2)->{
 			RunnableClassTreeItem<String> t1 = (RunnableClassTreeItem<String>) o1;
 			RunnableClassTreeItem<String> t2 = (RunnableClassTreeItem<String>) o2;
 			return (t1.getValue().compareTo(t2.getValue()));
 		});
-		
-	    header.setOnMousePressed(new EventHandler<MouseEvent>() {
-		   @Override
-		   public void handle(MouseEvent event) {
-			   xOffset = event.getSceneX();
-			   yOffset = event.getSceneY();
-		   }
+		return true;
+	}
+
+	/**
+	 * Sets event handlers for mouse press and drag actions on the header.
+	 * The handler stores the initial mouse coordinates on press and moves the stage accordingly on drag.
+	 *
+	 * @return true if the mouse event handling was successful, false otherwise.
+	 */
+	private boolean handleMouseEvent() {
+		header.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				xOffset = event.getSceneX();
+				yOffset = event.getSceneY();
+			}
 		});
 
-	    	//move around here
-	    header.setOnMouseDragged(new EventHandler<MouseEvent>() {
-		   @Override
-		   public void handle(MouseEvent event) {
-			   stage.setX(event.getScreenX() - xOffset);
-			   stage.setY(event.getScreenY() - yOffset);
-		   }
+		//move around here
+		header.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				stage.setX(event.getScreenX() - xOffset);
+				stage.setY(event.getScreenY() - yOffset);
+			}
 		});
+		return true;
 	}
-	
+
+	/**
+	 * Initializes the components by setting the logo image, setting up the TreeView with sorting functionality,
+	 * and handling mouse press and drag events on the header.
+	 */
+	private void initialize() {
+		logo.setImage(new Image(getClass().getResource("/zenit/setup/zenit.png").toExternalForm()));
+		logo.setFitWidth(55);
+
+		setupTreeViewWithSorting();
+		handleMouseEvent();
+	}
+
 	private void populateTree(File root) {
 		File[] children = root.listFiles();
 		

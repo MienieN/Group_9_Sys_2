@@ -445,6 +445,13 @@ public class ProjectMetadataController extends AnchorPane {
 		}
 	}
 
+	/**
+	 * Method to change the JRE version of the project.
+	 * Retrieves the selected JRE version from the JREVersions ListView,
+	 * gets the full path of the selected JDK from JDKDirectories,
+	 * sets the JRE version in the metadata,
+	 * and encodes the metadata.
+	 */
 	@FXML
 	private void changeJREVersion() {
 		String JDKName = JREVersions.getSelectionModel().getSelectedItem();
@@ -452,13 +459,28 @@ public class ProjectMetadataController extends AnchorPane {
 		metadata.setJREVersion(JDK);
 		metadata.encode();
 	}
-	
+
+	/**
+	 * Displays a file chooser dialog for the user to select multiple files.
+	 *
+	 * @return A List of File objects representing the files selected by the user
+	 */
+	private List<File> chooseFiles() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().add(libraryFilter);
+		return fileChooser.showOpenMultipleDialog(propertyStage);
+	}
+
+	/**
+	 * Allows the user to add internal libraries to the project.
+	 * Prompts the user to choose multiple files using a file chooser dialog.
+	 * If files are selected, attempts to add them as internal libraries to the project.
+	 * Updates the project metadata and lists of internal libraries if the addition is successful.
+	 * If the addition fails, displays an error message.
+	 */
 	@FXML
 	private void addInternalLibrary() {
-		FileChooser fc = new FileChooser();
-		fc.getExtensionFilters().add(libraryFilter);
-
-		List<File> selectedFiles = fc.showOpenMultipleDialog(propertyStage);
+		List<File> selectedFiles = chooseFiles();
 		if (selectedFiles != null) {
 			boolean success = fileController.addInternalLibraries(selectedFiles, projectFile);
 			if (success) {

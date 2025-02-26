@@ -13,6 +13,8 @@ public class ConsoleArea extends InlineCssTextArea {
 	private String ID, backgroundColor, fileName;
 	private Process process;
 	
+	// ------------------------------------------------------------------------------------
+	// Constructors:
 	/**
 	 * Constructs a new ConsoleArea with default values.
 	 * Initializes the instance with default values and applies default settings such as making it uneditable
@@ -41,8 +43,8 @@ public class ConsoleArea extends InlineCssTextArea {
         
         initializeConsoleArea(); // Extract common setup logic
     }
-    
 	
+	// ------------------------------------------------------------------------------------
 	// Methods:
 	/**
 	 * Initializes the ConsoleArea with default settings such as making it uneditable and applying the default stylesheet.
@@ -105,7 +107,7 @@ public class ConsoleArea extends InlineCssTextArea {
 		});
 	}
 	
-	
+	// ------------------------------------------------------------------------------------
 	//Getters:
 	/**
 	 * Retrieves the name of the file associated with this object.
@@ -143,7 +145,7 @@ public class ConsoleArea extends InlineCssTextArea {
 		return ID;
 	}
 	
-	
+	// ------------------------------------------------------------------------------------
 	// Setters:
 	/**
 	 * Sets the name of the file associated with this object.

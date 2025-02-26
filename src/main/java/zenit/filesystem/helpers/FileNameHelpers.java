@@ -8,8 +8,9 @@ import java.io.File;
  * manipulating file paths, such as removing parts of the path or renaming folders.
  */
 public class FileNameHelpers {
- 
-	// Get project name from file methods: -------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------------------
+	// Get project name methods:
     /**
 	 * Extracts the project name from the given file by analyzing its folder structure.
 	 * If the folder "src" is present in the file path, the project name is assumed
@@ -59,9 +60,9 @@ public class FileNameHelpers {
 	private static String getProjectNameDefault (String[] folderArray) {
 		return folderArray[folderArray.length - 1]; // Default to the last folder if src not found
 	}
-	// Get project name from file methods end ----------------------------------------------------------------
 	
-	// Get package name from file method: -------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------
+	// Get package name method:
 	/**
 	 * Extracts the package name from the provided file by analyzing its directory structure.
 	 * The method assumes that the package folder is located directly below the "src" folder.
@@ -80,9 +81,9 @@ public class FileNameHelpers {
 		int srcIndex = getSrcFolderIndex(folders);
 		return getFolderAtDepth(folders, srcIndex, 1); // Package folder is one level below "src"
 	}
-	// Get package name from file method end ----------------------------------------------------------------
 	
-	// Get class name from file method: ---------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------
+	// Get class name from file method:
 	/**
 	 * Extracts the class name from the provided file by analyzing its folder structure.
 	 * The method assumes that the class folder is located two levels below the "src" folder.
@@ -101,9 +102,68 @@ public class FileNameHelpers {
 		int srcIndex = getSrcFolderIndex(folders);
 		return getFolderAtDepth(folders, srcIndex, 2); // Class folder is two levels below "src"
 	}
-	// Get class name from file method end -----------------------------------------------------------------
 	
-	// Validation methods: ---------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------
+	// Validation methods:
+	/**
+	 * Validates whether the specified depth, derived from a starting index and offset,
+	 * falls within the bounds of the provided folder array.
+	 *
+	 * @param folders the array of folder names representing the directory structure.
+	 *                Each element corresponds to a folder in the file path, in order.
+	 * @param srcIndex the index of the starting folder (e.g., "src") within the array.
+	 *                 Must be non-negative and within the bounds of the array.
+	 * @param offsetFromSrc the offset to apply to the starting index to calculate the target depth.
+	 *                      This can be positive or negative depending on the needed traversal direction.
+	 * @return true if the calculated target depth (srcIndex + offsetFromSrc) is within the bounds
+	 *         of the folder array; false otherwise.
+	 */
+	public static boolean isValidDepth(String[] folders, int srcIndex, int offsetFromSrc) {
+		return srcIndex != - 1 && folders.length > srcIndex + offsetFromSrc;
+	}
+	
+	/**
+	 * Renames a specified folder in the file's path by replacing the old folder name
+	 * with a new folder name. The method iterates through the folder structure of the file,
+	 * performing the replacement, and returns a new File object with the updated path.
+	 *
+	 * @param file the original file whose path is to be modified. Must not be null.
+	 * @param oldName the name of the folder to be replaced in the file's path. Must not be null.
+	 * @param newName the new name to replace the old folder name with. Must not be null.
+	 * @return a new File object with the updated path after the folder rename. Returns the
+	 *         original file object if no matching folder name is found or if the input is invalid.
+	 */
+	public static File renameFolderInFile(File file, String oldName, String newName) {
+		String[] folders = getFoldersAsStringArray(file);
+		StringBuilder newFilepath = new StringBuilder();
+		
+		for (String folder : folders) {
+			if (folder.equals(oldName)) {
+				folder = newName;
+			}
+			newFilepath.append(folder).append("/");
+		}
+		return new File(newFilepath.toString());
+	}
+	
+	// ------------------------------------------------------------------------------------
+	// Getters:
+	/**
+	 * Splits the absolute path of the given file into an array of folder names.
+	 * Each folder in the path is represented as an element in the returned array.
+	 *
+	 * @param file the file whose absolute path is to be split into folders. Must not be null.
+	 * @return an array of strings where each element represents a folder in the file's path.
+	 *         Returns an empty array if the file path is empty or invalid.
+	 */
+	public static String[] getFoldersAsStringArray(File file) {
+		String[] folders;
+		String filepath = file.getAbsolutePath(); // Get the path in string
+		folders = filepath.split("/"); // Split path into the different folders
+		
+		return folders;
+	}
+	
 	/**
 	 * Finds the index of the "src" folder in the given array of folder names.
 	 * If the "src" folder is not found, the method returns -1.
@@ -145,41 +205,6 @@ public class FileNameHelpers {
 				: null;
 	}
 	
-	/**
-	 * Validates whether the specified depth, derived from a starting index and offset,
-	 * falls within the bounds of the provided folder array.
-	 *
-	 * @param folders the array of folder names representing the directory structure.
-	 *                Each element corresponds to a folder in the file path, in order.
-	 * @param srcIndex the index of the starting folder (e.g., "src") within the array.
-	 *                 Must be non-negative and within the bounds of the array.
-	 * @param offsetFromSrc the offset to apply to the starting index to calculate the target depth.
-	 *                      This can be positive or negative depending on the needed traversal direction.
-	 * @return true if the calculated target depth (srcIndex + offsetFromSrc) is within the bounds
-	 *         of the folder array; false otherwise.
-	 */
-	public static boolean isValidDepth(String[] folders, int srcIndex, int offsetFromSrc) {
-		return srcIndex != - 1 && folders.length > srcIndex + offsetFromSrc;
-	}
-	
-	/**
-	 * Splits the absolute path of the given file into an array of folder names.
-	 * Each folder in the path is represented as an element in the returned array.
-	 *
-	 * @param file the file whose absolute path is to be split into folders. Must not be null.
-	 * @return an array of strings where each element represents a folder in the file's path.
-	 *         Returns an empty array if the file path is empty or invalid.
-	 */
-	public static String[] getFoldersAsStringArray(File file) {
-		String[] folders;
-		String filepath = file.getAbsolutePath(); // Get the path in string
-		folders = filepath.split("/"); // Split path into the different folders
-		
-		return folders;
-	}
-	// validation methods end -------------------------------------------------------------------------
-	
-	// Helper methods: ---------------------------------------------------------------------------------
 	/**
 	 * Constructs a new File object that represents the directory path of the given file
 	 * excluding its top-most folder or file. The top directory or file in the provided
@@ -250,31 +275,4 @@ public class FileNameHelpers {
 		System.out.println(newFilepath);
 		return new File(newFilepath.toString());
 	}
-	
-	/**
-	 * Renames a specified folder in the file's path by replacing the old folder name
-	 * with a new folder name. The method iterates through the folder structure of the file,
-	 * performing the replacement, and returns a new File object with the updated path.
-	 *
-	 * @param file the original file whose path is to be modified. Must not be null.
-	 * @param oldName the name of the folder to be replaced in the file's path. Must not be null.
-	 * @param newName the new name to replace the old folder name with. Must not be null.
-	 * @return a new File object with the updated path after the folder rename. Returns the
-	 *         original file object if no matching folder name is found or if the input is invalid.
-	 */
-	public static File renameFolderInFile(File file, String oldName, String newName) {
-		String[] folders = getFoldersAsStringArray(file);
-		StringBuilder newFilepath = new StringBuilder();
-		
-		for (String folder : folders) {
-			if (folder.equals(oldName)) {
-				folder = newName;
-			}
-			newFilepath.append(folder).append("/");
-		}
-		
-		return new File(newFilepath.toString());
-		
-	}
-	// Helper methods end -------------------------------------------------------------------------------
 }

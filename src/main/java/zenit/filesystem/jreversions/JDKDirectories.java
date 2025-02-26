@@ -23,6 +23,7 @@ import main.java.zenit.Zenit;
  installations, as well as for removing JDK directories from the list.
  */
 public class JDKDirectories {
+    // Methods:
     /**
      The main entry point of the application. This method initializes
      the application by setting the default JDK file to null, effectively
@@ -65,43 +66,6 @@ public class JDKDirectories {
         }
         catch (IOException e) {
             System.err.println("An error occurred while creating the JDK file.");
-        }
-    }
-    
-    /**
-     * Ensures the existence of a specific file intended to store information
-     * about Java Development Kit (JDK) directories. If the file does not exist,
-     * it is created.
-     *
-     * @return the File object representing the specified file.
-     * @throws IOException if an I/O error occurs during file creation.
-     */
-    private static File getOrCreateJDKFile() throws IOException {
-        File file = new File("res/JDK/JDK.dat");
-        if (! file.exists()) {
-            file.createNewFile();
-        }
-        return file;
-    }
-    
-    /**
-     * Retrieves the default directory for Java Virtual Machine (JVM) installations
-     * based on the operating system.
-     *
-     * @return a File object representing the default JVM directory for the
-     * operating system. Returns null if the operating system is unrecognized.
-     */
-    public static File getJVMDirectory() {
-        String OS = Zenit.OS;
-        
-        // Using a switch-case to handle different OS values
-        switch (OS) {
-            case "Mac OS X":
-                return new File("/library/java/javavirtualmachines");
-            case "Windows":
-                return new File("C:\\Program Files\\Java\\");
-            default:
-                return null; // Default case if no match is found
         }
     }
     
@@ -150,9 +114,8 @@ public class JDKDirectories {
             }
         }
         catch (IOException | ClassNotFoundException e) {
-          System.err.println("An error occurred while reading the JDK file.");
+            System.err.println("An error occurred while reading the JDK file.");
         }
-        
         return JDKs;
     }
     
@@ -193,7 +156,7 @@ public class JDKDirectories {
             oos.flush();
         }
         catch (IOException e) {
-          System.err.println("An error occurred while serializing the JDK files.");
+            System.err.println("An error occurred while serializing the JDK files.");
         }
     }
     
@@ -242,6 +205,29 @@ public class JDKDirectories {
         return success;
     }
     
+    // --------------------------------------------------------------------------------------------
+    // Getters:
+    /**
+     * Retrieves the default Java Development Kit (JDK) file from a predefined location.
+     * The method attempts to deserialize the file stored at "res/JDK/DefaultJDK.dat"
+     * and returns it as a File object. If the file does not exist or an error occurs
+     * during deserialization, null is returned.
+     *
+     * @return the File object representing the default JDK if successfully deserialized,
+     *         or null if the file is not found or an error occurs during deserialization.
+     */
+    public static File getDefaultJDKFile() {
+        File defaultJDK = new File("res/JDK/DefaultJDK.dat");
+        
+        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(
+                new FileInputStream(defaultJDK)))) {
+            return (File) ois.readObject();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+    }
+    
     /**
      * Retrieves the full path of a Java Development Kit (JDK) installation directory
      * based on its name. The method iterates through a list of known JDK directories
@@ -264,6 +250,45 @@ public class JDKDirectories {
     }
     
     /**
+     * Ensures the existence of a specific file intended to store information
+     * about Java Development Kit (JDK) directories. If the file does not exist,
+     * it is created.
+     *
+     * @return the File object representing the specified file.
+     * @throws IOException if an I/O error occurs during file creation.
+     */
+    private static File getOrCreateJDKFile() throws IOException {
+        File file = new File("res/JDK/JDK.dat");
+        if (! file.exists()) {
+            file.createNewFile();
+        }
+        return file;
+    }
+    
+    /**
+     * Retrieves the default directory for Java Virtual Machine (JVM) installations
+     * based on the operating system.
+     *
+     * @return a File object representing the default JVM directory for the
+     * operating system. Returns null if the operating system is unrecognized.
+     */
+    public static File getJVMDirectory() {
+        String OS = Zenit.OS;
+        
+        // Using a switch-case to handle different OS values
+        switch (OS) {
+            case "Mac OS X":
+                return new File("/library/java/javavirtualmachines");
+            case "Windows":
+                return new File("C:\\Program Files\\Java\\");
+            default:
+                return null; // Default case if no match is found
+        }
+    }
+    
+    // --------------------------------------------------------------------------------------------
+    // Setters:
+    /**
      * Sets the default Java Development Kit (JDK) file by serializing the specified file
      * to a predefined location on disk. If the predefined file does not exist, it will
      * be created. This method is used to update the default JDK configuration.
@@ -283,31 +308,9 @@ public class JDKDirectories {
             
             oos.writeObject(file);
             oos.flush();
-            
         }
         catch (IOException e) {
             System.err.println("An error occurred while setting the default JDK file.");
-        }
-    }
-    
-    /**
-     * Retrieves the default Java Development Kit (JDK) file from a predefined location.
-     * The method attempts to deserialize the file stored at "res/JDK/DefaultJDK.dat"
-     * and returns it as a File object. If the file does not exist or an error occurs
-     * during deserialization, null is returned.
-     *
-     * @return the File object representing the default JDK if successfully deserialized,
-     *         or null if the file is not found or an error occurs during deserialization.
-     */
-    public static File getDefaultJDKFile() {
-        File defaultJDK = new File("res/JDK/DefaultJDK.dat");
-        
-        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(
-                new FileInputStream(defaultJDK)))) {
-            return (File) ois.readObject();
-        }
-        catch (IOException | ClassNotFoundException e) {
-            return null;
         }
     }
 }

@@ -38,6 +38,7 @@ import main.java.zenit.ui.MainController;
  * </p>
  */
 public class ConsoleController implements Initializable {
+	// variables:
 	private MainController mainController;
 	private final ArrayList<ConsoleArea> consoleList = new ArrayList<ConsoleArea>();
 	private final ArrayList<Terminal> terminalList = new ArrayList<Terminal>();
@@ -45,6 +46,7 @@ public class ConsoleController implements Initializable {
 	private ConsoleArea activeConsole;
 	private Terminal activeTerminal;
 	
+	// FXML variables:
 	@FXML private TabPane consoleTabPane; //TODO: check if safe for removal
 	@FXML private Button btnTerminal, btnConsole, btnNewTerminal,btnNewConsole, btnClearConsole;
 	@FXML private ChoiceBox<ConsoleArea> consoleChoiceBox;
@@ -52,6 +54,7 @@ public class ConsoleController implements Initializable {
 	@FXML private AnchorPane rootAnchor, rootNode;
 	@FXML private FontIcon iconCloseConsoleInstance, iconTerminateProcess, iconCloseTerminalInstance;
 	
+	// ------------------------------------------------------------------------------------
 	// Console Methods:
 	/**
 	 * Creates a placeholder console pane to display when there is no active console.
@@ -185,7 +188,7 @@ public class ConsoleController implements Initializable {
 		activeConsole.clear();
 	}
 	
-	
+	// ------------------------------------------------------------------------------------
 	// Terminal Methods:
 	/**
 	 * Switches the display to show terminal tabs and hides console tabs.
@@ -286,7 +289,7 @@ public class ConsoleController implements Initializable {
 		return (System.getProperty("os.name").startsWith("W") ? windowsConfig : new TerminalConfig());
 	}
 	
-	
+	// ------------------------------------------------------------------------------------
 	// Utility Methods:
 	/**
 	 * Sets all anchor constraints of the specified Node to fill its parent AnchorPane completely.
@@ -504,7 +507,7 @@ public class ConsoleController implements Initializable {
 		});
 	}
 	
-	
+	// ------------------------------------------------------------------------------------
 	// Getters:
 	/**
 	 * Retrieves the list of stylesheets currently associated with the root node.
@@ -515,7 +518,7 @@ public class ConsoleController implements Initializable {
 		return rootNode.getStylesheets();
 	}
 	
-	
+	// ------------------------------------------------------------------------------------
 	// Setters:
 	/**
 	 * Sets the main controller for this ConsoleController. The main controller acts as a

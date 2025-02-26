@@ -11,7 +11,7 @@ import main.java.zenit.exceptions.TypeCodeException;
 public class CodeSnippets {
 	public static final int EMPTY = 99, CLASS = 100, INTERFACE = 101;
 	
-	
+	// ------------------------------------------------------------------------------------
 	// Methods:
 	/**
 	 * Generates a new piece of code based on the specified type code. The method

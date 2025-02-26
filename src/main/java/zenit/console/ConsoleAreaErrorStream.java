@@ -12,6 +12,8 @@ public class ConsoleAreaErrorStream extends OutputStream {
 	private final StringBuilder stringBuilder = new StringBuilder();
 	private static final int NEWLINE_CHAR = '\n', CARRIAGE_RETURN_CHAR = '\r';
 	
+	// ------------------------------------------------------------------------------------
+	// Constructors:
 	/**
 	 * Constructs a ConsoleAreaErrorStream that redirects error output to the specified ConsoleArea.
 	 *
@@ -20,8 +22,8 @@ public class ConsoleAreaErrorStream extends OutputStream {
 	public ConsoleAreaErrorStream(ConsoleArea consoleArea) {
 		this.consoleArea = consoleArea;
 	}
-
 	
+	// ------------------------------------------------------------------------------------
 	// Methods:
 	/**
 	 * Flushes the current content of the StringBuilder to the associated ConsoleArea as error output.

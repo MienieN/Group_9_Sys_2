@@ -16,6 +16,8 @@ public class ConsoleAreaOutputStream extends OutputStream {
 	private final ConsoleArea consoleArea;
 	private final StringBuilder stringBuilder = new StringBuilder();
 	
+	// ------------------------------------------------------------------------------------
+	// Constructor:
 	/**
 	 * Constructs a ConsoleAreaOutputStream that redirects output to the specified ConsoleArea.
 	 *
@@ -25,7 +27,7 @@ public class ConsoleAreaOutputStream extends OutputStream {
 		this.consoleArea = consoleArea;
 	}
 	
-	
+	// ------------------------------------------------------------------------------------
 	// Methods:
 	/**
 	 * Flushes the current content of the StringBuilder to the associated ConsoleArea.

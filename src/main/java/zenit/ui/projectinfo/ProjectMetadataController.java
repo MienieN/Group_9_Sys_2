@@ -39,9 +39,12 @@ public class ProjectMetadataController extends AnchorPane {
 	private RunnableClass[] runnableClasses;
 	private RunnableClass selectedRunnableClass;
 	private FileChooser.ExtensionFilter libraryFilter = new FileChooser.ExtensionFilter("Libraries", "*.jar", "*.zip");
+	public enum DirectoryOrSourcepathType { INTERNAL, EXTERNAL}
 	private boolean darkMode, taUpdated = false;
 	private double xOffset = 0, yOffset = 0;
-	
+	private static final String DARK_MODE_STYLESHEET_PATH = "/zenit/ui/projectinfo/mainStyle.css";
+	private static final String LIGHT_MODE_STYLESHEET_PATH = "/zenit/ui/projectinfo/mainStyle-lm.css";
+
 	@FXML private AnchorPane header;
 	@FXML private ImageView logo;
 	@FXML private Text title;
@@ -49,11 +52,6 @@ public class ProjectMetadataController extends AnchorPane {
 	@FXML private TextArea taProgramArguments, taVMArguments;
 	@FXML private ComboBox<String> JREVersions;
 	@FXML private Button addInternalLibrary, removeInternalLibrary, addExternalLibrary, removeExternalLibrary, save, run;
-
-	public enum DirectoryOrSourcepathType {
-		INTERNAL,
-		EXTERNAL
-	}
 
 	/**
 	 * Constructor for ProjectMetadataController.
@@ -745,25 +743,43 @@ public class ProjectMetadataController extends AnchorPane {
 		return null;
 	}
 
-	public void ifDarkModeChanged(boolean isDarkMode) {
-		var stylesheets = propertyStage.getScene().getStylesheets();
-		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();
-		var lightMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle-lm.css").toExternalForm();
-		
-		if (isDarkMode) {
-			if (stylesheets.contains(lightMode)) {
-				stylesheets.remove(lightMode);
-			}
-			
-			stylesheets.add(darkMode);
-		} else {
-			if (stylesheets.contains(darkMode)) {
-				stylesheets.remove(darkMode);
-			}
-			stylesheets.add(lightMode);
-		}	
-	}
-	
+	/**
+	 * Executes the appropriate action when the dark mode status is changed.
+	 *
+	 * @param isDarkMode a boolean indicating whether dark mode is enabled or not
+	 */
+    public void ifDarkModeChanged(boolean isDarkMode) {
+        List<String> stylesheets = propertyStage.getScene().getStylesheets();
+
+        if (isDarkMode) {
+            switchStylesheet(stylesheets, LIGHT_MODE_STYLESHEET_PATH, DARK_MODE_STYLESHEET_PATH);
+        } else {
+            switchStylesheet(stylesheets, DARK_MODE_STYLESHEET_PATH, LIGHT_MODE_STYLESHEET_PATH);
+        }
+    }
+
+	/**
+	 * Switches the stylesheet from one resource to another in a given list of stylesheets.
+	 *
+	 * @param stylesheets A list of stylesheets to perform the switch on.
+	 * @param from The resource path of the stylesheet to switch from.
+	 * @param to The resource path of the stylesheet to switch to.
+	 */
+    private void switchStylesheet(List<String> stylesheets, String from, String to) {
+        String fromStylesheet = getClass().getResource(from).toExternalForm();
+        if (stylesheets.contains(fromStylesheet)) {
+            stylesheets.remove(fromStylesheet);
+        }
+        String toStylesheet = getClass().getResource(to).toExternalForm();
+        stylesheets.add(toStylesheet);
+    }
+
+	/**
+	 * Updates the text in the given ListView with the specified string.
+	 *
+	 * @param list the ListView in which the text will be updated
+	 * @param string the new text to be displayed in the ListView
+	 */
 	private void updateText(ListView<String> list, String string) {
 		list.getItems().clear();
 		list.getItems().add(string);

@@ -684,42 +684,67 @@ public class ProjectMetadataController extends AnchorPane {
 	private void argumentsChanged() {
 		taUpdated = true;
 	}
-	
+
+	/**
+	 * Adds a new runnable class to the project.
+	 * This method creates a new ProjectRunnableClassesController and starts it with the provided projectFile, darkMode, and fileController.
+	 * It then updates the lists to reflect the changes made.
+	 */
 	@FXML
 	private void addRunnableClass() {
 		new ProjectRunnableClassesController(projectFile, darkMode, fileController).start();
 		updateLists();
 	}
-	
+
+	/**
+	 * Removes the selected runnable class from the list and updates the metadata and UI accordingly.
+	 */
 	@FXML
 	private void removeRunnableClass() {
 		String selected = runnableClassesList.getSelectionModel().getSelectedItem();
-		
-		if (selected != null) {
+		if (runnableClassesList.getSelectionModel().getSelectedItem() != null) {
 			metadata.removeRunnableClass(selected);
 			metadata.encode();
 			updateLists();
 		}
 	}
-	
+
+	/**
+	 * Closes the property stage.
+	 */
 	@FXML
-	private void close() { propertyStage.close(); }
-	
-	//Help classes
-	private RunnableClass getSelectedRunnableClass() {
-		String selected = runnableClassesList.getSelectionModel().getSelectedItem();
+	private void close() {
+		propertyStage.close();
+	}
 
-		if (runnableClasses != null) {
-
-			for (RunnableClass runnableClass : runnableClasses) {
-				if (runnableClass.getPath().equals(selected)) {
-					return runnableClass;
-				}
+	/**
+	 * Returns the RunnableClass object with the specified path.
+	 *
+	 * @param selected the path of the RunnableClass to retrieve
+	 * @return the RunnableClass object with the specified path, or null if not found
+	 */
+	private RunnableClass getRunnableClass(String selected) {
+		for (RunnableClass runnableClass : runnableClasses) {
+			if (runnableClass.getPath().equals(selected)) {
+				return runnableClass;
 			}
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Retrieves the selected RunnableClass object based on the selection in the runnableClassesList.
+	 *
+	 * @return The selected RunnableClass object or null if no selection is made or if runnableClasses is null.
+	 */
+	private RunnableClass getSelectedRunnableClass() {
+		String selected = runnableClassesList.getSelectionModel().getSelectedItem();
+		if (runnableClasses != null) {
+            return getRunnableClass(selected);
+		}
+		return null;
+	}
+
 	public void ifDarkModeChanged(boolean isDarkMode) {
 		var stylesheets = propertyStage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();

@@ -144,24 +144,42 @@ public class ProjectRunnableClassesController extends AnchorPane {
 		handleMouseEvent();
 	}
 
+	/**
+	 * Populates the tree with files from the specified root directory.
+	 *
+	 * @param root The root directory from which to start populating the tree.
+	 */
 	private void populateTree(File root) {
 		File[] children = root.listFiles();
-		
 		for (File file : children) {
 			addNode(file, treeView.getRoot());
 		}
 	}
-	
+
+	/**
+	 * Checks if the given file is a Java class file that contains a main method.
+	 *
+	 * @param file The file to be checked.
+	 * @return true if the file ends with '.java' and contains a main method, false otherwise.
+	 */
+	private boolean isRunnableClass(File file) {
+		return file.getName().endsWith(".java")
+				&& fileController.checkIfClassFileContainsMainMethod(file);
+	}
+
+	/**
+	 * Adds a new node to the tree with the given parent node.
+	 *
+	 * @param file The file to create a node for.
+	 * @param parent The parent node where the new node will be added.
+	 */
 	private void addNode(File file, TreeItem<String> parent) {
 		String name = file.getName();
-		boolean runnable = false;
-		if (file.getName().endsWith(".java") && fileController.checkIfClassFileContainsMainMethod(file)) {
-			name += " [runnable]";
-			runnable = true;
-		} else if (file.getName().endsWith(".java")) {
-			name += " [not runnable]";
-			runnable = false;
-		}
+		boolean runnable = isRunnableClass(file);
+
+		String fileNamePostfix = runnable ? " [runnable]" : " [not runnable]";
+		name += file.getName().endsWith(".java") ? fileNamePostfix : "";
+
 		RunnableClassTreeItem<String> node = new RunnableClassTreeItem<String>(name, file, runnable);
 		parent.getChildren().add(node);
 		
@@ -172,7 +190,8 @@ public class ProjectRunnableClassesController extends AnchorPane {
 			}
 		}
 	}
-	
+
+
 	public void ifDarkModeChanged(boolean isDarkMode) {
 		var stylesheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();
@@ -211,7 +230,11 @@ public class ProjectRunnableClassesController extends AnchorPane {
 					+ "(contains a main-method");
 		}
 	}
-	
+
+	/**
+	 * Closes the stage associated with the method's controller.
+	 * This method closes the JavaFX stage that is currently being displayed.
+	 */
 	@FXML
 	private void close() { stage.close(); }
 }

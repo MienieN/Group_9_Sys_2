@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class JDKVerifierTest {
 
     @Test
-    void testGetExecutablePathWithJavacWindows() {
+    void testGetExecutablePath() {
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains("mac os")) {
             assertEquals("/path/to/jdk/Contents/Home/bin/javac", JDKVerifier.getExecutablePath("/path/to/jdk", "javac"));

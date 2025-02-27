@@ -232,12 +232,15 @@ public class SetupController extends AnchorPane {
 		return true;
 	}
 
+	/**
+	 * Opens a DirectoryChooser dialog for the user to select a workspace directory.
+	 * Sets the selected directory as the workspace and updates the workspace path text field.
+	 * If no directory is selected and the current workspace path field is empty, toggles radio buttons accordingly.
+	 */
 	@FXML
 	private void browse() {
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setTitle("Choose a workspace");
-		dc.setInitialDirectory(new File(System.getProperty("user.home")));
-		File newWorkspace = dc.showDialog(stage);
+		DirectoryChooser directoryChooser = createDirectoryChooser();
+		File newWorkspace = directoryChooser.showDialog(stage);
 		
 		if (newWorkspace != null) {
 			workspaceFile = newWorkspace;
@@ -246,6 +249,18 @@ public class SetupController extends AnchorPane {
 		} else if (newWorkspace == null && workspacePath.getText().equals("")){
 			toggleRadiobutton(false);
 		}
+	}
+
+	/**
+	 * Creates a DirectoryChooser object with preset properties.
+	 *
+	 * @return DirectoryChooser object with title set to "Choose a workspace" and initial directory set to the user's home directory.
+	 */
+	private DirectoryChooser createDirectoryChooser() {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setTitle("Choose a workspace");
+		directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		return directoryChooser;
 	}
 	
 	@FXML

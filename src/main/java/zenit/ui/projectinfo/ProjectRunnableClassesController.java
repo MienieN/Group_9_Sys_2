@@ -21,6 +21,10 @@ import main.java.zenit.filesystem.RunnableClass;
 import main.java.zenit.filesystem.metadata.Metadata;
 import main.java.zenit.ui.DialogBoxes;
 
+/**
+ * A class that controls the interactions and functionality of the Project Runnable Classes application component.
+ * Extends AnchorPane to provide a base layout for adding JavaFX components.
+ */
 public class ProjectRunnableClassesController extends AnchorPane {
 	private Stage stage;
 	private ProjectFile projectFile;
@@ -191,30 +195,49 @@ public class ProjectRunnableClassesController extends AnchorPane {
 		}
 	}
 
-
+	/**
+	 * Updates the stylesheets of the stage's scene based on the dark mode setting.
+	 *
+	 * @param isDarkMode A boolean indicating whether dark mode is enabled.
+	 */
 	public void ifDarkModeChanged(boolean isDarkMode) {
 		var stylesheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css").toExternalForm();
 		var lightMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle-lm.css").toExternalForm();
-		
+
 		if (isDarkMode) {
 			if (stylesheets.contains(lightMode)) {
 				stylesheets.remove(lightMode);
 			}
-			
 			stylesheets.add(darkMode);
 		} else {
 			if (stylesheets.contains(darkMode)) {
 				stylesheets.remove(darkMode);
 			}
 			stylesheets.add(lightMode);
-		}	
+		}
 	}
-	
+
+	/**
+	 * Retrieves the selected item from the tree view as a RunnableClassTreeItem.
+	 * This method assumes that the tree view allows only RunnableClassTreeItem items to be selected.
+	 *
+	 * @return The selected RunnableClassTreeItem from the tree view.
+	 */
+	private RunnableClassTreeItem<String> getSelectedItem() {
+		return (RunnableClassTreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+	}
+
+	/**
+	 * Adds a new runnable class to the project metadata.
+	 * If the selected item is a runnable class, it extracts necessary information
+	 * such as the file path, creates a new RunnableClass object, adds it to the metadata,
+	 * encodes the metadata, and then closes the window.
+	 * If the selected item is not a runnable class, it displays an error dialog.
+	 */
 	@FXML
 	private void add() {
-		RunnableClassTreeItem<String> item = (RunnableClassTreeItem<String>) 
-				treeView.getSelectionModel().getSelectedItem();
+		RunnableClassTreeItem<String> item = getSelectedItem();
 		
 		if (item.isRunnable()) {
 			Metadata metadata = new Metadata(projectFile.getMetadata());
@@ -236,5 +259,7 @@ public class ProjectRunnableClassesController extends AnchorPane {
 	 * This method closes the JavaFX stage that is currently being displayed.
 	 */
 	@FXML
-	private void close() { stage.close(); }
+	private void close() {
+		stage.close();
+	}
 }

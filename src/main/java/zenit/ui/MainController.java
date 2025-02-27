@@ -212,7 +212,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 		if (className != null) {
 			String filepath = parent.getPath() + "/" + className;
 			file = new File(filepath);
-			file = fileController.createFile(file, typeCode);
+			file = fileController.createFileWithType(file, typeCode);
 			openFile(file);
 		}
 		return file;

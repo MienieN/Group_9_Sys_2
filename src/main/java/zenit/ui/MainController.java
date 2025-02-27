@@ -245,7 +245,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 		File file = tab.getFile();
 		if (file == null) { file = chooseFile(); }
 
-		boolean didWrite = fileController.writeFile(file, tab.getFileText());
+		boolean didWrite = fileController.writeContentToFile(file, tab.getFileText());
 
 		if (didWrite) {
 			tab.update(file);
@@ -259,7 +259,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 	private boolean saveFile(boolean backgroundCompile, File file, String text) {
 		if (file == null) { return saveFile(backgroundCompile); }
 
-		boolean didWrite = fileController.writeFile(file, text);
+		boolean didWrite = fileController.writeContentToFile(file, text);
 		
 		if (didWrite) {
 			FileTreeItem<String> root = FileTree.getTreeItemFromFile((FileTreeItem<String>) treeView.getRoot(), file.getParentFile());
@@ -432,7 +432,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 		if (deletedFile.fst() != null && !deletedFile.fst().exists()) {
 			try {
 				deletedFile.fst().createNewFile();
-				fileController.writeFile(deletedFile.fst(), deletedFile.snd());
+				fileController.writeContentToFile(deletedFile.fst(), deletedFile.snd());
 				saveFile(false, deletedFile.fst(), deletedFile.snd());
 			} catch (IOException e) {
 				System.out.println("Error MainController undoDeleteFile() = " + e);

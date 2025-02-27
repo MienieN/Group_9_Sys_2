@@ -170,11 +170,12 @@ public class SetupController extends AnchorPane {
 	}
 
 	/**
-	 * Initializes the radio buttons in the setup interface. Sets up toggle group for rb1 and rb2.
-	 * Determines the initial selection of radio buttons based on the workspaceFile existence.
-	 * Adds a ChangeListener to the toggle group for handling radio button selection changes.
+	 * Initializes the radio buttons based on the workspace file availability.
+	 * If the workspace file is null, selects rb2; otherwise, selects rb1.
+	 *
+	 * @return true if the radio buttons are successfully initialized
 	 */
-	private void initRadioButtons() {
+	private boolean initRadioButtons() {
 		rb1.setToggleGroup(tgGroup);
 		rb2.setToggleGroup(tgGroup);
 		
@@ -185,35 +186,41 @@ public class SetupController extends AnchorPane {
 		}
 
 		tgGroup.selectedToggleProperty().addListener(new RadioButtonListener());
+		return true;
 	}
 
 	/**
-	 * Updates the JDK list by extracting JDK directory names as strings, marking the default JDK name as default
-	 * in the list, and updating the JDK list in the user interface.
+	 * Updates the JDK list with the latest JDK names extracted from directories.
+	 *
+	 * @return true if the JDK list was successfully updated, false otherwise
 	 */
-	private void updateJdkList() {
+	private boolean updateJdkList() {
 		List<String> jdkNames = JDKDirectories.extractJDKDirectoryNameAsString();
 		markDefaultJdkNameAsDefault(jdkNames);
 		updateJdkListInUI(jdkNames);
+		return true;
 	}
 
 	/**
-	 * Updates the JDK list in the user interface with the provided list of JDK names.
+	 * Updates the JDK list in the user interface.
 	 *
 	 * @param jdkNames a List of JDK names to update the JDK list with
+	 * @return true if the JDK list was successfully updated, false otherwise
 	 */
-	private void updateJdkListInUI(List<String> jdkNames) {
+	private boolean updateJdkListInUI(List<String> jdkNames) {
 		ObservableList<String> observableJdkNames = FXCollections.observableArrayList(jdkNames);
 		FXCollections.sort(observableJdkNames);
 		jdkList.setItems(observableJdkNames);
+		return true;
 	}
 
 	/**
 	 * Marks the default JDK name as default in the provided list of JDK names.
 	 *
-	 * @param jdkNames a list of JDK names
+	 * @param jdkNames a List of JDK names to check and mark the default JDK name as default
+	 * @return true if the default JDK name is successfully marked as default, false otherwise
 	 */
-	private static void markDefaultJdkNameAsDefault(List<String> jdkNames) {
+	private boolean markDefaultJdkNameAsDefault(List<String> jdkNames) {
 		//Try to read the default JDK
 		File defaultJdkFile = JDKDirectories.getDefaultJDKFile();
 		if (defaultJdkFile != null) {
@@ -222,6 +229,7 @@ public class SetupController extends AnchorPane {
 				jdkNames.add(defaultJdkName + " [default]");
 			}
 		}
+		return true;
 	}
 
 	@FXML

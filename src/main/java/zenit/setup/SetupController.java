@@ -6,6 +6,8 @@ import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -111,7 +113,7 @@ public class SetupController extends AnchorPane {
 		loadLogoAndOsJdks();
 		loadWorkspace();
 		initRadioButtons();
-		updateList();
+		updateJdkList();
 	}
 
 	/**
@@ -185,35 +187,43 @@ public class SetupController extends AnchorPane {
 		tgGroup.selectedToggleProperty().addListener(new RadioButtonListener());
 	}
 
-	private void updateList() {
-		//Init list of JDKs
-		List<String> JDKs = JDKDirectories.extractJDKDirectoryNameAsString();
-		
+	/**
+	 * Updates the JDK list by extracting JDK directory names as strings, marking the default JDK name as default
+	 * in the list, and updating the JDK list in the user interface.
+	 */
+	private void updateJdkList() {
+		List<String> jdkNames = JDKDirectories.extractJDKDirectoryNameAsString();
+		markDefaultJdkNameAsDefault(jdkNames);
+		updateJdkListInUI(jdkNames);
+	}
+
+	/**
+	 * Updates the JDK list in the user interface with the provided list of JDK names.
+	 *
+	 * @param jdkNames a List of JDK names to update the JDK list with
+	 */
+	private void updateJdkListInUI(List<String> jdkNames) {
+		ObservableList<String> observableJdkNames = FXCollections.observableArrayList(jdkNames);
+		FXCollections.sort(observableJdkNames);
+		jdkList.setItems(observableJdkNames);
+	}
+
+	/**
+	 * Marks the default JDK name as default in the provided list of JDK names.
+	 *
+	 * @param jdkNames a list of JDK names
+	 */
+	private static void markDefaultJdkNameAsDefault(List<String> jdkNames) {
 		//Try to read the default JDK
-		File defaultJDKFile = JDKDirectories.getDefaultJDKFile();
-		if (defaultJDKFile != null) {
-			String defaultJDKName = defaultJDKFile.getName();
-			
-			if (defaultJDKName != null && JDKs.contains(defaultJDKName)) {
-				JDKs.remove(defaultJDKName);
-				defaultJDKName += " [default]";
-				JDKs.add(defaultJDKName);
+		File defaultJdkFile = JDKDirectories.getDefaultJDKFile();
+		if (defaultJdkFile != null) {
+			String defaultJdkName = defaultJdkFile.getName();
+			if (defaultJdkName != null && jdkNames.remove(defaultJdkName)) {
+				jdkNames.add(defaultJdkName + " [default]");
 			}
 		}
-	
-		//Add to list
-		jdkList.getItems().clear();
-		jdkList.getItems().addAll(JDKs);
-		
-		//Sort
-		jdkList.getItems().sort((o1,o2)->{
-			return o1.compareTo(o2);
-		});
 	}
-	
-	/**
-	 * 
-	 */
+
 	@FXML
 	private void browse() {
 		DirectoryChooser dc = new DirectoryChooser();
@@ -243,7 +253,7 @@ public class SetupController extends AnchorPane {
 						+ " already exist in the list.");
 			} else {
 				if (JDKDirectories.appendToTrackedDirectoriesList(newJDK)) {
-					updateList();
+					updateJdkList();
 				} else {
 					DialogBoxes.errorDialog("Not a valid JDK folder", "", "The chosen folder is not"
 							+ " a valid JDK folder, must contain a java and javac executable");
@@ -277,7 +287,7 @@ public class SetupController extends AnchorPane {
 			File removeJDKFile = new File(removeJDKPath);
 			JDKDirectories.removeFromTrackedDirectoriesList(removeJDKFile);
 		
-			updateList();
+			updateJdkList();
 		} else {
 			DialogBoxes.errorDialog("Choose JDK to remove", "", "Choose a JDK from the list to "
 					+ "remove it");
@@ -293,7 +303,7 @@ public class SetupController extends AnchorPane {
 			File deaultJDKFile = new File(defaultJDKPath);
 			JDKDirectories.setDefaultJDKFile(deaultJDKFile);
 		
-			updateList();
+			updateJdkList();
 		} else {
 			DialogBoxes.errorDialog("Choose JDK to make default", "", "Choose a JDK from the list to "
 					+ "make it the default");

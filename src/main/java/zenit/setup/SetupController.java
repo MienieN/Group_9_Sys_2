@@ -28,19 +28,25 @@ import main.java.zenit.ui.DialogBoxes;
 
 public class SetupController extends AnchorPane {
 	private Stage stage;
-	private File workspaceDat = new File("res/workspace/workspace.dat");
-	private File JDKDat = new File("res/JDK/JDK.dat");
-	private File defaultJDKDat = new File ("res/JDK/DefaultJDK.dat");
+	private File workspaceDat;
+	private File JDKDat;
+	private File defaultJDKDat;
 	private File workspaceFile;
-	private final ToggleGroup tgGroup;
 	private RadioButtonListener rbListener;
+	private final ToggleGroup tgGroup;
 	
 	@FXML ListView<String> jdkList;
 	@FXML TextField workspacePath;
-	@FXML RadioButton rb1;
-	@FXML RadioButton rb2;
 	@FXML ImageView logo;
+	@FXML RadioButton rb1, rb2;
 
+	/**
+	 * Constructor for the SetupController class. Initializes the necessary variables and files required for setup.
+	 * 1. Initializes a ToggleGroup to handle radio button selection.
+	 * 2. Initializes workspaceDat file to store workspace information.
+	 * 3. Initializes JDKDat file to store JDK information.
+	 * 4. Initializes defaultJDKDat file to store default JDK information.
+	 */
 	public SetupController() {
 		//Init final variable
 		tgGroup = new ToggleGroup();
@@ -51,30 +57,49 @@ public class SetupController extends AnchorPane {
 		defaultJDKDat = new File ("res/JDK/DefaultJDK.dat");
 	}
 
+	/**
+	 * This method starts the setup process by loading the setup interface from the FXML file, setting up the stage with the provided scene,
+	 * initializing necessary graphical components, and displaying the stage.
+	 */
 	public void start() {
 		try {
-			//setup scene
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/zenit/setup/Setup.fxml"));
-			loader.setController(this);
+			FXMLLoader loader = loadSetupFXML();
 			AnchorPane root = (AnchorPane) loader.load();
 			Scene scene = new Scene(root);
+			setUpStage(scene);
 
-			//set up stage
-			stage = new Stage();
-			stage.setResizable(false);
-			stage.setScene(scene);
-			stage.initStyle(StageStyle.UNDECORATED);
-			
-			//Init graphical components
-			initialize();
-			
-			//display stage
-			stage.showAndWait();
+			initialize(); //Init graphical components
+			stage.showAndWait(); //display stage
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error in SetupController start method: " + e.getMessage());
 		}
+	}
+
+	/**
+	 * Loads the FXML file for the setup interface.
+	 *
+	 * @return FXMLLoader object for the setup FXML file.
+	 */
+	private FXMLLoader loadSetupFXML() {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/zenit/setup/Setup.fxml"));
+		loader.setController(this);
+		return loader;
+	}
+
+	/**
+	 * Sets up the stage for the application with the given scene.
+	 *
+	 * @param scene the Scene object to set on the stage
+	 * @return true if the stage setup was successful, false otherwise
+	 */
+	private boolean setUpStage(Scene scene) {
+		stage = new Stage();
+		stage.setResizable(false);
+		stage.setScene(scene);
+		stage.initStyle(StageStyle.UNDECORATED);
+		return true;
 	}
 
 	private void initialize() {

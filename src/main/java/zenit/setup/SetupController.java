@@ -102,39 +102,69 @@ public class SetupController extends AnchorPane {
 		return true;
 	}
 
+	/**
+	 * Initializes the setup process by setting dark mode, loading logo and OS default JDKs,
+	 * loading workspace information, initializing radio buttons, and updating the JDK list.
+	 */
 	private void initialize() {
-		
-		//Set dark mode
+		setDarkMode();
+		loadLogoAndOsJdks();
+		loadWorkspace();
+		initRadioButtons();
+		updateList();
+	}
+
+	/**
+	 * Sets the dark mode for the application by adding the dark mode stylesheet to the scene.
+	 *
+	 * @return true if the dark mode was set successfully, false otherwise
+	 */
+	private boolean setDarkMode() {
 		var stylesheets = stage.getScene().getStylesheets();
 		var darkMode = getClass().getResource("/zenit/ui/projectinfo/mainStyle.css")
 				.toExternalForm();
 		stylesheets.add(darkMode);
-		
+		return true;
+	}
+
+	/**
+	 * Loads the logo image and OS default JDKs if necessary.
+	 *
+	 * @return true if the logo image and default JDKs were loaded successfully, false otherwise
+	 */
+	private boolean loadLogoAndOsJdks() {
 		//Load logo
 		logo.setImage(new Image(getClass().getResource("/zenit/setup/zenit.png")
 				.toExternalForm()));
 		logo.setFitWidth(55);
-		
+
 		//Load OS default JDKs if none are saved
 		if (!JDKDat.exists()) {
 			JDKDirectories.createNewFileWithDefaultJVMDirectories();
 		}
-		
-		//Load in set workspace if it exist
-		if (workspaceDat.exists()) {	
+
+		return true;
+	}
+
+	/**
+	 * Loads the workspace information. If the workspace data file exists, it reads the workspace information
+	 * from the file and sets the workspace path. If the workspace data file does not exist, it sets up a new
+	 * workspace using WorkspaceHandler and returns true.
+	 *
+	 * @return true if the workspace was loaded successfully or a new workspace was set up, false otherwise
+	 */
+	private boolean loadWorkspace() {
+		if (workspaceDat.exists()) {
 			try {
 				workspaceFile = WorkspaceHandler.readWorkspace();
 				workspacePath.setText(workspaceFile.getPath());
 			} catch (IOException e) {
-				e.printStackTrace();
-			}	
+				System.out.println("Eror while loading workspace: " + e.getMessage());
+			}
 		} else {
 			WorkspaceHandler.setUpNewWorkspace();
 		}
-		
-		initRadioButtons();
-		
-		updateList();
+		return true;
 	}
 
 	private void initRadioButtons() {

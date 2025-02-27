@@ -167,6 +167,11 @@ public class SetupController extends AnchorPane {
 		return true;
 	}
 
+	/**
+	 * Initializes the radio buttons in the setup interface. Sets up toggle group for rb1 and rb2.
+	 * Determines the initial selection of radio buttons based on the workspaceFile existence.
+	 * Adds a ChangeListener to the toggle group for handling radio button selection changes.
+	 */
 	private void initRadioButtons() {
 		rb1.setToggleGroup(tgGroup);
 		rb2.setToggleGroup(tgGroup);
@@ -176,9 +181,8 @@ public class SetupController extends AnchorPane {
 		} else {
 			rb1.setSelected(true);
 		}
-		
-		rbListener = new RadioButtonListener();
-		tgGroup.selectedToggleProperty().addListener(rbListener);
+
+		tgGroup.selectedToggleProperty().addListener(new RadioButtonListener());
 	}
 
 	private void updateList() {

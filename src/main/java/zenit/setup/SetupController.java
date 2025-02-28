@@ -298,37 +298,52 @@ public class SetupController extends AnchorPane {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * Removes the selected JDK from the JDK list.
+	 *
+	 * Retrieves the name of the JDK to remove from the selection list.
+	 * Displays an error dialog if no JDK is selected.
+	 * Displays an error dialog if the default JDK is selected for removal.
+	 * Prompts the user to confirm the removal if there is only one JDK remaining in the list.
+	 * Removes the JDK from the tracked directories list, updates the JDK list, and UI accordingly.
+	 */
 	@FXML
 	private void removeJDK() {
-		String removeJDKName = jdkList.getSelectionModel().getSelectedItem();
-		
-		if (removeJDKName != null) {
-			
-			if (removeJDKName.endsWith(" [default]")) {
-				DialogBoxes.errorDialog("Can't remove default JDK", "", "Can't remove the default "
-						+ "JDK, choose another default JDK to remove this one");
-				return;
-			} else if (jdkList.getItems().size() == 1){
-				int choice = DialogBoxes.twoChoiceDialog("Remove the last JDK from list", "",
-						"There is only one JDK remaining in the list. Are you sure you want to "
-						+ "remove it? At least one JDK is needed to run Zenit", "Yes, remove", 
-						
-						"No, keep it");
-				if (choice == 0 || choice == 2) {
-					return;
-				}
-			}
-			
-			String removeJDKPath = JDKDirectories.getFullPathFromName(removeJDKName);
-			File removeJDKFile = new File(removeJDKPath);
-			JDKDirectories.removeFromTrackedDirectoriesList(removeJDKFile);
-		
-			updateJdkList();
-		} else {
+		String jdkToRemoveName = jdkList.getSelectionModel().getSelectedItem();
+
+		if (jdkToRemoveName == null) {
 			DialogBoxes.errorDialog("Choose JDK to remove", "", "Choose a JDK from the list to "
 					+ "remove it");
-		}	
+			return;
+		}
+		if (jdkToRemoveName.endsWith(" [default]")) {
+			DialogBoxes.errorDialog("Can't remove default JDK", "", "Can't remove the default "
+					+ "JDK, choose another default JDK to remove this one");
+			return;
+		}
+		if (!confirmLastJDKRemoval()) {
+			return;
+		}
+		String jdkToRemovePath = JDKDirectories.getFullPathFromName(jdkToRemoveName);
+		File jdkToRemoveFile = new File(jdkToRemovePath);
+		JDKDirectories.removeFromTrackedDirectoriesList(jdkToRemoveFile);
+		updateJdkList();
+	}
+
+	/**
+	 * Checks if there is only one JDK remaining in the list. If yes, prompts the user to confirm removal as at least one JDK is needed to run Zenit.
+	 *
+	 * @return true if there is more than one JDK in the list or if the user confirms the removal of the last JDK, false otherwise
+	 */
+	private boolean confirmLastJDKRemoval() {
+		if (jdkList.getItems().size() > 1) {
+			return true;
+		}
+		int choice = DialogBoxes.twoChoiceDialog("Remove the last JDK from list", "",
+				"There is only one JDK remaining in the list. Are you sure you want to "
+						+ "remove it? At least one JDK is needed to run Zenit", "Yes, remove", "No, keep it");
+		return !(choice == 0 || choice == 2);
 	}
 	
 	@FXML

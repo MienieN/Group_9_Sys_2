@@ -270,57 +270,52 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		}
 	}
 
+	/**
+	 * Opens the specified URL in the default web browser based on the operating system.
+	 *
+	 * @param url the URL to be opened in the browser
+	 */
 	private void openInBrowser(String url) {
-		Runtime rt = Runtime.getRuntime();
-		
+		String command;
 		switch(operatingSystem) {
 			case LINUX:
-			try {
-				rt.exec("xdg-open " + url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				command = "xdg-open ";
 				break;
-				
 			case MACOS:
-			try {
-				rt.exec("open " + url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				command = "open ";
 				break;
-				
 			case WINDOWS:
-			try {
-				rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				command = "rundll32 url.dll,FileProtocolHandler ";
 				break;
 			default:
-				System.err.println("OS not found. Open link manually in browser:\n" + url );
-				break;
+				System.err.println("Unsupported operating system. Open link manually in browser:\n" + url );
+				return;
+		}
+
+		try {
+			Runtime.getRuntime().exec(command + url);
+		} catch (IOException e) {
+			System.out.println("Error opening link: " + e.getMessage());
 		}
 	}
 
+	/**
+	 * Handles the change in dark mode for the application, updating stylesheets and settings accordingly.
+	 *
+	 * @param isDarkMode true if the dark mode is enabled, false otherwise
+	 */
 	private void darkModeChanged(boolean isDarkMode) {
 		if(!isCustomTheme) {
 			var stylesheets = this.mainController.getStage().getScene().getStylesheets();
 			var settingsPanelStylesheets = window.getScene().getStylesheets();
-			
 			var lightMode = getClass().getResource("/zenit/ui/mainStyle-lm.css").toExternalForm();
 			var darkMode = getClass().getResource("/zenit/ui/mainStyle.css").toExternalForm();
 			var darkModeKeywords = ZenCodeArea.class.getResource("/zenit/ui/keywords.css").toExternalForm();
 			var lightModeKeywords = ZenCodeArea.class.getResource("/zenit/ui/keywords-lm.css").toExternalForm();
 			var darkModeConsole = getClass().getResource("/zenit/console/consoleStyle.css").toExternalForm();
 			var lightModeConsole = getClass().getResource("/zenit/console/consoleStyleLight.css").toExternalForm();
-			
-		
-			if (isDarkMode) {
 
+			if (isDarkMode) {
 				settingsPanelStylesheets.clear();
 				settingsPanelStylesheets.add(settingsPanelDarkMode);
 				consoleController.getStylesheets().remove(lightModeConsole);
@@ -330,14 +325,12 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 				stylesheets.clear();
 				stylesheets.add(darkModeKeywords);
 				stylesheets.add(darkMode);
-
 			} else {
 				settingsPanelStylesheets.clear();
 				settingsPanelStylesheets.add(settingsPanelLightMode);
 				consoleController.getStylesheets().remove(darkModeConsole);
 				consoleController.getStylesheets().add(lightModeConsole);
 				consoleController.changeAllConsoleAreaBackgroundColors("-fx-background-color:#989898");
-
 
 				stylesheets.clear();
 				stylesheets.add(lightModeKeywords);

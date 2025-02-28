@@ -2,10 +2,8 @@ package main.java.zenit.settingspanel;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import org.controlsfx.control.ToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -132,12 +130,22 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		themeHandler = new CustomCSSThemeHandler(stages);
 		return true;
 	}
-	
+
+	/**
+	 * Sets a new font for the choice box and the main controller.
+	 *
+	 * @param newFont the new font to be set
+	 */
 	public void setNewFont(String newFont) {
 		choiceBoxNewFont.setValue(newFont);
 		mainController.setFontFamily(newFont);
 	}
 
+	/**
+	 * Sets a new font size for the text in the application.
+	 *
+	 * @param newFontSize the new font size to be set
+	 */
 	public void setNewFontSize(long newFontSize) {
 		long size = newFontSize;
 		fieldNewSize.textProperty().setValue(String.valueOf(size));
@@ -151,24 +159,28 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		mainController.setFontSize((int)size);//this.codeArea.setFontSize((int)size);
 	}
 
-	public void panelToFront(Event e) {
-		if(e.getSource() == btnTextAppearance) {
-			panelTextAppearance.toFront();
-		}
-		else if(e.getSource() == btnJavaHome) {
-			panelJavaHome.toFront();
-		}
-		else if(e.getSource() == btnSupport) {
-			panelSupport.toFront();
-		}
-		else if(e.getSource() == btnTheme) {
-			panelTheme.toFront();
-		}
-		else if(e.getSource() == btnCustomCSS) {
-			panelCustomCSS.toFront();
-		}
-		else if(e.getSource() == btnCustomTheme) {
-			panelCustomTheme.toFront();
+	/**
+	 * A map that associates button actions with corresponding Runnable implementations.
+	 * The keys are instances of Button enum and the values are Runnable instances.
+	 */
+	Map<Button, Runnable> buttonActions = new HashMap<>() {{
+		put(btnTextAppearance, () -> panelTextAppearance.toFront());
+		put(btnJavaHome, () -> panelJavaHome.toFront());
+		put(btnSupport, () -> panelSupport.toFront());
+		put(btnTheme, () -> panelTheme.toFront());
+		put(btnCustomCSS, () -> panelCustomCSS.toFront());
+		put(btnCustomTheme, () -> panelCustomTheme.toFront());
+	}};
+
+	/**
+	 * Brings the panel associated with the specified event to the front to make it visible.
+	 *
+	 * @param event the event triggering the action to bring the panel to the front
+	 */
+	public void panelToFront(Event event) {
+		Runnable action = buttonActions.get(event.getSource());
+		if (action != null) {
+			action.run();
 		}
 	}
 	

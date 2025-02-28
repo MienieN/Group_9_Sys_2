@@ -1,5 +1,6 @@
 package main.java.zenit;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
@@ -65,7 +66,6 @@ class ZenitTest {
             throw new RuntimeException(e);
         }
         });
-
     }
 
 

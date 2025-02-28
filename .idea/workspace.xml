@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/TextAreaOutputStreamTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/main/java/zenit/ZenitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/ZenitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,38 +44,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DebugErrorBufferTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DebugErrorTest.testGetRow.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProcessBufferTest.testIsempty.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SearchTest.testReplaceAll.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SearchTest.testSearchInFile (1).executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SearchTest.testSearchInFile.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TerminalControllerTest.testTabPaneNotNull.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ZenitTest.testTest (1).executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ZenitTest.testTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;JonatanATNew&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/Jonatan/Desktop/Group_9_Sys_2/src/test/java/main/java/zenit&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jonatan/Desktop/Group_9_Sys_2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.45747125&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Unnamed.executor": "Run",
+    "JUnit.DebugErrorBufferTest.executor": "Run",
+    "JUnit.DebugErrorTest.testGetRow.executor": "Run",
+    "JUnit.ProcessBufferTest.testIsempty.executor": "Run",
+    "JUnit.SearchTest.testReplaceAll.executor": "Run",
+    "JUnit.SearchTest.testSearchInFile (1).executor": "Run",
+    "JUnit.SearchTest.testSearchInFile.executor": "Run",
+    "JUnit.TerminalControllerTest.testTabPaneNotNull.executor": "Run",
+    "JUnit.TextAreaOutputStreamTest.testWriteSingleChar.executor": "Run",
+    "JUnit.ZenitTest.testTest (1).executor": "Run",
+    "JUnit.ZenitTest.testTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "JonatanATNew",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/Jonatan/Desktop/Group_9_Sys_2/src/test/java/main/java/zenit",
+    "last_opened_file_path": "C:/Users/Jonatan/Desktop/Group_9_Sys_2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.45747125",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -86,7 +89,7 @@
       <recent name="main.java.zenit.terminal" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Unnamed">
+  <component name="RunManager" selected="JUnit.TextAreaOutputStreamTest.testWriteSingleChar">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
@@ -106,22 +109,6 @@
       <option name="PACKAGE_NAME" value="main.java.zenit.javacodecompiler" />
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.javacodecompiler.DebugErrorBufferTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProcessBufferTest.testIsempty" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="zenit" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.java.zenit.javacodecompiler.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="main.java.zenit.javacodecompiler" />
-      <option name="MAIN_CLASS_NAME" value="main.java.zenit.javacodecompiler.ProcessBufferTest" />
-      <option name="METHOD_NAME" value="testIsempty" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -174,21 +161,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TextAreaOutputStreamTest.testWriteSingleChar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.zenit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.java.zenit" />
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.TextAreaOutputStreamTest" />
+      <option name="METHOD_NAME" value="testWriteSingleChar" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Unnamed" />
+      <item itemvalue="JUnit.TextAreaOutputStreamTest.testWriteSingleChar" />
       <item itemvalue="JUnit.SearchTest.testReplaceAll" />
       <item itemvalue="JUnit.SearchTest.testSearchInFile" />
       <item itemvalue="JUnit.SearchTest.testSearchInFile (1)" />
       <item itemvalue="JUnit.DebugErrorBufferTest" />
-      <item itemvalue="JUnit.ProcessBufferTest.testIsempty" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TextAreaOutputStreamTest.testWriteSingleChar" />
         <item itemvalue="JUnit.SearchTest.testSearchInFile (1)" />
         <item itemvalue="JUnit.SearchTest.testReplaceAll" />
         <item itemvalue="JUnit.SearchTest.testSearchInFile" />
         <item itemvalue="JUnit.DebugErrorBufferTest" />
-        <item itemvalue="JUnit.ProcessBufferTest.testIsempty" />
       </list>
     </recent_temporary>
   </component>

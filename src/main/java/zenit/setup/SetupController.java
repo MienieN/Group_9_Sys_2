@@ -3,7 +3,6 @@ package main.java.zenit.setup;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,7 +21,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import main.java.zenit.Zenit;
 import main.java.zenit.filesystem.WorkspaceHandler;
 import main.java.zenit.filesystem.jreversions.JDKDirectories;
@@ -34,13 +32,13 @@ public class SetupController extends AnchorPane {
 	private File JDKDat;
 	private File defaultJDKDat;
 	private File workspaceFile;
-	private RadioButtonListener rbListener;
-	private final ToggleGroup tgGroup;
+	private RadioButtonListener radioButtonListener;
+	private final ToggleGroup toggleGroup;
 	
 	@FXML ListView<String> jdkList;
 	@FXML TextField workspacePath;
 	@FXML ImageView logo;
-	@FXML RadioButton rb1, rb2;
+	@FXML RadioButton radioButton1, radioButton2;
 
 	/**
 	 * Constructor for the SetupController class. Initializes the necessary variables and files required for setup.
@@ -51,7 +49,7 @@ public class SetupController extends AnchorPane {
 	 */
 	public SetupController() {
 		//Init final variable
-		tgGroup = new ToggleGroup();
+		toggleGroup = new ToggleGroup();
 		
 		//Init dat files
 		workspaceDat = new File("res/workspace/workspace.dat");
@@ -176,16 +174,16 @@ public class SetupController extends AnchorPane {
 	 * @return true if the radio buttons are successfully initialized
 	 */
 	private boolean initRadioButtons() {
-		rb1.setToggleGroup(tgGroup);
-		rb2.setToggleGroup(tgGroup);
+		radioButton1.setToggleGroup(toggleGroup);
+		radioButton2.setToggleGroup(toggleGroup);
 		
 		if (workspaceFile == null) {
-			rb2.setSelected(true);
+			radioButton2.setSelected(true);
 		} else {
-			rb1.setSelected(true);
+			radioButton1.setSelected(true);
 		}
 
-		tgGroup.selectedToggleProperty().addListener(new RadioButtonListener());
+		toggleGroup.selectedToggleProperty().addListener(new RadioButtonListener());
 		return true;
 	}
 
@@ -382,7 +380,7 @@ public class SetupController extends AnchorPane {
 		//Check if workspace input text has been updated since save
 		boolean unsavedChanges = true;
 		while (unsavedChanges) {
-			boolean isToggleGroupSelected = tgGroup.getSelectedToggle().equals(rb1);
+			boolean isToggleGroupSelected = toggleGroup.getSelectedToggle().equals(radioButton1);
 			boolean isWorkspacePathChanged = workspaceFile != null && !workspaceFile.getPath().equals(workspacePath.getText());
 
 			if (isToggleGroupSelected && isWorkspacePathChanged) {
@@ -407,7 +405,7 @@ public class SetupController extends AnchorPane {
 	 * @return true if the default workspace is selected and set up successfully, false otherwise
 	 */
 	private boolean isDefaultWorkspaceSelected() {
-		if (tgGroup.getSelectedToggle().equals(rb2)) {
+		if (toggleGroup.getSelectedToggle().equals(radioButton2)) {
 			String userPath = System.getProperty("user.home");
 			String documentsPath = getDocumentsPath();
 			File defaultWorkspace = new File(userPath + File.separator + documentsPath +
@@ -501,36 +499,57 @@ public class SetupController extends AnchorPane {
 		return true;
 	}
 
+	/**
+	 * Determines the path for the 'Documents' directory based on the operating system.
+	 *
+	 * @return A String representing the path to the 'Documents' directory, or null if the operating system is not recognized.
+	 */
 	private String getDocumentsPath() {
 		String OS = Zenit.OS;
 		if (OS.equals("Mac OS X")) {
 			return "documents" + File.separator;
-		} else if (OS.startsWith("Windows")) {
-			return "Documents";
-		} else if (OS.equals("Linux")) {
+		} else if (OS.startsWith("Windows") || OS.equals("Linux")) {
 			return "Documents";
 		} else {
 			return null;
 		}
 	}
 
+	/**
+	 * Toggles the radio buttons based on the provided boolean value.
+	 *
+	 * @param toggleOwn a boolean indicating whether to toggle the radio buttons
+	 */
 	private void toggleRadiobutton(boolean toggleOwn) {
-		tgGroup.selectedToggleProperty().removeListener(rbListener);
+		toggleGroup.selectedToggleProperty().removeListener(radioButtonListener);
 		if (toggleOwn) {
-			rb2.setSelected(false);
-			rb1.setSelected(true);
+			radioButton2.setSelected(false);
+			radioButton1.setSelected(true);
 		} else {
-			rb1.setSelected(false);
-			rb2.setSelected(true);
+			radioButton1.setSelected(false);
+			radioButton2.setSelected(true);
 		}
-		tgGroup.selectedToggleProperty().addListener(rbListener);
+		toggleGroup.selectedToggleProperty().addListener(radioButtonListener);
 	}
-	
-	private class RadioButtonListener implements ChangeListener<Toggle> {
 
+	/**
+	 * Private inner class that implements the ChangeListener interface for handling radio button selection changes.
+	 * This listener checks if the selected radio button is equal to radioButton1 and then either calls browse() method
+	 * if the workspacePath text field is empty or calls onEnter() method if it is not empty.
+	 */
+	private class RadioButtonListener implements ChangeListener<Toggle> {
+		/**
+		 * Handles the change event of the ObservableValue representing the selected Toggle.
+		 * If the selected Toggle is equal to radioButton1 and the workspacePath text field is empty, calls the browse() method.
+		 * If the workspacePath text field is not empty, calls the onEnter() method.
+		 *
+		 * @param observable The ObservableValue that triggered the change event.
+		 * @param oldValue The previous value of the ObservableValue.
+		 * @param newValue The new value of the ObservableValue.
+		 */
 		@Override
 		public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-            if (tgGroup.getSelectedToggle().equals(rb1)) {
+            if (toggleGroup.getSelectedToggle().equals(radioButton1)) {
             	if (workspacePath.getText().equals("")) {
             		browse();
             	} else {
@@ -539,5 +558,4 @@ public class SetupController extends AnchorPane {
             }
 		}
 	}
-	
 }

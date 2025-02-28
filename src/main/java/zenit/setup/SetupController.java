@@ -345,51 +345,68 @@ public class SetupController extends AnchorPane {
 						+ "remove it? At least one JDK is needed to run Zenit", "Yes, remove", "No, keep it");
 		return !(choice == 0 || choice == 2);
 	}
-	
+
+	/**
+	 * Sets the selected JDK as the default JDK for the application.
+	 * Retrieves the name of the selected JDK from the JDK list.
+	 * If a JDK is selected, sets the selected JDK file as the default JDK file using JDKDirectories.
+	 * Updates the JDK list in the user interface after setting the default JDK.
+	 * Displays an error dialog if no JDK is selected for setting as default.
+	 */
 	@FXML
 	private void setDefaultJDK() {
 		String defaultJDKName = jdkList.getSelectionModel().getSelectedItem();
-		
 		if (defaultJDKName != null) {
-			String defaultJDKPath = JDKDirectories.getFullPathFromName(defaultJDKName);
-			File deaultJDKFile = new File(defaultJDKPath);
-			JDKDirectories.setDefaultJDKFile(deaultJDKFile);
-		
+			JDKDirectories.setDefaultJDKFile(new File(JDKDirectories.getFullPathFromName(defaultJDKName)));
 			updateJdkList();
 		} else {
 			DialogBoxes.errorDialog("Choose JDK to make default", "", "Choose a JDK from the list to "
 					+ "make it the default");
 		}
 	}
-	
+
+	/**
+	 * Exits the application by invoking System.exit(0).
+	 */
 	@FXML
 	private void quit() {
 		System.exit(0);
 	}
-	
+
+	/**
+	 * Checks if there are unsaved changes in the workspace input text and prompts the user to save.
+	 * The method loops until changes are saved or user decides not to save.
+	 */
 	@FXML
 	private void done() {
-		
 		//Check if workspace input text has been updated since save
-		boolean notSavedWorkspace = true;
-		
-		while (notSavedWorkspace) {
-			if (tgGroup.getSelectedToggle().equals(rb1) && workspaceFile != null && 
-					!workspaceFile.getPath().equals(workspacePath.getText())) {
+		boolean unsavedChanges = true;
+		while (unsavedChanges) {
+			boolean isToggleGroupSelected = tgGroup.getSelectedToggle().equals(rb1);
+			boolean isWorkspacePathChanged = workspaceFile != null && !workspaceFile.getPath().equals(workspacePath.getText());
+
+			if (isToggleGroupSelected && isWorkspacePathChanged) {
 				int choice = DialogBoxes.twoChoiceDialog("Save changes to workspace", "",
-						"The changes to workspace has not been saved, would you like: " + 
-						workspacePath.getText() + " to be your workspace?", "Yes", "No");
-				if (choice == 1) {
-					onEnter();
-				} else {
-					notSavedWorkspace = false;
-				}
-			} else {
-				notSavedWorkspace = false;
+						"The changes to workspace has not been saved, would you like: " +
+								workspacePath.getText() + " to be your workspace?", "Yes", "No");
+				unsavedChanges = choice == 1;
+			}
+			else {
+				unsavedChanges = false;
 			}
 		}
-		
-		//Check if default workspace is selected
+		isDefaultWorkspaceSelected();
+	}
+
+	/**
+	 * Checks if the default workspace is selected based on the radio button selection.
+	 * If rb2 radio button is selected, it sets up a default workspace in the user's home directory.
+	 * Validates the existence of necessary files and displays error dialogs if files are missing.
+	 * Creates the workspace directory and closes the stage if all conditions are met.
+	 *
+	 * @return true if the default workspace is selected and set up successfully, false otherwise
+	 */
+	private boolean isDefaultWorkspaceSelected() {
 		if (tgGroup.getSelectedToggle().equals(rb2)) {
 			String userPath = System.getProperty("user.home");
 			String documentsPath = getDocumentsPath();
@@ -400,7 +417,6 @@ public class SetupController extends AnchorPane {
 			}
 			workspaceFile = defaultWorkspace;
 		}
-		
 		if (!workspaceFile.exists() || !JDKDat.exists() || !defaultJDKDat.exists()) {
 			DialogBoxes.errorDialog("Missing files", "", "Please enter the required information to"
 					+ " launch Zenit");
@@ -408,6 +424,7 @@ public class SetupController extends AnchorPane {
 			WorkspaceHandler.createWorkspace(workspaceFile);
 			stage.close();
 		}
+		return true;
 	}
 	
 	@FXML

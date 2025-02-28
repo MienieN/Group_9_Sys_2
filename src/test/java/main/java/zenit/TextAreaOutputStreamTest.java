@@ -2,10 +2,12 @@ package main.java.zenit;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import javax.management.StringValueExp;
 import java.io.IOException;
@@ -13,12 +15,20 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class TextAreaOutputStreamTest {
+class TextAreaOutputStreamTest extends ApplicationTest {
 
     private TextArea textArea;
 
     private TextAreaOutputStream textAreaOutputStream;
 
+
+    @Override
+    public void start(Stage stage) {
+        MockitoAnnotations.openMocks(this);
+        textArea = new TextArea();
+        textAreaOutputStream = spy(new TextAreaOutputStream(textArea));
+    }
+    /*
     @BeforeEach
     void setup() {
         Platform.runLater(() -> {
@@ -26,6 +36,8 @@ class TextAreaOutputStreamTest {
             textAreaOutputStream = spy(new TextAreaOutputStream(textArea));
         });
     }
+
+     */
 
     @Test
     void testWriteSingleChar(){

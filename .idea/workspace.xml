@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/TextAreaOutputStreamTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/main/java/zenit/ZenitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/ZenitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +52,7 @@
     "JUnit.SearchTest.testSearchInFile (1).executor": "Run",
     "JUnit.SearchTest.testSearchInFile.executor": "Run",
     "JUnit.TerminalControllerTest.testTabPaneNotNull.executor": "Run",
+    "JUnit.TextAreaOutputStreamTest.testClose.executor": "Run",
     "JUnit.TextAreaOutputStreamTest.testWriteSingleChar.executor": "Run",
     "JUnit.ZenitTest.testTest (1).executor": "Run",
     "JUnit.ZenitTest.testTest.executor": "Run",
@@ -89,26 +88,11 @@
       <recent name="main.java.zenit.terminal" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TextAreaOutputStreamTest.testWriteSingleChar">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.TestUI">
+    <configuration name="TestUI" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
-      <option name="VM_PARAMETERS" value="--module-path lib/windowsFX/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DebugErrorBufferTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="zenit" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.java.zenit.javacodecompiler.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="main.java.zenit.javacodecompiler" />
-      <option name="MAIN_CLASS_NAME" value="main.java.zenit.javacodecompiler.DebugErrorBufferTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="--module-path lib/javafx-sdk-23.0.2/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -161,6 +145,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TextAreaOutputStreamTest.testClose" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.zenit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.java.zenit" />
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.TextAreaOutputStreamTest" />
+      <option name="METHOD_NAME" value="testClose" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TextAreaOutputStreamTest.testWriteSingleChar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="zenit" />
       <extension name="coverage">
@@ -178,20 +178,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.TestUI" />
+      <item itemvalue="JUnit.TextAreaOutputStreamTest.testClose" />
       <item itemvalue="JUnit.TextAreaOutputStreamTest.testWriteSingleChar" />
       <item itemvalue="JUnit.SearchTest.testReplaceAll" />
       <item itemvalue="JUnit.SearchTest.testSearchInFile" />
       <item itemvalue="JUnit.SearchTest.testSearchInFile (1)" />
-      <item itemvalue="JUnit.DebugErrorBufferTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TextAreaOutputStreamTest.testClose" />
         <item itemvalue="JUnit.TextAreaOutputStreamTest.testWriteSingleChar" />
         <item itemvalue="JUnit.SearchTest.testSearchInFile (1)" />
         <item itemvalue="JUnit.SearchTest.testReplaceAll" />
         <item itemvalue="JUnit.SearchTest.testSearchInFile" />
-        <item itemvalue="JUnit.DebugErrorBufferTest" />
       </list>
     </recent_temporary>
   </component>

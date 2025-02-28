@@ -426,40 +426,79 @@ public class SetupController extends AnchorPane {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * This method is triggered when the user presses the Enter key after entering text in the workspacePath text field.
+	 * It checks if the input corresponds to an existing directory, an existing file that is not a directory, or a non-existing file.
+	 * Based on the type of input, it calls the appropriate handling methods.
+	 */
 	@FXML
 	private void onEnter() {
 		String input = workspacePath.getText();
 		File file = new File(input);
 		
 		if (file.exists() && file.isDirectory()) {
-			workspaceFile = file;
-			toggleRadiobutton(true);
+			handleExistingDirectory(file);
 		} else if (file.exists() && !file.isDirectory()) {
-			DialogBoxes.errorDialog("File selected", "", "You have selected a file as workspace. A"
-					+ " workspace must be a directory");
-			toggleRadiobutton(false);
+			handleExistingFile();
 		} else if (!file.exists()) {
-			int choice = DialogBoxes.twoChoiceDialog("Folder doesn't exist", "", "The folder " + 
-					input + " doesn't exist. Would you like to create it?", "Yes, create folder",
-					"No, don't create folder");
-			
-			if (choice == 1) {
-				if (file.mkdir()) {
-					DialogBoxes.informationDialog("Folder created", "The folder " + input + 
-							" is now created.");
-					workspaceFile = file;
-					toggleRadiobutton(true);
-				} else {
-					DialogBoxes.errorDialog("Folder couldn't be created", "", "The folder " +
-							input + " couldn't be created. You can only create a folder in an"
-									+ " existing folder");
-					toggleRadiobutton(false);
-				}
+			handleNonExistingFile(file, input);
+		}
+	}
+
+	/**
+	 * Handles an existing directory by setting the workspace file to the provided File,
+	 * toggling the radio button selection, and returning a boolean indicating success.
+	 *
+	 * @param file the File representing the existing directory to handle
+	 * @return true if the existing directory is handled successfully
+	 */
+	private boolean handleExistingDirectory(File file) {
+		workspaceFile = file;
+		toggleRadiobutton(true);
+		return true;
+	}
+
+	/**
+	 * Displays an error dialog and toggles a radio button based on handling an existing file.
+	 *
+	 * @return true to indicate successful handling of the existing file
+	 */
+	private boolean handleExistingFile() {
+		DialogBoxes.errorDialog("File selected", "", "You have selected a file as workspace. A"
+				+ " workspace must be a directory");
+		toggleRadiobutton(false);
+		return true;
+	}
+
+	/**
+	 * Handles a non-existing file by prompting the user to create a folder with the provided input.
+	 *
+	 * @param file the File object representing the file to be created as a folder
+	 * @param input the String input representing the folder name to be created
+	 * @return true if the folder creation process is completed and handled successfully
+	 */
+	private boolean handleNonExistingFile(File file, String input) {
+		int choice = DialogBoxes.twoChoiceDialog("Folder doesn't exist", "", "The folder " +
+						input + " doesn't exist. Would you like to create it?", "Yes, create folder",
+				"No, don't create folder");
+
+		if (choice == 1) {
+			if (file.mkdir()) {
+				DialogBoxes.informationDialog("Folder created", "The folder " + input +
+						" is now created.");
+				workspaceFile = file;
+				toggleRadiobutton(true);
 			} else {
+				DialogBoxes.errorDialog("Folder couldn't be created", "", "The folder " +
+						input + " couldn't be created. You can only create a folder in an"
+						+ " existing folder");
 				toggleRadiobutton(false);
 			}
+		} else {
+			toggleRadiobutton(false);
 		}
+		return true;
 	}
 
 	private String getDocumentsPath() {

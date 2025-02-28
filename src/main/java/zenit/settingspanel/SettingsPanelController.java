@@ -341,60 +341,103 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		mainController.setDarkmode(this.isDarkMode);
 	}
 
+	/**
+	 * Initializes the Settings Panel view by setting up various components and listeners.
+	 * It initializes the text fields, sliders, labels, choice boxes, Java Home path, operating system, dark mode toggle,
+	 * custom theme toggle, CSS list view, primary and secondary color pickers, and event handlers for theme customization.
+	 */
 	private void initialize() {
 		lblOldTextSize.setText(String.valueOf(oldSize));
 		fieldNewSize.setText(String.valueOf(oldSize));
 		sliderNewSize.setValue(oldSize);
-		
-		sliderNewSize.valueProperty().addListener(
-			(ChangeListener<? super Number>) (arg0, arg1, arg2) -> {
-				setNewFontSize(Math.round(sliderNewSize.getValue()));
-		});
-		
-		fieldNewSize.textProperty().addListener((arg0, arg1, arg2) -> {
-			try {  
-				setNewFontSize(Long.parseLong(fieldNewSize.getText()));
-			  } catch(NumberFormatException e){  
-			e.printStackTrace();	 
-			  }  
-		});
-		
-		List<String> fonts = Font.getFamilies();
-		
-		for(int i = 0; i < fonts.size(); i++) {
-			choiceBoxNewFont.getItems().add(fonts.get(i));
-		}
-		choiceBoxNewFont.setValue(oldFont);
-		lblOldFont.setText(oldFont);
-		choiceBoxNewFont.getSelectionModel().selectedItemProperty().addListener((arg0, arg1, arg2) -> {
-			setNewFont(arg2);
-		});
-		
+		createSliderListener();
+		createFieldListener();
+		createChoiceBoxListener();
 		lblCurrentJavaHome.setText(System.getenv("JAVA_HOME"));
-		
 		fieldNewSize.setAlignment(Pos.CENTER_RIGHT);
-		
-		String os = System.getProperty("os.name").toLowerCase();
-		if(os.indexOf("win") >= 0) {
-			operatingSystem = OS.WINDOWS;
-		}	
-		else if(os.indexOf("mac") >= 0) {
-			operatingSystem = OS.MACOS;
-		}
-		else if(os.indexOf("nix") >=0 || os.indexOf("nux") >=0) {
-			operatingSystem = OS.LINUX;
-		}
-		
+		setOperatingSystem();
 		toggleDarkMode.setSelected(mainController.isDarkmode());
-		toggleDarkMode.selectedProperty().addListener(new ChangeListener <Boolean> () {
-            @Override
-			public void changed(
-				ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
-            {
-				darkModeChanged(newValue);
-			}
-        });
-		
+
+		setToggleDarkModeListener();
+		setToggleSwitchCustomThemeListener();
+
+		listViewAddedCSS.getItems().add(new AnchorPane());
+
+		setPrimaryColorEventHandler();
+		setPrimaryTintEventHandler();
+		setSecondaryColorEventHandler();
+		setSecondaryTintEventHandler();
+	}
+
+	/**
+	 * Sets the event handler for changing the secondary tint color in the color picker.
+	 * This method listens for changes in the color picker's secondary tint value and updates the theme
+	 * by changing the secondary tint color.
+	 *
+	 * @return true if the event handler was set successfully
+	 */
+	private boolean setSecondaryTintEventHandler() {
+		colorPickerSecondaryTint.setOnAction((event) -> {
+			Platform.runLater(() -> {
+				themeHandler.changeColor(colorPickerSecondaryTint.getValue(),
+						CustomColor.secondaryTint);
+			});
+		});
+		return true;
+	}
+
+	/**
+	 * Sets the event handler for changing the secondary color in the color picker.
+	 *
+	 * @return true if the event handler was set successfully
+	 */
+	private boolean setSecondaryColorEventHandler() {
+		colorPickerSecondaryColor.setOnAction((event) -> {
+			Platform.runLater(() -> {
+				themeHandler.changeColor(colorPickerSecondaryColor.getValue(),
+						CustomColor.secondaryColor);
+			});
+		});
+		return true;
+	}
+
+	/**
+	 * Sets the event handler for changing the primary tint color in the color picker.
+	 *
+	 * @return true if the event handler was set successfully
+	 */
+	private boolean setPrimaryTintEventHandler() {
+		colorPickerPrimaryTint.setOnAction((event) -> {
+			Platform.runLater(() -> {
+				themeHandler.changeColor(colorPickerPrimaryTint.getValue(),
+						CustomColor.primaryTint);
+			});
+		});
+		return true;
+	}
+
+	/**
+	 * Sets the event handler for changing the primary color in the color picker.
+	 *
+	 * @return true if the event handler was set successfully
+	 */
+	private boolean setPrimaryColorEventHandler() {
+		colorPickerPrimaryColor.setOnAction((event) -> {
+		     Platform.runLater(() -> {
+		    	 themeHandler.changeColor(colorPickerPrimaryColor.getValue(),
+		    		CustomColor.primaryColor);
+			     });
+		});
+		return true;
+	}
+
+	/**
+	 * Sets a listener for the toggle switch representing a custom theme.
+	 * When the toggle switch value changes, it invokes necessary methods to handle theme changes.
+	 *
+	 * @return true if the toggle switch listener was successfully set
+	 */
+	private boolean setToggleSwitchCustomThemeListener() {
 		toggleSwitchCustomTheme.selectedProperty().addListener(new ChangeListener <Boolean> () {
             @Override
 			public void changed(
@@ -405,36 +448,96 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 				darkModeChanged(toggleDarkMode.isSelected());
 			}
         });
-		
-		listViewAddedCSS.getItems().add(new AnchorPane());
+		return true;
+	}
 
-		colorPickerPrimaryColor.setOnAction((event) -> {
-		     Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerPrimaryColor.getValue(),
-		    		CustomColor.primaryColor);
-			     });
-		});	
-		
-		colorPickerPrimaryTint.setOnAction((event) -> {
-	    	 Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerPrimaryTint.getValue(),
-		    		CustomColor.primaryTint);
-		     });
-		});	
-		
-		colorPickerSecondaryColor.setOnAction((event) -> {
-	    	 Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerSecondaryColor.getValue(),
-				    CustomColor.secondaryColor);
-		     });
-		});	
-		
-		colorPickerSecondaryTint.setOnAction((event) -> {
-	    	 Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerSecondaryTint.getValue(),
-				    CustomColor.secondaryTint);
-		     });
-		});	
+	/**
+	 * Sets a listener for the dark mode toggle switch.
+	 * When the toggle switch value changes, it invokes the darkModeChanged method with the updated value.
+	 *
+	 * @return true if the toggle switch listener was successfully set
+	 */
+	private boolean setToggleDarkModeListener() {
+		toggleDarkMode.selectedProperty().addListener(new ChangeListener <Boolean> () {
+            @Override
+			public void changed(
+				ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+            {
+				darkModeChanged(newValue);
+			}
+        });
+		return true;
+	}
+
+	/**
+	 * Sets the operating system based on the current system properties.
+	 *
+	 * @return true if the operating system was successfully set, false otherwise
+	 */
+	private boolean setOperatingSystem() {
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.contains("win")) {
+			operatingSystem = OS.WINDOWS;
+			return true;
+		}
+		else if(os.contains("mac")) {
+			operatingSystem = OS.MACOS;
+			return true;
+		}
+		else if(os.contains("nix") || os.contains("nux")) {
+			operatingSystem = OS.LINUX;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Populates the choice box with a list of fonts, sets the initial value to the old font,
+	 * updates the label with the old font, and sets up a listener to change the font when a new one is selected.
+	 *
+	 * @return true if the choice box listener was successfully created
+	 */
+	private boolean createChoiceBoxListener() {
+		List<String> fonts = Font.getFamilies();
+		for (String font : fonts) {
+			choiceBoxNewFont.getItems().add(font);
+		}
+		choiceBoxNewFont.setValue(oldFont);
+		lblOldFont.setText(oldFont);
+		choiceBoxNewFont.getSelectionModel().selectedItemProperty().addListener((arg0, arg1, arg2) -> {
+			setNewFont(arg2);
+		});
+		return true;
+	}
+
+	/**
+	 * Adds a listener to the text property of fieldNewSize to update the font size when it changes.
+	 *
+	 * @return true if the field listener was successfully created
+	 */
+	private boolean createFieldListener() {
+		fieldNewSize.textProperty().addListener((arg0, arg1, arg2) -> {
+			try {
+				setNewFontSize(Long.parseLong(fieldNewSize.getText()));
+			  } catch(NumberFormatException e) {
+				System.out.println("Error parsing new font size: " + e.getMessage());
+			  }
+		});
+		return true;
+	}
+
+	/**
+	 * Adds a change listener to the sliderNewSize property to update the new font size
+	 * when the value changes.
+	 *
+	 * @return true if the slider listener was successfully created, false otherwise
+	 */
+	private boolean createSliderListener() {
+		sliderNewSize.valueProperty().addListener(
+			(ChangeListener<? super Number>) (arg0, arg1, arg2) -> {
+				setNewFontSize(Math.round(sliderNewSize.getValue()));
+		});
+		return true;
 	}
 
 	public Stage getStage() {

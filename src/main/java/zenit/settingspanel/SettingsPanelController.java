@@ -187,7 +187,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	@FXML
 	private void setNewJavaHome() {
 		/*
-		 * TODO REMOVE
+		 * TODO REMOVE (Who made this comment, what are we removing and why?)
 		 */
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		File selectedDirectory = directoryChooser.showDialog(window);
@@ -196,68 +196,78 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		     //No Directory selected
 		}
 		else{
-			 ProcessBuilder pb = new ProcessBuilder();
-			    Map<String, String> env = pb.environment();
-			    env.put("JAVA_HOME", selectedDirectory.getAbsolutePath());
+			 ProcessBuilder processBuilder = new ProcessBuilder();
+			    Map<String, String> environment = processBuilder.environment();
+			    environment.put("JAVA_HOME", selectedDirectory.getAbsolutePath());
 			    try {
-					Process p = pb.start();
+					Process process = processBuilder.start();
 					Thread.sleep(100);
 					newJavaHome.setText(System.getenv("JAVA_HOME"));
 					newJavaHome.setStyle("-fx-text-fill: #0B6623;");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					System.out.println("Error opening Java Home: " + e.getMessage());
 				}
 		}
 	}
 
 	@FXML
 	private void addCSSLine() {
-		
-//		String CSSLine = fldCSSLineInput.getText();
-//		try {
-//			Scene mockScene = new Scene(new Region());
-//			mockScene.getRoot().setStyle(CSSLine);
-//			
-//			String allCusomLinesOfCSS = "";
-//			addedCSSLines.addFirst(CSSLine);
-//			
-//			for(int i = 0; i < addedCSSLines.size(); i++) {
-//				allCusomLinesOfCSS += addedCSSLines.get(i);
-//			}
-//			this.window.getScene().getRoot().setStyle(allCusomLinesOfCSS);
-//			
-//			updateCustomCSSListView();
-//		}
-//		
-//		catch(Exception e) {
-//			e.printStackTrace();
-//		}
+		// TODO Why is the logic commented out, but not the method itself, and why is it still here then? - Yrja
+		/*String CSSLine = fldCSSLineInput.getText();
+		try {
+			Scene mockScene = new Scene(new Region());
+			mockScene.getRoot().setStyle(CSSLine);
+
+			String allCustomLinesOfCSS = "";
+			addedCSSLines.addFirst(CSSLine);
+
+			for(int i = 0; i < addedCSSLines.size(); i++) {
+				allCustomLinesOfCSS += addedCSSLines.get(i);
+			}
+			this.window.getScene().getRoot().setStyle(allCustomLinesOfCSS);
+			updateCustomCSSListView();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}*/
 	}
 
+	/**
+	 * Updates the custom CSS list view with the current list of added CSS lines.
+	 * Clears the existing items in the list view and populates it with new CustomCSSListItem objects
+	 * based on the addedCSSLines list.
+	 */
 	private void updateCustomCSSListView() {
 		listViewAddedCSS.getItems().clear();
-		
-		for(int i = 0; i < addedCSSLines.size(); i++) {
-			listViewAddedCSS.getItems().add(new CustomCSSListItem(addedCSSLines.get(i)));
-		}
+        for (String addedCSSLine : addedCSSLines) {
+            listViewAddedCSS.getItems().add(new CustomCSSListItem(addedCSSLine));
+        }
 	}
-	
+
+	/**
+	 * Represents a map that links Hyperlink objects to their corresponding URLs.
+	 * The linkMap is initialized with predefined Hyperlink objects and their associated URLs.
+	 * Key: Hyperlink object
+	 * Value: String representing the URL
+	 */
+	Map<Hyperlink, String> linkMap = Map.of(
+			linkOpenInGitHub, "https://github.com/strazan/zenit",
+			linkSubmitIssue, "https://github.com/strazan/zenit/issues/new",
+			linkDownloadSource, "https://github.com/strazan/zenit/archive/develop.zip"
+	);
+
+	/**
+	 * Opens the specified URL in the default web browser.
+	 *
+	 * @param e The Event triggering the method.
+	 */
 	@FXML
-	private void openLinkInBrowserEvent(Event e) {	
-		
-		if(e.getSource() == linkOpenInGitHub) {
-			openInBrowser("https://github.com/strazan/zenit");
+	private void openLinkInBrowserEvent(Event e) {
+		String url = linkMap.get(e.getSource());
+
+		if (url != null) {
+			openInBrowser(url);
 		}
-		if(e.getSource() == linkSubmitIssue) {
-			openInBrowser("https://github.com/strazan/zenit/issues/new");
-		}
-		if(e.getSource() == linkDownloadSource) {
-			openInBrowser("https://github.com/strazan/zenit/archive/develop.zip");
-		}	
 	}
 
 	private void openInBrowser(String url) {

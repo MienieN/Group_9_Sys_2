@@ -262,14 +262,27 @@ public class SetupController extends AnchorPane {
 		directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		return directoryChooser;
 	}
-	
+
+	/**
+	 * Opens a DirectoryChooser dialog for the user to select a JDK directory.
+	 * Sets the initial directory to the current JDK directory.
+	 * Calls addNewJdkIfValid method with the selected JDK directory.
+	 */
 	@FXML
 	private void addJDK() {
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setTitle("Choose JDK to add");
-		dc.setInitialDirectory(JDKDirectories.getJVMDirectory());
-		File newJDK = dc.showDialog(stage);
-		
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setTitle("Choose JDK to add");
+		directoryChooser.setInitialDirectory(JDKDirectories.getJVMDirectory());
+		addNewJdkIfValid(directoryChooser.showDialog(stage));
+	}
+
+	/**
+	 * Adds a new JDK to the list if the provided JDK file is valid.
+	 *
+	 * @param newJDK the File object representing the JDK to be added
+	 * @return true if the JDK was successfully added, false otherwise
+	 */
+	private boolean addNewJdkIfValid(File newJDK) {
 		if (newJDK != null) {
 			if (jdkList.getItems().contains(newJDK.getName())) {
 				DialogBoxes.errorDialog("JDK already exist in list", "", "A JDK with that name"
@@ -283,6 +296,7 @@ public class SetupController extends AnchorPane {
 				}
 			}
 		}
+		return true;
 	}
 	
 	@FXML

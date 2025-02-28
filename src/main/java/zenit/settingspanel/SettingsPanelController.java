@@ -540,16 +540,30 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		return true;
 	}
 
+	/**
+	 * Retrieves the Stage instance associated with this object.
+	 *
+	 * @return the Stage instance representing the window
+	 */
 	public Stage getStage() {
 		return this.window;
 	}
 
+	/**
+	 * Retrieves the custom theme CSS file associated with this object.
+	 *
+	 * @return the custom theme CSS file
+	 */
 	public File getCustomThemeCSS() {
 		return this.customThemeCSS;
 	}
 
+	/**
+	 * Retrieves the active stylesheet based on the current dark mode setting.
+	 *
+	 * @return the active stylesheet path, either for dark mode or light mode
+	 */
 	public String getActiveStylesheet() {
-	
 		if(isDarkMode) {
 			return settingsPanelDarkMode;
 		}

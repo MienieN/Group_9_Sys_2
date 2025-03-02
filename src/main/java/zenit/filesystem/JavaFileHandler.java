@@ -21,40 +21,90 @@ import main.java.zenit.filesystem.helpers.FileNameHelpers;
  */
 public class JavaFileHandler extends FileHandler {
 
+	/**
+	 * Creates a new file with the specified content and ensures the file has a ".java" extension.
+	 * If the file already exists, an {@code IOException} is thrown. If the provided content is
+	 * {@code null}, default content is generated based on the specified type code.
+	 *
+	 * @param file the {@code File} object representing the file to be created. If the file does not
+	 *             have a ".java" extension, it is added automatically.
+	 * @param content the {@code String} content to be written to the file. If {@code null}, default
+	 *                content is generated using the type code.
+	 * @param typeCode an integer representing the type of content to generate if the content is
+	 *                 {@code null}. This determines whether the default content represents an empty
+	 *                 structure, a class, or an interface.
+	 * @return the {@code File} object representing the created file.
+	 * @throws IOException if an I/O error occurs or if the file already exists.
+	 */
 	protected static File createFile(File file, String content, int typeCode) throws IOException {
 		try {
-			String fileName = file.getName();
 			//Adds .java if not already added
-			if (!fileName.endsWith(".java")) {
-				String filepath = file.getPath();
-				filepath += ".java";
-				file = new File(filepath);
-			}
+			file = ensureJavaExtension(file);
+			
 			//Checks if file already exists
 			if (file.exists()) {
 				throw new IOException("File already exists");
 			}
+			
 			//Tries to create file
 			file.createNewFile();
 			
 			//Write content to file
 			if (content == null) {
-				try {
-					content = CodeSnippets.newSnippet(typeCode, file.getName(), FileNameHelpers.getPackageNameFromFile(file));
-				} catch (TypeCodeException ex) {
-					ex.printStackTrace();
-				}
+				content = generateDefaultContent(file, typeCode);
 			}
 			
-			try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), textEncoding))) {
-				br.write(content);
-				br.flush();
+			try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), textEncoding))) {
+				bufferedWriter.write(content);
+				bufferedWriter.flush();
 			}
-
 			return file;
 		} catch (IOException e) {
 			throw new IOException("Couldn't create new class");
 		}
+	}
+	
+	/**
+	 * Ensures that the provided {@code File} object has a ".java" file extension.
+	 * If the file does not already have the ".java" extension, a new {@code File} object
+	 * with the updated name is returned.
+	 *
+	 * @param file the {@code File} object to check and adjust for the ".java" extension
+	 * @return a {@code File} object with the ".java" extension
+	 */
+	private static File ensureJavaExtension(File file) {
+		String fileName = file.getName();
+		
+		if (!fileName.endsWith(".java")) {
+			String filepath = file.getPath();
+			filepath += ".java";
+			file = new File(filepath);
+		}
+		return file;
+	}
+	
+	/**
+	 * Generates default content for a given file based on the specified type code.
+	 * The method utilizes `CodeSnippets.newSnippet` to generate the content, which
+	 * can represent an empty snippet, a class definition, or an interface definition.
+	 *
+	 * @param file the {@code File} object for which the default content is generated.
+	 *             The name of the file is used as part of the snippet generation.
+	 * @param typeCode an integer representing the type of snippet to generate. Valid codes include:
+	 *                 - `CodeSnippets.EMPTY` for an empty snippet,
+	 *                 - `CodeSnippets.CLASS` for a class definition,
+	 *                 - `CodeSnippets.INTERFACE` for an interface definition.
+	 * @return a {@code String} containing the generated content. If an exception occurs during
+	 *         content generation, {@code null} is returned.
+	 */
+	private static String generateDefaultContent(File file, int typeCode) {
+		String content = null;
+		try {
+			content = CodeSnippets.newSnippet(typeCode, file.getName(), FileNameHelpers.getPackageNameFromFile(file));
+		} catch (TypeCodeException ex) {
+			ex.printStackTrace();
+		}
+		return content;
 	}
 	
 	/**

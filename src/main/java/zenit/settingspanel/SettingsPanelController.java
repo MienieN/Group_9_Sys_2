@@ -2,13 +2,9 @@ package main.java.zenit.settingspanel;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.controlsfx.control.ToggleSwitch;
-
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,179 +30,164 @@ import main.java.zenit.ui.MainController;
 import main.java.zenit.zencodearea.ZenCodeArea;
 
 public class SettingsPanelController extends AnchorPane implements ThemeCustomizable{
-
-	private int oldSize;
 	private String oldFont;
 	private File customThemeCSS;
 	private LinkedList<String> addedCSSLines;
 	private List<ThemeCustomizable> stages;
-	
 	private Stage window;
 	private MainController mainController;
+	private ConsoleController consoleController;
 	private CustomCSSThemeHandler themeHandler;
-	
-	private boolean isCustomTheme = false;
-	private boolean isDarkMode = true;
-
+	private OS operatingSystem;
 	private String settingsPanelDarkMode = getClass().getResource(
 		"/zenit/settingspanel/settingspanelDarkMode.css").toExternalForm();
 	private String settingsPanelLightMode = getClass().getResource(
 		"/zenit/settingspanel/settingspanelLightMode.css").toExternalForm();
-	
-	private enum OS {	
-		MACOS, WINDOWS, LINUX
-	}
-	
-	private OS operatingSystem;
-	@FXML
-	private TextField fldNewSize;
-	@FXML
-	private Slider sldrNewSize;
-	@FXML
-	private Label lblOldTextSize;
-	@FXML
-	private Label lblOldFont;
-	@FXML
-	private Label lblCurrentJavaHome;
-	@FXML
-	private Label newJavaHome;
-	@FXML
-	private Label lblTxtAppeaSize;
-	@FXML
-	private ChoiceBox<String> chcbxNewFont;
-	@FXML
-	private Button btnTextAppearance;
-	@FXML
-	private Button btnJavaHome;
-	@FXML
-	private Button btnSupport;
-	@FXML
-	private Button btnTheme;
-	@FXML
-	private Button btnCustomCSS;
-	@FXML
-	private Button btnCustomTheme;
-	@FXML
-	private Hyperlink linkOpenInGitHub;
-	@FXML
-	private Hyperlink linkSubmitIssue;
-	@FXML
-	private Hyperlink linkDownloadSource;
-	@FXML
-	private ToggleSwitch toggleDarkMode;
-	@FXML
-	private ToggleSwitch toggleSwitchCustomTheme;
-	@FXML
-	private ListView listViewAddedCSS;
-	@FXML
-	private ColorPicker colorPickerPrimaryColor;
-	@FXML
-	private ColorPicker colorPickerPrimaryTint;
-	@FXML
-	private ColorPicker colorPickerSecondaryColor;
-	@FXML
-	private ColorPicker colorPickerSecondaryTint;
-	@FXML
-	private AnchorPane pnlTextAppearance;
-	@FXML
-	private AnchorPane pnlJavaHome;
-	@FXML
-	private AnchorPane pnlSupport;
-	@FXML
-	private AnchorPane pnlTheme;
-	@FXML
-	private AnchorPane pnlCustomCSS;
-	@FXML
-	private AnchorPane pnlCustomTheme;
-	private ConsoleController consoleController;
-	
+	private int oldSize;
+	private boolean isCustomTheme = false, isDarkMode = true;
+	private enum OS { MACOS, WINDOWS, LINUX }
+
+	@FXML private TextField fieldNewSize;
+	@FXML private Slider sliderNewSize;
+	@FXML private Label lblOldTextSize, lblOldFont, lblCurrentJavaHome,
+			newJavaHome, lblTextAppearanceSize;
+	@FXML private ChoiceBox<String> choiceBoxNewFont;
+	@FXML private Button btnTextAppearance, btnJavaHome, btnSupport,
+			btnTheme, btnCustomCSS, btnCustomTheme;
+	@FXML private Hyperlink linkOpenInGitHub, linkSubmitIssue, linkDownloadSource;
+	@FXML private ToggleSwitch toggleDarkMode, toggleSwitchCustomTheme;
+	@FXML private ListView listViewAddedCSS;
+	@FXML private ColorPicker colorPickerPrimaryColor, colorPickerPrimaryTint,
+			colorPickerSecondaryColor, colorPickerSecondaryTint;
+	@FXML private AnchorPane panelTextAppearance, panelJavaHome, panelSupport,
+			panelTheme, panelCustomCSS, panelCustomTheme;
+
+	/**
+	 * Creates a new instance of SettingsPanelController with the provided parameters.
+	 *
+	 * @param mainController the main controller instance
+	 * @param oldFontSize the old font size value
+	 * @param oldFontFamily the old font family value
+	 * @param consoleController the console controller instance
+	 */
 	public SettingsPanelController(MainController mainController, int oldFontSize, String oldFontFamily, ConsoleController consoleController) {
 		this.mainController = mainController;
 		this.consoleController = consoleController;
 		oldSize = oldFontSize;
 		oldFont = oldFontFamily;
 		addedCSSLines = new LinkedList<String>();
-		
-		FXMLLoader loader = new FXMLLoader(
-			getClass().getResource("/zenit/settingspanel/SettingsPanel.fxml"
-		));
-		
+		setLoader();
+		setWindow();
+		setStage();
+	}
+
+	/**
+	 * Sets up the loader for loading the SettingsPanel.fxml file and binding it to the controller.
+	 *
+	 * @return true if the loader setup was successful, false otherwise
+	 */
+	private boolean setLoader() {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/zenit/settingspanel/SettingsPanel.fxml"));
 		loader.setRoot(this);
 		loader.setController(this);
-
 		try {
 			loader.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error loading SettingsPanel.fxml: " + e.getMessage());
 		}
+		return true;
+	}
 
+	/**
+	 * Sets up the window for displaying the preferences panel.
+	 *
+	 * @return true if the window setup was successful, false otherwise
+	 */
+	private boolean setWindow() {
 		window = new Stage();
 		Scene scene = new Scene(this);
-		
 		window.setScene(scene);
 		window.setTitle("Preferences");
 		initialize();
-//		scene.getStylesheets().add(getClass().getResource(
-//			"/zenit/settingspanel/settingspanelDarkMode.css").toString(
-//		));
-		
-		darkModeChanged(mainController.isDarkmode());
+		//scene.getStylesheets().add(getClass().getResource("/zenit/settingspanel/settingspanelDarkMode.css").toString());
 
+		darkModeChanged(mainController.isDarkmode());
 		window.show();
-		
+
+		return true;
+	}
+
+	/**
+	 * Sets up the theme customization for the settings panel.
+	 *
+	 * @return true if the stage setup was successful, false otherwise
+	 */
+	private boolean setStage() {
 		this.customThemeCSS = new File("/customtheme/settingspanelCustomTheme.css");
-		
 		stages = new  ArrayList<ThemeCustomizable>();
 		stages.add(mainController);
 		stages.add(this);
-	
 		themeHandler = new CustomCSSThemeHandler(stages);
+		return true;
 	}
-	
+
+	/**
+	 * Sets a new font for the choice box and the main controller.
+	 *
+	 * @param newFont the new font to be set
+	 */
 	public void setNewFont(String newFont) {
-		chcbxNewFont.setValue(newFont);
+		choiceBoxNewFont.setValue(newFont);
 		mainController.setFontFamily(newFont);
 	}
 
+	/**
+	 * Sets a new font size for the text in the application.
+	 *
+	 * @param newFontSize the new font size to be set
+	 */
 	public void setNewFontSize(long newFontSize) {
 		long size = newFontSize;
-		fldNewSize.textProperty().setValue(String.valueOf(size));
+		fieldNewSize.textProperty().setValue(String.valueOf(size));
 		if(size > 100) {
 			size = 100;
 		}
 		else if(size < 6) {
 			size = 6;
 		}
-		sldrNewSize.setValue(size);
+		sliderNewSize.setValue(size);
 		mainController.setFontSize((int)size);//this.codeArea.setFontSize((int)size);
 	}
 
-	public void panelToFront(Event e) {
-		if(e.getSource() == btnTextAppearance) {
-			pnlTextAppearance.toFront();
-		}
-		else if(e.getSource() == btnJavaHome) {
-			pnlJavaHome.toFront();
-		}
-		else if(e.getSource() == btnSupport) {
-			pnlSupport.toFront();
-		}
-		else if(e.getSource() == btnTheme) {
-			pnlTheme.toFront();
-		}
-		else if(e.getSource() == btnCustomCSS) {
-			pnlCustomCSS.toFront();
-		}
-		else if(e.getSource() == btnCustomTheme) {
-			pnlCustomTheme.toFront();
+	/**
+	 * A map that associates button actions with corresponding Runnable implementations.
+	 * The keys are instances of Button enum and the values are Runnable instances.
+	 */
+	Map<Button, Runnable> buttonActions = new HashMap<>() {{
+		put(btnTextAppearance, () -> panelTextAppearance.toFront());
+		put(btnJavaHome, () -> panelJavaHome.toFront());
+		put(btnSupport, () -> panelSupport.toFront());
+		put(btnTheme, () -> panelTheme.toFront());
+		put(btnCustomCSS, () -> panelCustomCSS.toFront());
+		put(btnCustomTheme, () -> panelCustomTheme.toFront());
+	}};
+
+	/**
+	 * Brings the panel associated with the specified event to the front to make it visible.
+	 *
+	 * @param event the event triggering the action to bring the panel to the front
+	 */
+	public void panelToFront(Event event) {
+		Runnable action = buttonActions.get(event.getSource());
+		if (action != null) {
+			action.run();
 		}
 	}
 	
 	@FXML
 	private void setNewJavaHome() {
 		/*
-		 * TODO REMOVE
+		 * TODO REMOVE (Who made this comment, what are we removing and why?)
 		 */
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		File selectedDirectory = directoryChooser.showDialog(window);
@@ -215,121 +196,126 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		     //No Directory selected
 		}
 		else{
-			 ProcessBuilder pb = new ProcessBuilder();
-			    Map<String, String> env = pb.environment();
-			    env.put("JAVA_HOME", selectedDirectory.getAbsolutePath());
+			 ProcessBuilder processBuilder = new ProcessBuilder();
+			    Map<String, String> environment = processBuilder.environment();
+			    environment.put("JAVA_HOME", selectedDirectory.getAbsolutePath());
 			    try {
-					Process p = pb.start();
+					Process process = processBuilder.start();
 					Thread.sleep(100);
 					newJavaHome.setText(System.getenv("JAVA_HOME"));
 					newJavaHome.setStyle("-fx-text-fill: #0B6623;");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					System.out.println("Error opening Java Home: " + e.getMessage());
 				}
 		}
 	}
 
 	@FXML
 	private void addCSSLine() {
-		
-//		String CSSLine = fldCSSLineInput.getText();
-//		try {
-//			Scene mockScene = new Scene(new Region());
-//			mockScene.getRoot().setStyle(CSSLine);
-//			
-//			String allCusomLinesOfCSS = "";
-//			addedCSSLines.addFirst(CSSLine);
-//			
-//			for(int i = 0; i < addedCSSLines.size(); i++) {
-//				allCusomLinesOfCSS += addedCSSLines.get(i);
-//			}
-//			this.window.getScene().getRoot().setStyle(allCusomLinesOfCSS);
-//			
-//			updateCustomCSSListView();
-//		}
-//		
-//		catch(Exception e) {
-//			e.printStackTrace();
-//		}
+		// TODO Why is the logic commented out, but not the method itself, and why is it still here then? - Yrja
+		/*String CSSLine = fldCSSLineInput.getText();
+		try {
+			Scene mockScene = new Scene(new Region());
+			mockScene.getRoot().setStyle(CSSLine);
+
+			String allCustomLinesOfCSS = "";
+			addedCSSLines.addFirst(CSSLine);
+
+			for(int i = 0; i < addedCSSLines.size(); i++) {
+				allCustomLinesOfCSS += addedCSSLines.get(i);
+			}
+			this.window.getScene().getRoot().setStyle(allCustomLinesOfCSS);
+			updateCustomCSSListView();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}*/
 	}
 
+	/**
+	 * Updates the custom CSS list view with the current list of added CSS lines.
+	 * Clears the existing items in the list view and populates it with new CustomCSSListItem objects
+	 * based on the addedCSSLines list.
+	 */
 	private void updateCustomCSSListView() {
 		listViewAddedCSS.getItems().clear();
-		
-		for(int i = 0; i < addedCSSLines.size(); i++) {
-			listViewAddedCSS.getItems().add(new CustomCSSListItem(addedCSSLines.get(i)));
-		}
-	}
-	
-	@FXML
-	private void openLinkInBrowserEvent(Event e) {	
-		
-		if(e.getSource() == linkOpenInGitHub) {
-			openInBrowser("https://github.com/strazan/zenit");
-		}
-		if(e.getSource() == linkSubmitIssue) {
-			openInBrowser("https://github.com/strazan/zenit/issues/new");
-		}
-		if(e.getSource() == linkDownloadSource) {
-			openInBrowser("https://github.com/strazan/zenit/archive/develop.zip");
-		}	
+        for (String addedCSSLine : addedCSSLines) {
+            listViewAddedCSS.getItems().add(new CustomCSSListItem(addedCSSLine));
+        }
 	}
 
+	/**
+	 * Represents a map that links Hyperlink objects to their corresponding URLs.
+	 * The linkMap is initialized with predefined Hyperlink objects and their associated URLs.
+	 * Key: Hyperlink object
+	 * Value: String representing the URL
+	 */
+	Map<Hyperlink, String> linkMap = Map.of(
+			linkOpenInGitHub, "https://github.com/strazan/zenit",
+			linkSubmitIssue, "https://github.com/strazan/zenit/issues/new",
+			linkDownloadSource, "https://github.com/strazan/zenit/archive/develop.zip"
+	);
+
+	/**
+	 * Opens the specified URL in the default web browser.
+	 *
+	 * @param e The Event triggering the method.
+	 */
+	@FXML
+	private void openLinkInBrowserEvent(Event e) {
+		String url = linkMap.get(e.getSource());
+
+		if (url != null) {
+			openInBrowser(url);
+		}
+	}
+
+	/**
+	 * Opens the specified URL in the default web browser based on the operating system.
+	 *
+	 * @param url the URL to be opened in the browser
+	 */
 	private void openInBrowser(String url) {
-		Runtime rt = Runtime.getRuntime();
-		
+		String command;
 		switch(operatingSystem) {
 			case LINUX:
-			try {
-				rt.exec("xdg-open " + url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				command = "xdg-open ";
 				break;
-				
 			case MACOS:
-			try {
-				rt.exec("open " + url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				command = "open ";
 				break;
-				
 			case WINDOWS:
-			try {
-				rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				command = "rundll32 url.dll,FileProtocolHandler ";
 				break;
 			default:
-				System.err.println("OS not found. Open link manually in browser:\n" + url );
-				break;
+				System.err.println("Unsupported operating system. Open link manually in browser:\n" + url );
+				return;
+		}
+
+		try {
+			Runtime.getRuntime().exec(command + url);
+		} catch (IOException e) {
+			System.out.println("Error opening link: " + e.getMessage());
 		}
 	}
 
+	/**
+	 * Handles the change in dark mode for the application, updating stylesheets and settings accordingly.
+	 *
+	 * @param isDarkMode true if the dark mode is enabled, false otherwise
+	 */
 	private void darkModeChanged(boolean isDarkMode) {
 		if(!isCustomTheme) {
 			var stylesheets = this.mainController.getStage().getScene().getStylesheets();
 			var settingsPanelStylesheets = window.getScene().getStylesheets();
-			
 			var lightMode = getClass().getResource("/zenit/ui/mainStyle-lm.css").toExternalForm();
 			var darkMode = getClass().getResource("/zenit/ui/mainStyle.css").toExternalForm();
 			var darkModeKeywords = ZenCodeArea.class.getResource("/zenit/ui/keywords.css").toExternalForm();
 			var lightModeKeywords = ZenCodeArea.class.getResource("/zenit/ui/keywords-lm.css").toExternalForm();
 			var darkModeConsole = getClass().getResource("/zenit/console/consoleStyle.css").toExternalForm();
 			var lightModeConsole = getClass().getResource("/zenit/console/consoleStyleLight.css").toExternalForm();
-			
-		
-			if (isDarkMode) {
 
+			if (isDarkMode) {
 				settingsPanelStylesheets.clear();
 				settingsPanelStylesheets.add(settingsPanelDarkMode);
 				consoleController.getStylesheets().remove(lightModeConsole);
@@ -339,14 +325,12 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 				stylesheets.clear();
 				stylesheets.add(darkModeKeywords);
 				stylesheets.add(darkMode);
-
 			} else {
 				settingsPanelStylesheets.clear();
 				settingsPanelStylesheets.add(settingsPanelLightMode);
 				consoleController.getStylesheets().remove(darkModeConsole);
 				consoleController.getStylesheets().add(lightModeConsole);
 				consoleController.changeAllConsoleAreaBackgroundColors("-fx-background-color:#989898");
-
 
 				stylesheets.clear();
 				stylesheets.add(lightModeKeywords);
@@ -357,60 +341,103 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		mainController.setDarkmode(this.isDarkMode);
 	}
 
+	/**
+	 * Initializes the Settings Panel view by setting up various components and listeners.
+	 * It initializes the text fields, sliders, labels, choice boxes, Java Home path, operating system, dark mode toggle,
+	 * custom theme toggle, CSS list view, primary and secondary color pickers, and event handlers for theme customization.
+	 */
 	private void initialize() {
 		lblOldTextSize.setText(String.valueOf(oldSize));
-		fldNewSize.setText(String.valueOf(oldSize));
-		sldrNewSize.setValue(oldSize);
-		
-		sldrNewSize.valueProperty().addListener(
-			(ChangeListener<? super Number>) (arg0, arg1, arg2) -> {
-				setNewFontSize(Math.round(sldrNewSize.getValue()));	
-		});
-		
-		fldNewSize.textProperty().addListener((arg0, arg1, arg2) -> {
-			try {  
-				setNewFontSize(Long.parseLong(fldNewSize.getText()));  
-			  } catch(NumberFormatException e){  
-			e.printStackTrace();	 
-			  }  
-		});
-		
-		List<String> fonts = Font.getFamilies();
-		
-		for(int i = 0; i < fonts.size(); i++) {
-			chcbxNewFont.getItems().add(fonts.get(i));
-		}
-		chcbxNewFont.setValue(oldFont);
-		lblOldFont.setText(oldFont);
-		chcbxNewFont.getSelectionModel().selectedItemProperty().addListener((arg0, arg1, arg2) -> {
-			setNewFont(arg2);
-		});
-		
+		fieldNewSize.setText(String.valueOf(oldSize));
+		sliderNewSize.setValue(oldSize);
+		createSliderListener();
+		createFieldListener();
+		createChoiceBoxListener();
 		lblCurrentJavaHome.setText(System.getenv("JAVA_HOME"));
-		
-		fldNewSize.setAlignment(Pos.CENTER_RIGHT);
-		
-		String os = System.getProperty("os.name").toLowerCase();
-		if(os.indexOf("win") >= 0) {
-			operatingSystem = OS.WINDOWS;
-		}	
-		else if(os.indexOf("mac") >= 0) {
-			operatingSystem = OS.MACOS;
-		}
-		else if(os.indexOf("nix") >=0 || os.indexOf("nux") >=0) {
-			operatingSystem = OS.LINUX;
-		}
-		
+		fieldNewSize.setAlignment(Pos.CENTER_RIGHT);
+		setOperatingSystem();
 		toggleDarkMode.setSelected(mainController.isDarkmode());
-		toggleDarkMode.selectedProperty().addListener(new ChangeListener <Boolean> () {
-            @Override
-			public void changed(
-				ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
-            {
-				darkModeChanged(newValue);
-			}
-        });
-		
+
+		setToggleDarkModeListener();
+		setToggleSwitchCustomThemeListener();
+
+		listViewAddedCSS.getItems().add(new AnchorPane());
+
+		setPrimaryColorEventHandler();
+		setPrimaryTintEventHandler();
+		setSecondaryColorEventHandler();
+		setSecondaryTintEventHandler();
+	}
+
+	/**
+	 * Sets the event handler for changing the secondary tint color in the color picker.
+	 * This method listens for changes in the color picker's secondary tint value and updates the theme
+	 * by changing the secondary tint color.
+	 *
+	 * @return true if the event handler was set successfully
+	 */
+	private boolean setSecondaryTintEventHandler() {
+		colorPickerSecondaryTint.setOnAction((event) -> {
+			Platform.runLater(() -> {
+				themeHandler.changeColor(colorPickerSecondaryTint.getValue(),
+						CustomColor.secondaryTint);
+			});
+		});
+		return true;
+	}
+
+	/**
+	 * Sets the event handler for changing the secondary color in the color picker.
+	 *
+	 * @return true if the event handler was set successfully
+	 */
+	private boolean setSecondaryColorEventHandler() {
+		colorPickerSecondaryColor.setOnAction((event) -> {
+			Platform.runLater(() -> {
+				themeHandler.changeColor(colorPickerSecondaryColor.getValue(),
+						CustomColor.secondaryColor);
+			});
+		});
+		return true;
+	}
+
+	/**
+	 * Sets the event handler for changing the primary tint color in the color picker.
+	 *
+	 * @return true if the event handler was set successfully
+	 */
+	private boolean setPrimaryTintEventHandler() {
+		colorPickerPrimaryTint.setOnAction((event) -> {
+			Platform.runLater(() -> {
+				themeHandler.changeColor(colorPickerPrimaryTint.getValue(),
+						CustomColor.primaryTint);
+			});
+		});
+		return true;
+	}
+
+	/**
+	 * Sets the event handler for changing the primary color in the color picker.
+	 *
+	 * @return true if the event handler was set successfully
+	 */
+	private boolean setPrimaryColorEventHandler() {
+		colorPickerPrimaryColor.setOnAction((event) -> {
+		     Platform.runLater(() -> {
+		    	 themeHandler.changeColor(colorPickerPrimaryColor.getValue(),
+		    		CustomColor.primaryColor);
+			     });
+		});
+		return true;
+	}
+
+	/**
+	 * Sets a listener for the toggle switch representing a custom theme.
+	 * When the toggle switch value changes, it invokes necessary methods to handle theme changes.
+	 *
+	 * @return true if the toggle switch listener was successfully set
+	 */
+	private boolean setToggleSwitchCustomThemeListener() {
 		toggleSwitchCustomTheme.selectedProperty().addListener(new ChangeListener <Boolean> () {
             @Override
 			public void changed(
@@ -421,48 +448,122 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 				darkModeChanged(toggleDarkMode.isSelected());
 			}
         });
-		
-		listViewAddedCSS.getItems().add(new AnchorPane());
-
-		colorPickerPrimaryColor.setOnAction((event) -> {
-		     Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerPrimaryColor.getValue(),
-		    		CustomColor.primaryColor);
-			     });
-		});	
-		
-		colorPickerPrimaryTint.setOnAction((event) -> {
-	    	 Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerPrimaryTint.getValue(),
-		    		CustomColor.primaryTint);
-		     });
-		});	
-		
-		colorPickerSecondaryColor.setOnAction((event) -> {
-	    	 Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerSecondaryColor.getValue(),
-				    CustomColor.secondaryColor);
-		     });
-		});	
-		
-		colorPickerSecondaryTint.setOnAction((event) -> {
-	    	 Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerSecondaryTint.getValue(),
-				    CustomColor.secondaryTint);
-		     });
-		});	
+		return true;
 	}
 
+	/**
+	 * Sets a listener for the dark mode toggle switch.
+	 * When the toggle switch value changes, it invokes the darkModeChanged method with the updated value.
+	 *
+	 * @return true if the toggle switch listener was successfully set
+	 */
+	private boolean setToggleDarkModeListener() {
+		toggleDarkMode.selectedProperty().addListener(new ChangeListener <Boolean> () {
+            @Override
+			public void changed(
+				ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+            {
+				darkModeChanged(newValue);
+			}
+        });
+		return true;
+	}
+
+	/**
+	 * Sets the operating system based on the current system properties.
+	 *
+	 * @return true if the operating system was successfully set, false otherwise
+	 */
+	private boolean setOperatingSystem() {
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.contains("win")) {
+			operatingSystem = OS.WINDOWS;
+			return true;
+		}
+		else if(os.contains("mac")) {
+			operatingSystem = OS.MACOS;
+			return true;
+		}
+		else if(os.contains("nix") || os.contains("nux")) {
+			operatingSystem = OS.LINUX;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Populates the choice box with a list of fonts, sets the initial value to the old font,
+	 * updates the label with the old font, and sets up a listener to change the font when a new one is selected.
+	 *
+	 * @return true if the choice box listener was successfully created
+	 */
+	private boolean createChoiceBoxListener() {
+		List<String> fonts = Font.getFamilies();
+		for (String font : fonts) {
+			choiceBoxNewFont.getItems().add(font);
+		}
+		choiceBoxNewFont.setValue(oldFont);
+		lblOldFont.setText(oldFont);
+		choiceBoxNewFont.getSelectionModel().selectedItemProperty().addListener((arg0, arg1, arg2) -> {
+			setNewFont(arg2);
+		});
+		return true;
+	}
+
+	/**
+	 * Adds a listener to the text property of fieldNewSize to update the font size when it changes.
+	 *
+	 * @return true if the field listener was successfully created
+	 */
+	private boolean createFieldListener() {
+		fieldNewSize.textProperty().addListener((arg0, arg1, arg2) -> {
+			try {
+				setNewFontSize(Long.parseLong(fieldNewSize.getText()));
+			  } catch(NumberFormatException e) {
+				System.out.println("Error parsing new font size: " + e.getMessage());
+			  }
+		});
+		return true;
+	}
+
+	/**
+	 * Adds a change listener to the sliderNewSize property to update the new font size
+	 * when the value changes.
+	 *
+	 * @return true if the slider listener was successfully created, false otherwise
+	 */
+	private boolean createSliderListener() {
+		sliderNewSize.valueProperty().addListener(
+			(ChangeListener<? super Number>) (arg0, arg1, arg2) -> {
+				setNewFontSize(Math.round(sliderNewSize.getValue()));
+		});
+		return true;
+	}
+
+	/**
+	 * Retrieves the Stage instance associated with this object.
+	 *
+	 * @return the Stage instance representing the window
+	 */
 	public Stage getStage() {
 		return this.window;
 	}
 
+	/**
+	 * Retrieves the custom theme CSS file associated with this object.
+	 *
+	 * @return the custom theme CSS file
+	 */
 	public File getCustomThemeCSS() {
 		return this.customThemeCSS;
 	}
 
+	/**
+	 * Retrieves the active stylesheet based on the current dark mode setting.
+	 *
+	 * @return the active stylesheet path, either for dark mode or light mode
+	 */
 	public String getActiveStylesheet() {
-	
 		if(isDarkMode) {
 			return settingsPanelDarkMode;
 		}

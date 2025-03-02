@@ -85,28 +85,6 @@ public class JavaFileHandler extends FileHandler {
 			throw new IOException(ex.getMessage());
 		}
 	}
-	
-	//TODO this is a duplicate of the method in FolderHandler, should be refactored
-	protected static File renameFile(File oldFile, String newFilename) throws IOException {
-		
-		File tempFile = FileNameHelpers.getFilepathWithoutTopFile(oldFile); //Removes file name
-		
-		//Create new file with new name
-		String newFilepath = tempFile.getPath() + "/" + newFilename;
-		File newFile = new File(newFilepath);
-		
-		if (newFile.exists()) {
-			throw new IOException("File already exists");
-		}
-
-		boolean success = oldFile.renameTo(newFile);
-		
-		if (!success) {
-			throw new IOException("Couldn't rename file");
-		}
-		
-		return newFile;
-	}
 
 	protected static void failedToDeleteFile(File file) throws IOException {
 		if (!file.delete()) {

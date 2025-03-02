@@ -57,24 +57,50 @@ public class JavaFileHandler extends FileHandler {
 		}
 	}
 	
+	/**
+	 * Reads the contents of the specified file and returns it as a single string.
+	 * Each line of the file is separated by a newline character in the returned string.
+	 *
+	 * @param file the {@code File} object representing the file to be read
+	 * @return a {@code String} containing the contents of the file
+	 * @throws IOException if an I/O error occurs while reading the file
+	 */
 	protected static String readFile(File file) throws IOException {
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(
-				new FileInputStream(file), textEncoding))) {
+		try (BufferedReader bufferedReader = createBufferedReader(file)) {
 			
-			String currentString = br.readLine();
-			String stringBuilder = "";
+			StringBuilder fileContents = new StringBuilder();
+			String lineReader = bufferedReader.readLine();
+			String currentLine;
 
-			while (currentString != null) {
-				stringBuilder += currentString + "\n";
-				currentString = br.readLine();
+			while ((currentLine = lineReader) != null) {
+				fileContents.append(currentLine).append("\n");
 			}
-			return stringBuilder;
+			return fileContents.toString();
 			
 		} catch (IOException ex) {
-			throw new IOException("File couldn't be read");
+			throw new IOException("File couldn't be read: " + ex.getMessage());
 		}
 	}
 	
+	/**
+	 * Creates a buffered reader for the specified file using the configured text encoding.
+	 *
+	 * @param file the {@code File} object representing the file to be read
+	 * @return a {@code BufferedReader} that can be used to read the file
+	 * @throws IOException if an I/O error occurs while creating the buffered reader
+	 */
+	private static BufferedReader createBufferedReader(File file) throws IOException {
+		return new BufferedReader(new InputStreamReader(new FileInputStream(file), textEncoding));
+	}
+	
+	/**
+	 * Saves the given content to the specified file. The file's content will
+	 * be overwritten if it already exists.
+	 *
+	 * @param file the {@code File} object representing the file to which content will be written
+	 * @param content the {@code String} content to be saved in the file
+	 * @throws IOException if an I/O error occurs while saving the file
+	 */
 	protected static void saveFile(File file, String content) throws IOException {
 		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(file), textEncoding))) {
@@ -86,6 +112,14 @@ public class JavaFileHandler extends FileHandler {
 		}
 	}
 
+	/**
+	 * Attempts to delete the specified file. If the file cannot be deleted,
+	 * throws an {@code IOException} with an error message.
+	 *
+	 * @param file the {@code File} object representing the file to be deleted
+	 * @throws IOException if the file cannot be deleted
+	 */
+	// TODO fix this for windows as it does not delete nor does it show the error message
 	protected static void failedToDeleteFile(File file) throws IOException {
 		if (!file.delete()) {
 			throw new IOException("Failed to delete " + file);

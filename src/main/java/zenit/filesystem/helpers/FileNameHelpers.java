@@ -72,6 +72,8 @@ public class FileNameHelpers {
 	 * @return the name of the package folder one level below the "src" folder, or null
 	 *         if the file is null or the "src" folder is not found in the path.
 	 */
+	// TODO: this is not working for windows, it is not returning the package name to be added to
+	//  the newly created class (see JavaFileHandler.java)
 	public static String getPackageNameFromFile (File file) {
 		if (file == null) {
 			return null;

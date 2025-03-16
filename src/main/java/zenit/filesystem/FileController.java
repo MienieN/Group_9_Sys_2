@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 import main.java.zenit.filesystem.helpers.CodeSnippets;
+import main.java.zenit.filesystem.helpers.FileNameHelpers;
 import main.java.zenit.filesystem.metadata.Metadata;
 
 
@@ -24,6 +25,10 @@ public class FileController {
 	 */
 	public FileController(File workspace) {
 		this.workspace = workspace;
+	}
+	
+	public FileController() {
+	
 	}
 	
 	// ------------------------------------------------------------------------------------
@@ -188,7 +193,7 @@ public class FileController {
 					newFile = FolderHandler.renameFolder(file, newName);
 				}
 				else {
-					newFile = JavaFileHandler.renameFile(file, newName);
+					newFile = renameFilesAndFolders(file, newName);
 				}
 			}
 			catch (IOException ex) {
@@ -422,5 +427,33 @@ public class FileController {
 			System.err.println("Error reading file: " + classFile.getPath());
 		}
 		return false;
+	}
+	
+	/**
+	 * Renames a file or folder to a new name while preserving its directory path.
+	 *
+	 * @param oldFile the original file or folder to be renamed
+	 * @param newFilename the new name to assign to the file or folder
+	 * @return the newly renamed file or folder as a {@code File} object
+	 * @throws IOException if an I/O error occurs, such as if the file already exists or the rename operation fails
+	 */
+	public static File renameFilesAndFolders (File oldFile, String newFilename) throws IOException {
+		File tempFile = FileNameHelpers.getFilepathWithoutTopFile(oldFile); //Removes file name
+		
+		//Create new file with new name
+		String newFilepath = tempFile.getPath() + "/" + newFilename;
+		File newFile = new File(newFilepath);
+		
+		if (newFile.exists()) {
+			throw new IOException("File already exists");
+		}
+		
+		boolean success = oldFile.renameTo(newFile);
+		
+		if (!success) {
+			throw new IOException("Couldn't rename file");
+		}
+		
+		return newFile;
 	}
 }

@@ -33,7 +33,7 @@ class JDKDirectoriesTest {
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains("mac os")) {
             assertEquals("/library/java/javavirtualmachines", JDKDirectories.getJVMDirectory().getPath()); //this is for macOS
-        } else if (os.contains("windows")) {
+        } else if (os.contains("Windows")) {
             assertEquals("C:\\Program Files\\Java", JDKDirectories.getJVMDirectory().getPath()); //this is for windows
         } else assertNull(JDKDirectories.getDefaultJDKFile());
     }

@@ -128,16 +128,16 @@ public class NewFileController extends AnchorPane {
      */
     @FXML
     private void create() {
-        String filename = tfName.getText();
+        String fileName = tfName.getText();
 
-        if (!filename.equals("")) {
-            filename += fileEnding.getSelectionModel().getSelectedItem();
+        if (!fileName.equals("")) {
+            fileName += fileEnding.getSelectionModel().getSelectedItem();
 
-            String filePath = this.filepath.getSelectionModel().getSelectedItem() + File.separator + filename;
+            String filePath = this.filepath.getSelectionModel().getSelectedItem() + File.separator + fileName;
             newFile = new File(filePath);
             try {
                 if (!newFile.createNewFile()) {
-                    DialogBoxes.errorDialog("File name already exist", "", "A file with the name " + filename + " already exist. Please input a different name.");
+                    DialogBoxes.errorDialog("File name already exist", "", "A file with the name " + fileName + " already exist. Please input a different name.");
                     newFile = null;
                 }
             } catch (IOException e) {

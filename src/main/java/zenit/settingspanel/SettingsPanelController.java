@@ -40,9 +40,9 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	private CustomCSSThemeHandler themeHandler;
 	private OS operatingSystem;
 	private String settingsPanelDarkMode = getClass().getResource(
-		"/zenit/settingspanel/settingspanelDarkMode.css").toExternalForm();
+			"/zenit/settingspanel/settingspanelDarkMode.css").toExternalForm();
 	private String settingsPanelLightMode = getClass().getResource(
-		"/zenit/settingspanel/settingspanelLightMode.css").toExternalForm();
+			"/zenit/settingspanel/settingspanelLightMode.css").toExternalForm();
 	private int oldSize;
 	private boolean isCustomTheme = false, isDarkMode = true;
 	private enum OS { MACOS, WINDOWS, LINUX }
@@ -61,6 +61,24 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 			colorPickerSecondaryColor, colorPickerSecondaryTint;
 	@FXML private AnchorPane panelTextAppearance, panelJavaHome, panelSupport,
 			panelTheme, panelCustomCSS, panelCustomTheme;
+	@FXML
+	private AnchorPane pnlTextAppearance;
+
+	@FXML
+	private AnchorPane pnlJavaHome;
+
+	@FXML
+	private AnchorPane pnlSupport;
+
+	@FXML
+	private AnchorPane pnlTheme;
+
+	@FXML
+	private AnchorPane pnlCustomCSS;
+
+	@FXML
+	private AnchorPane pnlCustomTheme;
+
 
 	/**
 	 * Creates a new instance of SettingsPanelController with the provided parameters.
@@ -73,6 +91,10 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	public SettingsPanelController(MainController mainController, int oldFontSize, String oldFontFamily, ConsoleController consoleController) {
 		this.mainController = mainController;
 		this.consoleController = consoleController;
+		fieldNewSize = new TextField();
+		sliderNewSize = new Slider();
+		choiceBoxNewFont = new ChoiceBox<>();
+
 		oldSize = oldFontSize;
 		oldFont = oldFontFamily;
 		addedCSSLines = new LinkedList<String>();
@@ -86,7 +108,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 *
 	 * @return true if the loader setup was successful, false otherwise
 	 */
-	private boolean setLoader() {
+	private void setLoader() {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/zenit/settingspanel/SettingsPanel.fxml"));
 		loader.setRoot(this);
 		loader.setController(this);
@@ -95,7 +117,6 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		} catch (IOException e) {
 			System.out.println("Error loading SettingsPanel.fxml: " + e.getMessage());
 		}
-		return true;
 	}
 
 	/**
@@ -103,7 +124,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 *
 	 * @return true if the window setup was successful, false otherwise
 	 */
-	private boolean setWindow() {
+	private void setWindow() {
 		window = new Stage();
 		Scene scene = new Scene(this);
 		window.setScene(scene);
@@ -114,7 +135,6 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		darkModeChanged(mainController.isDarkmode());
 		window.show();
 
-		return true;
 	}
 
 	/**
@@ -122,13 +142,12 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 *
 	 * @return true if the stage setup was successful, false otherwise
 	 */
-	private boolean setStage() {
+	private void setStage() {
 		this.customThemeCSS = new File("/customtheme/settingspanelCustomTheme.css");
 		stages = new  ArrayList<ThemeCustomizable>();
 		stages.add(mainController);
 		stages.add(this);
 		themeHandler = new CustomCSSThemeHandler(stages);
-		return true;
 	}
 
 	/**
@@ -159,31 +178,30 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		mainController.setFontSize((int)size);//this.codeArea.setFontSize((int)size);
 	}
 
-	/**
-	 * A map that associates button actions with corresponding Runnable implementations.
-	 * The keys are instances of Button enum and the values are Runnable instances.
-	 */
-	Map<Button, Runnable> buttonActions = new HashMap<>() {{
-		put(btnTextAppearance, () -> panelTextAppearance.toFront());
-		put(btnJavaHome, () -> panelJavaHome.toFront());
-		put(btnSupport, () -> panelSupport.toFront());
-		put(btnTheme, () -> panelTheme.toFront());
-		put(btnCustomCSS, () -> panelCustomCSS.toFront());
-		put(btnCustomTheme, () -> panelCustomTheme.toFront());
-	}};
 
-	/**
-	 * Brings the panel associated with the specified event to the front to make it visible.
-	 *
-	 * @param event the event triggering the action to bring the panel to the front
-	 */
-	public void panelToFront(Event event) {
-		Runnable action = buttonActions.get(event.getSource());
-		if (action != null) {
-			action.run();
+	public void panelToFront(Event e) {
+		if(e.getSource() == btnTextAppearance) {
+			pnlTextAppearance.toFront();
+		}
+		else if(e.getSource() == btnJavaHome) {
+			pnlJavaHome.toFront();
+		}
+		else if(e.getSource() == btnSupport) {
+			pnlSupport.toFront();
+		}
+		else if(e.getSource() == btnTheme) {
+			pnlTheme.toFront();
+		}
+		else if(e.getSource() == btnCustomCSS) {
+			pnlCustomCSS.toFront();
+		}
+		else if(e.getSource() == btnCustomTheme) {
+			pnlCustomTheme.toFront();
 		}
 	}
-	
+
+
+
 	@FXML
 	private void setNewJavaHome() {
 		/*
@@ -193,43 +211,43 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		File selectedDirectory = directoryChooser.showDialog(window);
 
 		if(selectedDirectory == null){
-		     //No Directory selected
+			//No Directory selected
 		}
 		else{
-			 ProcessBuilder processBuilder = new ProcessBuilder();
-			    Map<String, String> environment = processBuilder.environment();
-			    environment.put("JAVA_HOME", selectedDirectory.getAbsolutePath());
-			    try {
-					Process process = processBuilder.start();
-					Thread.sleep(100);
-					newJavaHome.setText(System.getenv("JAVA_HOME"));
-					newJavaHome.setStyle("-fx-text-fill: #0B6623;");
-				} catch (Exception e) {
-					System.out.println("Error opening Java Home: " + e.getMessage());
-				}
+			ProcessBuilder processBuilder = new ProcessBuilder();
+			Map<String, String> environment = processBuilder.environment();
+			environment.put("JAVA_HOME", selectedDirectory.getAbsolutePath());
+			try {
+				Process process = processBuilder.start();
+				Thread.sleep(100);
+				newJavaHome.setText(System.getenv("JAVA_HOME"));
+				newJavaHome.setStyle("-fx-text-fill: #0B6623;");
+			} catch (Exception e) {
+				System.out.println("Error opening Java Home: " + e.getMessage());
+			}
 		}
 	}
 
 	@FXML
 	private void addCSSLine() {
 		// TODO Why is the logic commented out, but not the method itself, and why is it still here then? - Yrja
-		/*String CSSLine = fldCSSLineInput.getText();
-		try {
-			Scene mockScene = new Scene(new Region());
-			mockScene.getRoot().setStyle(CSSLine);
+       /*String CSSLine = fldCSSLineInput.getText();
+       try {
+          Scene mockScene = new Scene(new Region());
+          mockScene.getRoot().setStyle(CSSLine);
 
-			String allCustomLinesOfCSS = "";
-			addedCSSLines.addFirst(CSSLine);
+          String allCustomLinesOfCSS = "";
+          addedCSSLines.addFirst(CSSLine);
 
-			for(int i = 0; i < addedCSSLines.size(); i++) {
-				allCustomLinesOfCSS += addedCSSLines.get(i);
-			}
-			this.window.getScene().getRoot().setStyle(allCustomLinesOfCSS);
-			updateCustomCSSListView();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}*/
+          for(int i = 0; i < addedCSSLines.size(); i++) {
+             allCustomLinesOfCSS += addedCSSLines.get(i);
+          }
+          this.window.getScene().getRoot().setStyle(allCustomLinesOfCSS);
+          updateCustomCSSListView();
+       }
+       catch(Exception e) {
+          e.printStackTrace();
+       }*/
 	}
 
 	/**
@@ -239,22 +257,13 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 */
 	private void updateCustomCSSListView() {
 		listViewAddedCSS.getItems().clear();
-        for (String addedCSSLine : addedCSSLines) {
-            listViewAddedCSS.getItems().add(new CustomCSSListItem(addedCSSLine));
-        }
+		for (String addedCSSLine : addedCSSLines) {
+			listViewAddedCSS.getItems().add(new CustomCSSListItem(addedCSSLine));
+		}
 	}
 
-	/**
-	 * Represents a map that links Hyperlink objects to their corresponding URLs.
-	 * The linkMap is initialized with predefined Hyperlink objects and their associated URLs.
-	 * Key: Hyperlink object
-	 * Value: String representing the URL
-	 */
-	Map<Hyperlink, String> linkMap = Map.of(
-			linkOpenInGitHub, "https://github.com/strazan/zenit",
-			linkSubmitIssue, "https://github.com/strazan/zenit/issues/new",
-			linkDownloadSource, "https://github.com/strazan/zenit/archive/develop.zip"
-	);
+
+
 
 	/**
 	 * Opens the specified URL in the default web browser.
@@ -263,6 +272,17 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 */
 	@FXML
 	private void openLinkInBrowserEvent(Event e) {
+		/**
+		 * Represents a map that links Hyperlink objects to their corresponding URLs.
+		 * The linkMap is initialized with predefined Hyperlink objects and their associated URLs.
+		 * Key: Hyperlink object
+		 * Value: String representing the URL
+		 */
+		Map<Hyperlink, String> linkMap = Map.of(
+				linkOpenInGitHub, "https://github.com/strazan/zenit",
+				linkSubmitIssue, "https://github.com/strazan/zenit/issues/new",
+				linkDownloadSource, "https://github.com/strazan/zenit/archive/develop.zip"
+		);
 		String url = linkMap.get(e.getSource());
 
 		if (url != null) {
@@ -423,10 +443,10 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 */
 	private boolean setPrimaryColorEventHandler() {
 		colorPickerPrimaryColor.setOnAction((event) -> {
-		     Platform.runLater(() -> {
-		    	 themeHandler.changeColor(colorPickerPrimaryColor.getValue(),
-		    		CustomColor.primaryColor);
-			     });
+			Platform.runLater(() -> {
+				themeHandler.changeColor(colorPickerPrimaryColor.getValue(),
+						CustomColor.primaryColor);
+			});
 		});
 		return true;
 	}
@@ -439,15 +459,15 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 */
 	private boolean setToggleSwitchCustomThemeListener() {
 		toggleSwitchCustomTheme.selectedProperty().addListener(new ChangeListener <Boolean> () {
-            @Override
+			@Override
 			public void changed(
-				ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
-            {
+					ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+			{
 				themeHandler.toggleCustomTheme(toggleSwitchCustomTheme.isSelected());
 				isCustomTheme = toggleSwitchCustomTheme.isSelected();
 				darkModeChanged(toggleDarkMode.isSelected());
 			}
-        });
+		});
 		return true;
 	}
 
@@ -459,13 +479,13 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 */
 	private boolean setToggleDarkModeListener() {
 		toggleDarkMode.selectedProperty().addListener(new ChangeListener <Boolean> () {
-            @Override
+			@Override
 			public void changed(
-				ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
-            {
+					ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+			{
 				darkModeChanged(newValue);
 			}
-        });
+		});
 		return true;
 	}
 
@@ -519,9 +539,9 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		fieldNewSize.textProperty().addListener((arg0, arg1, arg2) -> {
 			try {
 				setNewFontSize(Long.parseLong(fieldNewSize.getText()));
-			  } catch(NumberFormatException e) {
+			} catch(NumberFormatException e) {
 				System.out.println("Error parsing new font size: " + e.getMessage());
-			  }
+			}
 		});
 		return true;
 	}
@@ -534,9 +554,9 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 */
 	private boolean createSliderListener() {
 		sliderNewSize.valueProperty().addListener(
-			(ChangeListener<? super Number>) (arg0, arg1, arg2) -> {
-				setNewFontSize(Math.round(sliderNewSize.getValue()));
-		});
+				(ChangeListener<? super Number>) (arg0, arg1, arg2) -> {
+					setNewFontSize(Math.round(sliderNewSize.getValue()));
+				});
 		return true;
 	}
 
@@ -572,3 +592,4 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		}
 	}
 }
+

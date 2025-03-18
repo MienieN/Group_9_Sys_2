@@ -149,11 +149,12 @@ public class Metadata {
 		if (runnableClasses != null) {
 			// Iterate through the array of runnable classes
             for (RunnableClass runnableClass : runnableClasses) {
-				// Check if the class path matches (with ".java" extension)
-                if ((runnableClass.getPath()).equals(classPath + ".java")) {
+				String runnablePath = runnableClass.getPath();
+				// Check both possibilities: with or without .java
+				if (runnablePath.equals(classPath) || runnablePath.equals(classPath + ".java")) {
 					// Return the matching RunnableClass object
-                    return runnableClass;
-                }
+					return runnableClass;
+				}
             }
 		}
 		return null;	// Return null if no matching class is found

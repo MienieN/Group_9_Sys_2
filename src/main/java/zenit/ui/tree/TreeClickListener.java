@@ -5,6 +5,8 @@ import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import main.java.zenit.ui.MainController;
+import main.java.zenit.zencodearea.ZenCodeArea;
+import org.fxmisc.richtext.CodeArea;
 
 public class TreeClickListener implements EventHandler<MouseEvent> {
 	private final MainController controller;

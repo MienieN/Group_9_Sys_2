@@ -41,13 +41,12 @@ import main.java.zenit.javacodecompiler.ProcessBuffer;
 import main.java.zenit.settingspanel.SettingsPanelController;
 import main.java.zenit.settingspanel.ThemeCustomizable; // Implements
 import main.java.zenit.searchinfile.Search;
-import main.java.zenit.ui.tree.FileTree;
-import main.java.zenit.ui.tree.FileTreeItem;
-import main.java.zenit.ui.tree.TreeClickListener;
-import main.java.zenit.ui.tree.TreeContextMenu;
+import main.java.zenit.ui.tree.*;
 import main.java.zenit.util.Tuple;
 import main.java.zenit.ui.projectinfo.ProjectMetadataController;
 import main.java.zenit.zencodearea.ZenCodeArea;
+import org.fxmisc.richtext.CodeArea;
+
 // TODO Divide this into two separate controllers.
 public class MainController extends VBox implements ThemeCustomizable {
 	private Stage stage;
@@ -71,6 +70,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 	@FXML private ConsoleController consoleController;
 	@FXML private Label statusBarLeftLabel, statusBarRightLabel;
 	@FXML private FXMLLoader loader;
+	@FXML private ZenCodeArea codeArea;
 
 	// TODO BREAK THIS UP WHAT THE FUCK IS THIS
 	public MainController(Stage stage) {
@@ -122,6 +122,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 		} catch (Exception e) {
 			System.out.println("Error in MainController = " + e);
 		}
+
 	}
 
 	public FXMLLoader getFXMLLoader() {
@@ -359,6 +360,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 		} else if (file != null && getTabFromFile(file) != null) { // Tab already open
 			tabPane.getSelectionModel().select(getTabFromFile(file));
 		}
+
 	}
 	
 	private boolean supportedFileFormat(File file) {
@@ -586,6 +588,8 @@ public class MainController extends VBox implements ThemeCustomizable {
 
 	public FileTab addTab() {
 		FileTab tab = new FileTab(createNewZenCodeArea(), this);
+		System.out.println(tab.getZenCodeArea());
+		new InsertMenu(this, tab.getZenCodeArea()); //This line adds the menu to the codearea DO NOT REMOVE FOR THE LOVE OF GOD!
 		tab.setOnCloseRequest(event -> closeTab(event));
 		tabPane.getTabs().add(tab);
 		var selectionModel = tabPane.getSelectionModel();
@@ -651,6 +655,7 @@ public class MainController extends VBox implements ThemeCustomizable {
 
 		for (Tab tab : tabs) {
 			if (tab.isSelected()) {
+
 				return (FileTab) tab;
 			}
 		} return null;

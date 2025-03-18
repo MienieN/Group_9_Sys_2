@@ -93,10 +93,18 @@ public class JDKDirectories {
      */
     public static File getJVMDirectory() {
         String OS = Zenit.OS;
+        if (OS.contains("Windows")){
+            OS = "Windows";
+        }
+        else if (OS.contains("Mac os")){
+            OS = "Mac OS";
+        }
+
+
         
         // Using a switch-case to handle different OS values
         switch (OS) {
-            case "Mac OS X":
+            case "Mac OS":
                 return new File("/library/java/javavirtualmachines");
             case "Windows":
                 return new File("C:\\Program Files\\Java\\");

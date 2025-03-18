@@ -30,37 +30,101 @@ import main.java.zenit.ui.MainController;
 import main.java.zenit.zencodearea.ZenCodeArea;
 
 public class SettingsPanelController extends AnchorPane implements ThemeCustomizable{
+	private int oldSize;
 	private String oldFont;
 	private File customThemeCSS;
 	private LinkedList<String> addedCSSLines;
 	private List<ThemeCustomizable> stages;
+
 	private Stage window;
 	private MainController mainController;
-	private ConsoleController consoleController;
 	private CustomCSSThemeHandler themeHandler;
-	private OS operatingSystem;
+
+	private boolean isCustomTheme = false;
+	private boolean isDarkMode = true;
+
 	private String settingsPanelDarkMode = getClass().getResource(
 			"/zenit/settingspanel/settingspanelDarkMode.css").toExternalForm();
 	private String settingsPanelLightMode = getClass().getResource(
 			"/zenit/settingspanel/settingspanelLightMode.css").toExternalForm();
-	private int oldSize;
-	private boolean isCustomTheme = false, isDarkMode = true;
-	private enum OS { MACOS, WINDOWS, LINUX }
 
-	@FXML private TextField fieldNewSize;
-	@FXML private Slider sliderNewSize;
-	@FXML private Label lblOldTextSize, lblOldFont, lblCurrentJavaHome,
-			newJavaHome, lblTextAppearanceSize;
-	@FXML private ChoiceBox<String> choiceBoxNewFont;
-	@FXML private Button btnTextAppearance, btnJavaHome, btnSupport,
-			btnTheme, btnCustomCSS, btnCustomTheme;
-	@FXML private Hyperlink linkOpenInGitHub, linkSubmitIssue, linkDownloadSource;
-	@FXML private ToggleSwitch toggleDarkMode, toggleSwitchCustomTheme;
-	@FXML private ListView listViewAddedCSS;
-	@FXML private ColorPicker colorPickerPrimaryColor, colorPickerPrimaryTint,
-			colorPickerSecondaryColor, colorPickerSecondaryTint;
-	@FXML private AnchorPane panelTextAppearance, panelJavaHome, panelSupport,
-			panelTheme, panelCustomCSS, panelCustomTheme;
+	private enum OS {
+		MACOS, WINDOWS, LINUX
+	}
+	private OS operatingSystem;
+
+	@FXML
+	private TextField fldNewSize;
+
+	@FXML
+	private Slider sldrNewSize;
+
+	@FXML
+	private Label lblOldTextSize;
+
+	@FXML
+	private Label lblOldFont;
+
+	@FXML
+	private Label lblCurrentJavaHome;
+
+	@FXML
+	private Label newJavaHome;
+
+	@FXML
+	private Label lblTxtAppeaSize;
+
+	@FXML
+	private ChoiceBox<String> chcbxNewFont;
+
+	@FXML
+	private Button btnTextAppearance;
+
+	@FXML
+	private Button btnJavaHome;
+
+	@FXML
+	private Button btnSupport;
+
+	@FXML
+	private Button btnTheme;
+
+	@FXML
+	private Button btnCustomCSS;
+
+	@FXML
+	private Button btnCustomTheme;
+
+	@FXML
+	private Hyperlink linkOpenInGitHub;
+
+	@FXML
+	private Hyperlink linkSubmitIssue;
+
+	@FXML
+	private Hyperlink linkDownloadSource;
+
+	@FXML
+	private ToggleSwitch toggleDarkMode;
+
+	@FXML
+	private ToggleSwitch toggleSwitchCustomTheme;
+
+	@FXML
+	private ListView listViewAddedCSS;
+
+	@FXML
+	private ColorPicker colorPickerPrimaryColor;
+
+	@FXML
+	private ColorPicker colorPickerPrimaryTint;
+
+	@FXML
+	private ColorPicker colorPickerSecondaryColor;
+
+	@FXML
+	private ColorPicker colorPickerSecondaryTint;
+
 	@FXML
 	private AnchorPane pnlTextAppearance;
 
@@ -79,6 +143,8 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	@FXML
 	private AnchorPane pnlCustomTheme;
 
+	private ConsoleController consoleController;
+
 
 	/**
 	 * Creates a new instance of SettingsPanelController with the provided parameters.
@@ -91,9 +157,6 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	public SettingsPanelController(MainController mainController, int oldFontSize, String oldFontFamily, ConsoleController consoleController) {
 		this.mainController = mainController;
 		this.consoleController = consoleController;
-		fieldNewSize = new TextField();
-		sliderNewSize = new Slider();
-		choiceBoxNewFont = new ChoiceBox<>();
 
 		oldSize = oldFontSize;
 		oldFont = oldFontFamily;
@@ -156,7 +219,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 * @param newFont the new font to be set
 	 */
 	public void setNewFont(String newFont) {
-		choiceBoxNewFont.setValue(newFont);
+		chcbxNewFont.setValue(newFont);
 		mainController.setFontFamily(newFont);
 	}
 
@@ -167,14 +230,14 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 */
 	public void setNewFontSize(long newFontSize) {
 		long size = newFontSize;
-		fieldNewSize.textProperty().setValue(String.valueOf(size));
+		fldNewSize.textProperty().setValue(String.valueOf(size));
 		if(size > 100) {
 			size = 100;
 		}
 		else if(size < 6) {
 			size = 6;
 		}
-		sliderNewSize.setValue(size);
+		sldrNewSize.setValue(size);
 		mainController.setFontSize((int)size);//this.codeArea.setFontSize((int)size);
 	}
 
@@ -366,15 +429,16 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 * It initializes the text fields, sliders, labels, choice boxes, Java Home path, operating system, dark mode toggle,
 	 * custom theme toggle, CSS list view, primary and secondary color pickers, and event handlers for theme customization.
 	 */
+
 	private void initialize() {
 		lblOldTextSize.setText(String.valueOf(oldSize));
-		fieldNewSize.setText(String.valueOf(oldSize));
-		sliderNewSize.setValue(oldSize);
+		fldNewSize.setText(String.valueOf(oldSize));
+		sldrNewSize.setValue(oldSize);
 		createSliderListener();
 		createFieldListener();
 		createChoiceBoxListener();
 		lblCurrentJavaHome.setText(System.getenv("JAVA_HOME"));
-		fieldNewSize.setAlignment(Pos.CENTER_RIGHT);
+		fldNewSize.setAlignment(Pos.CENTER_RIGHT);
 		setOperatingSystem();
 		toggleDarkMode.setSelected(mainController.isDarkmode());
 
@@ -520,11 +584,11 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	private boolean createChoiceBoxListener() {
 		List<String> fonts = Font.getFamilies();
 		for (String font : fonts) {
-			choiceBoxNewFont.getItems().add(font);
+			chcbxNewFont.getItems().add(font);
 		}
-		choiceBoxNewFont.setValue(oldFont);
+		chcbxNewFont.setValue(oldFont);
 		lblOldFont.setText(oldFont);
-		choiceBoxNewFont.getSelectionModel().selectedItemProperty().addListener((arg0, arg1, arg2) -> {
+		chcbxNewFont.getSelectionModel().selectedItemProperty().addListener((arg0, arg1, arg2) -> {
 			setNewFont(arg2);
 		});
 		return true;
@@ -536,9 +600,9 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 * @return true if the field listener was successfully created
 	 */
 	private boolean createFieldListener() {
-		fieldNewSize.textProperty().addListener((arg0, arg1, arg2) -> {
+		fldNewSize.textProperty().addListener((arg0, arg1, arg2) -> {
 			try {
-				setNewFontSize(Long.parseLong(fieldNewSize.getText()));
+				setNewFontSize(Long.parseLong(fldNewSize.getText()));
 			} catch(NumberFormatException e) {
 				System.out.println("Error parsing new font size: " + e.getMessage());
 			}
@@ -553,9 +617,9 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 * @return true if the slider listener was successfully created, false otherwise
 	 */
 	private boolean createSliderListener() {
-		sliderNewSize.valueProperty().addListener(
+		sldrNewSize.valueProperty().addListener(
 				(ChangeListener<? super Number>) (arg0, arg1, arg2) -> {
-					setNewFontSize(Math.round(sliderNewSize.getValue()));
+					setNewFontSize(Math.round(sldrNewSize.getValue()));
 				});
 		return true;
 	}
@@ -591,5 +655,6 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 			return settingsPanelLightMode;
 		}
 	}
+
 }
 

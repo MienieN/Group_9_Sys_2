@@ -28,12 +28,12 @@
     &quot;assignee&quot;: &quot;Williamstara&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/MienieN/Group_9_Sys_2.git",
-    "accountId": "f10e583a-3bae-46bc-a406-7dfd74386b33"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MienieN/Group_9_Sys_2.git&quot;,
+    &quot;accountId&quot;: &quot;f10e583a-3bae-46bc-a406-7dfd74386b33&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 6
     }</component>
@@ -50,7 +50,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "OpenSettingsBug",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/MAU/Term 4/Sys 2/Group_9_Sys_2 - Copy",
+    "last_opened_file_path": "C:/Users/Jonatan/Desktop/Zenit",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -67,7 +67,7 @@
     <configuration name="TestUI" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
-      <option name="VM_PARAMETERS" value="--module-path lib/javafx-sdk-23.0.2/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
+      <option name="VM_PARAMETERS" value="--module-path lib/windowsfx/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

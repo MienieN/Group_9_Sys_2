@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/SettingsPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/SettingsPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/launchers/MacOSLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/launchers/MacOSLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/searchinfile/SearchInFileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/searchinfile/SearchInFileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomCSSListItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomCSSListItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomCSSThemeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomCSSThemeHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomColor.java" afterDir="false" />
     </list>
     <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,6 +41,9 @@
     &quot;accountId&quot;: &quot;f10e583a-3bae-46bc-a406-7dfd74386b33&quot;
   }
 }</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 6
     }</component>
@@ -46,9 +56,10 @@
   "keyToString": {
     "Application.TestUI.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "OpenSettingsBug",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Jonatan/Desktop/Zenit",
     "node.js.detected.package.eslint": "true",

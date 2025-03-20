@@ -1,3 +1,7 @@
+/**
+ * JavaSourceCodeCompiler is responsible for compiling and running Java source code files.
+ * It supports both compilation-only and compile-and-run modes.
+ */
 package main.java.zenit.javacodecompiler;
 
 import java.io.File;
@@ -9,8 +13,11 @@ import main.java.zenit.filesystem.RunnableClass;
 import main.java.zenit.filesystem.metadata.Metadata;
 import main.java.zenit.ui.MainController;
 
+/**
+ * JavaSourceCodeCompiler handles Java file compilation and execution.
+ */
 public class JavaSourceCodeCompiler {
-	
+
 	protected File file;
 	protected File metadataFile;
 	protected boolean inBackground;
@@ -18,10 +25,23 @@ public class JavaSourceCodeCompiler {
 	protected MainController cont;
 	protected ConsoleController consoleController;
 
+	/**
+	 * Constructs a JavaSourceCodeCompiler instance.
+	 * @param file The Java source file to compile.
+	 * @param inBackground Determines whether compilation runs in the background.
+	 */
 	public JavaSourceCodeCompiler(File file, boolean inBackground) {
 		this(file, null, inBackground, null, null);
 	}
 
+	/**
+	 * Constructs a JavaSourceCodeCompiler with additional parameters.
+	 * @param file The Java source file.
+	 * @param metadata The metadata file containing project information.
+	 * @param inBackground Whether the compilation runs in the background.
+	 * @param buffer The buffer for handling output and errors.
+	 * @param cont The main controller of the application.
+	 */
 	public JavaSourceCodeCompiler(File file, File metadata, boolean inBackground, Buffer<?> buffer, MainController cont) {
 		this.file = file;
 		this.metadataFile = metadata;
@@ -30,16 +50,25 @@ public class JavaSourceCodeCompiler {
 		this.cont = cont;
 	}
 
+	/**
+	 * Starts the compilation process.
+	 */
 	public void startCompile() {
-		new Compile().start();	
+		new Compile().start();
 	}
-	
+
+	/**
+	 * Starts the compilation process and executes the compiled class.
+	 */
 	public void startCompileAndRun() {
 		new CompileAndRun().start();
 	}
 
-	private class Compile extends Thread {
-		protected String JDKPath = null;
+	/**
+	 * Abstract base class for compilation processes.
+	 */
+	private abstract class CompilationBase extends Thread {
+		protected String JDKPath;
 		protected String sourcepath;
 		protected String directory;
 		protected File runPath;
@@ -47,186 +76,141 @@ public class JavaSourceCodeCompiler {
 		protected String[] internalLibraries;
 		protected String[] externalLibraries;
 
+		@Override
 		public void run() {
 			if (metadataFile != null) {
 				decodeMetadata();
 				createProjectPath();
-				compileInPackage();
-			} else {
-				compile();
 			}
-			
-			if (inBackground && buffer instanceof DebugErrorBuffer) {
-				DebugErrorBuffer deb = (DebugErrorBuffer) buffer;
-				cont.errorHandler(deb);
-			}	
+			Process process = compile();
+			handlePostCompilation(process);
 		}
-	
+
+		/**
+		 * Initializes project file paths.
+		 */
 		protected void createProjectPath() {
 			projectFile = metadataFile.getParentFile();
 		}
 
+		/**
+		 * Decodes project metadata.
+		 */
 		protected void decodeMetadata() {
 			Metadata metadata = new Metadata(metadataFile);
-			
 			JDKPath = metadata.getJREVersion();
 			directory = metadata.getDirectory();
 			sourcepath = metadata.getSourcePath();
 			internalLibraries = metadata.getInternalLibraries();
-			externalLibraries = metadata.getExternalLibraries();	
+			externalLibraries = metadata.getExternalLibraries();
 		}
 
+		/**
+		 * Compiles the Java source file.
+		 * @return The process executing the compilation.
+		 */
 		protected Process compile() {
-
 			CommandBuilder cb = new CommandBuilder(CommandBuilder.COMPILE);
 			cb.setJDK(JDKPath);
-			cb.setRunPath(file.getPath());
-
-			String command = cb.generateCommand();
-			Process process = executeCommand(command, null);
-			redirectStreams(process);
-			return process;
+			cb.setRunPath(getCompilationPath());
+			if (metadataFile != null) {
+				cb.setDirectory(directory);
+				cb.setSourcepath(sourcepath);
+				cb.setInternalLibraries(internalLibraries);
+				cb.setExternalLibraries(externalLibraries);
+			}
+			return executeAndRedirect(cb.generateCommand(), metadataFile != null ? projectFile : file.getParentFile());
 		}
 
-		protected Process compileInPackage() {
-			runPath = new File(createRunPathInProject());
+		protected abstract void handlePostCompilation(Process process);
 
-			CommandBuilder cb = new CommandBuilder(CommandBuilder.COMPILE);
-			cb.setJDK(JDKPath);
-			cb.setRunPath(runPath.getPath());
-			cb.setDirectory(directory);
-			cb.setSourcepath(sourcepath);
-			cb.setInternalLibraries(internalLibraries);
-			cb.setExternalLibraries(externalLibraries);
-			
-			String command = cb.generateCommand();
-			Process process = executeCommand(command, projectFile);
+		protected Process executeAndRedirect(String command, File workingDir) {
+			Process process = executeCommand(command, workingDir);
 			redirectStreams(process);
 			return process;
 		}
 
 		protected Process executeCommand(String command, File projectFile) {
 			if (inBackground) {
-				DebugErrorBuffer deb = null;
-				if (buffer != null && buffer instanceof DebugErrorBuffer) {
-					deb = (DebugErrorBuffer) buffer;
-				}
+				DebugErrorBuffer deb = buffer instanceof DebugErrorBuffer ? (DebugErrorBuffer) buffer : null;
 				return TerminalHelpers.runBackgroundCommand(command, projectFile, deb);
-			} else {
-				return TerminalHelpers.runCommand(command, projectFile);
 			}
-		}
-
-		protected String createRunPathInProject() {
-			File projectFile = metadataFile.getParentFile();
-			String runPath = file.getPath();
-			String projectPath = projectFile.getPath();
-
-			runPath = runPath.replaceAll(Matcher.quoteReplacement(projectPath + File.separator), "");
-
-			return runPath;
+			return TerminalHelpers.runCommand(command, projectFile);
 		}
 
 		protected void redirectStreams(Process process) {
-			StreamRedirector inStream = new StreamRedirector(process.getInputStream(), System.out::println);
-			StreamRedirector errorStream = new StreamRedirector(process.getErrorStream(), System.err::println);
+			Executors.newSingleThreadExecutor().submit(new StreamRedirector(process.getInputStream(), System.out::println));
+			Executors.newSingleThreadExecutor().submit(new StreamRedirector(process.getErrorStream(), System.err::println));
+		}
 
-			Executors.newSingleThreadExecutor().submit(inStream);
-			Executors.newSingleThreadExecutor().submit(errorStream);
+		protected String getCompilationPath() {
+			return metadataFile != null ? createRunPathInProject() : file.getPath();
+		}
+
+		private String createRunPathInProject() {
+			return file.getPath().replaceAll(Matcher.quoteReplacement(metadataFile.getParentFile().getPath() + File.separator), "");
 		}
 	}
-	
-	private class CompileAndRun extends Compile {
-		
+
+	/**
+	 * Handles compilation without execution.
+	 */
+	private class Compile extends CompilationBase {
 		@Override
-		public void run() {
-			Process process;
-			if (metadataFile != null) {
-				decodeMetadata();
-				createProjectPath();
-				process = compileInPackage();
-				
-				if (isCompiled(process)) {
-					process = runFileInPackage();
-				}
-			} else {
-				process = compile();
-				if (isCompiled(process)) {
-					process = runFile();
-				}
-			}
-			
-			if (buffer != null && buffer instanceof ProcessBuffer) {
-				ProcessBuffer pb = (ProcessBuffer) buffer;
-				pb.put(process);
+		protected void handlePostCompilation(Process process) {
+			if (inBackground && buffer instanceof DebugErrorBuffer) {
+				cont.errorHandler((DebugErrorBuffer) buffer);
 			}
 		}
-		
-		private boolean isCompiled(Process process) {
-			int exitValue = -1;
-			try {
-				exitValue = process.waitFor();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+	}
+
+	/**
+	 * Handles compilation followed by execution.
+	 */
+	private class CompileAndRun extends CompilationBase {
+		@Override
+		protected void handlePostCompilation(Process process) {
+			if (isCompiled(process)) {
+				process = executeAndRedirect(getRunCommand(), projectFile);
+				if (buffer instanceof ProcessBuffer) {
+					((ProcessBuffer) buffer).put(process);
+				}
 			}
-			
-			if (exitValue == 0) {
-				return true;
-			} else {
+		}
+
+		private boolean isCompiled(Process process) {
+			try {
+				return process.waitFor() == 0;
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
 				return false;
 			}
 		}
-		
-		private Process runFile() {
-			runPath = new File(createRunPathForRunning(file.getName()));
-			
-			CommandBuilder cb = new CommandBuilder(CommandBuilder.RUN);
-			cb.setJDK(JDKPath);
-			cb.setRunPath(runPath.getPath());
-			
-			String command = cb.generateCommand();
-			
-			Process process = executeCommand(command, file.getParentFile());
-		
-			redirectStreams(process);
-			return process;
-		}
-		
-		private Process runFileInPackage() {
-			runPath = new File(createRunPathForRunning(super.runPath.getPath()));
-			
-			CommandBuilder cb = new CommandBuilder(CommandBuilder.RUN);
-			cb.setJDK(JDKPath);
-			cb.setRunPath(runPath.getPath());
 
-			cb.setInternalLibraries(internalLibraries);
-			cb.setExternalLibraries(externalLibraries);
-			cb.setDirectory(directory);
-			
-			Metadata metadata = new Metadata(metadataFile);
-			RunnableClass rc = metadata.containRunnableClass(runPath.getPath());
-			
-			if (rc != null) {
-				cb.setProgramArguments(rc.getPaArguments());
-				cb.setVMArguments(rc.getVmArguments());
+		private String getRunCommand() {
+			CommandBuilder cb = new CommandBuilder(CommandBuilder.RUN);
+			cb.setJDK(JDKPath);
+			cb.setRunPath(getRunPath());
+			if (metadataFile != null) {
+				cb.setInternalLibraries(internalLibraries);
+				cb.setExternalLibraries(externalLibraries);
+				cb.setDirectory(directory);
+				Metadata metadata = new Metadata(metadataFile);
+				RunnableClass rc = metadata.containRunnableClass(getRunPath());
+				if (rc != null) {
+					cb.setProgramArguments(rc.getPaArguments());
+					cb.setVMArguments(rc.getVmArguments());
+				}
 			}
-					
-			String command = cb.generateCommand();
-			
-			Process process = executeCommand(command, projectFile);
-			
-			// Runs command
-			redirectStreams(process);
-			
-			return process;
+			return cb.generateCommand();
 		}
-		
-		private String createRunPathForRunning(String runPath) {
-			String newRunPath;
-			newRunPath = runPath.replaceAll(Matcher.quoteReplacement("src" + File.separator), "");
-			newRunPath = newRunPath.replaceAll(".java", "");
-			
-			return newRunPath;
-		}	
+
+		private String getRunPath() {
+			String path = file.getPath();
+			if (metadataFile != null) {
+				path = super.runPath.getPath();
+			}
+			return path.replaceAll(Matcher.quoteReplacement("src" + File.separator), "").replaceAll(".java", "");
+		}
 	}
 }

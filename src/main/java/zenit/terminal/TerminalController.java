@@ -12,8 +12,10 @@ import javafx.scene.paint.Color;
  * The TerminalController class is responsible for managing the terminal functionality in the application.
  */
 public class TerminalController {
-	@FXML private AnchorPane basePane;
-	@FXML private TabPane tabPane;
+	@FXML
+    public AnchorPane basePane;
+	@FXML
+    public TabPane tabPane;
 
 	/**
 	 * Initializes the TerminalController by adding a new terminal tab using a predefined dark configuration.
@@ -40,7 +42,7 @@ public class TerminalController {
 	 * @return a TerminalConfig object with settings for background color, foreground color, cursor blink,
 	 * cursor color, and font family appropriate for a dark-themed terminal.
 	 */
-	private TerminalConfig getDarkTerminalConfig() {
+    public TerminalConfig getDarkTerminalConfig() {
 		TerminalConfig darkConfig = new TerminalConfig();
 		darkConfig.setBackgroundColor(Color.BLACK);
 		darkConfig.setForegroundColor(Color.WHITE);

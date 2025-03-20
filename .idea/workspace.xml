@@ -5,14 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/zenit/filesystem/FileControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/zenit/terminal/TerminalControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/SettingsPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/SettingsPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/terminal/TerminalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/terminal/TerminalController.java" afterDir="false" />
     </list>
     <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -28,12 +38,12 @@
     &quot;assignee&quot;: &quot;Williamstara&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/MienieN/Group_9_Sys_2.git&quot;,
-    &quot;accountId&quot;: &quot;f10e583a-3bae-46bc-a406-7dfd74386b33&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/MienieN/Group_9_Sys_2.git",
+    "accountId": "4add3a3d-07a6-42be-831d-aa2df88ec300"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 6
     }</component>
@@ -46,9 +56,12 @@
   "keyToString": {
     "Application.TestUI.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "JUnit.TerminalControllerTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "OpenSettingsBug",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "WilliamTesting",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Jonatan/Desktop/Zenit",
     "node.js.detected.package.eslint": "true",
@@ -63,7 +76,16 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="zenit.filesystem" />
+      <recent name="zenit.terminal" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.TerminalControllerTest">
     <configuration name="TestUI" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
@@ -72,6 +94,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TerminalControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="zenit.terminal.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="zenit.terminal" />
+      <option name="MAIN_CLASS_NAME" value="zenit.terminal.TerminalControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TerminalControllerTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -90,6 +140,7 @@
       <workItem from="1739880854091" duration="109000" />
       <workItem from="1739966664902" duration="1467000" />
       <workItem from="1740034356100" duration="5557000" />
+      <workItem from="1742477513870" duration="2625000" />
     </task>
     <servers />
   </component>

@@ -17,6 +17,7 @@ public class InsertMenu extends ContextMenu{
     MainController mainController;
     private ZenCodeArea codeArea;
     private ContextMenu insertMenu = new ContextMenu();
+    private MenuItem mainmethod = new MenuItem("Main method");
     private MenuItem forLoop = new MenuItem("for-loop");
     private MenuItem whileLoop = new MenuItem("While-loop");
     private MenuItem switchCase = new MenuItem("Switch case");
@@ -50,10 +51,12 @@ public class InsertMenu extends ContextMenu{
         setReturnStringMethod();
         setReturnIntMethod();
         setReturnVoidMethod();
+        setMainMethod();
         methodMenu.getItems().addAll(returnStringMethod,
                 returnIntMethod,
                 returnVoidMethod);
-        insertMenu.getItems().addAll(forLoop,
+        insertMenu.getItems().addAll(mainmethod,
+                forLoop,
                 whileLoop,
                 switchCase,
                 doWhileLoop,
@@ -119,6 +122,11 @@ public class InsertMenu extends ContextMenu{
     public void setReturnVoidMethod(){
         String voidret = "public void methodname(){...}//Replace methodname and logic";
         returnVoidMethod.setOnAction(e -> mainController.getSelectedTab().getZenCodeArea().insertText(codeArea.getCaretPosition(),voidret));
+    }
+
+    public void setMainMethod(){
+        String mainmethodstr = "public static void main(String[] args){...}";
+        mainmethod.setOnAction(e -> mainController.getSelectedTab().getZenCodeArea().insertText(codeArea.getCaretPosition(),mainmethodstr));
     }
 
 }

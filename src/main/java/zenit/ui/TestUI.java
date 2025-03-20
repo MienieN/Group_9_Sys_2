@@ -3,6 +3,7 @@ package main.java.zenit.ui;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import main.java.zenit.ui.MainController;
 
 public class TestUI extends Application {
 	private MainController controller;

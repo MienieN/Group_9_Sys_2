@@ -93,6 +93,11 @@ public class JDKDirectories {
      */
     public static File getJVMDirectory() {
         String OS = Zenit.OS;
+        if (OS.contains("Windows")){
+            OS = "Windows";
+        }
+
+
         
         // Using a switch-case to handle different OS values
         switch (OS) {

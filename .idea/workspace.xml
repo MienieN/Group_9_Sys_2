@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39d6fa2c-3ca1-44a9-aff8-a4a25bfbd648" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/filesystem/FileControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="39d6fa2c-3ca1-44a9-aff8-a4a25bfbd648" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -94,7 +91,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1742565308728</updated>
-      <workItem from="1742565310575" duration="9525000" />
+      <workItem from="1742565310575" duration="9964000" />
     </task>
     <servers />
   </component>

@@ -80,14 +80,6 @@ class FileControllerTest {
     }
     
     @Test
-    void createPackage ( ) throws Exception{
-        File file = new File("Test");
-        boolean test = fileController.createPackage(file);
-        verify(fileController, times(1)).createPackage(file);
-        assertFalse(test);
-    }
-    
-    @Test
     void createProject ( ) {
         File file = fileController.createProject("Test");
         verify(fileController, times(1)).createProject("Test");

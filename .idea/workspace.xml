@@ -4,120 +4,74 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+    <list default="true" id="273991bc-4fd1-4675-be08-3613f5127356" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/zenit/unittesting/ConsoleRedirectTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FolderHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/FolderHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/JavaFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/JavaFileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/MetadataFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/MetadataFileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKVerifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKVerifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JREVersions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/jreversions/JDKDirectories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/Metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/Metadata.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataVerifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/filesystem/metadata/MetadataVerifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/setup/SetupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/setup/SetupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsControllerStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/JREVersionsControllerStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectMetadataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectMetadataController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectRunnableClassesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/projectinfo/ProjectRunnableClassesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
-    <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Sprint_2_Refactoring" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Williamstara"
-  }
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
 }]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/MienieN/Group_9_Sys_2.git",
-    "accountId": "b5631bbb-6360-4f5d-b270-92aadd4a3dcd"
-  }
-}]]></component>
-  <component name="ProjectColorInfo">{
-    &quot;associatedIndex&quot;: 6
-    }</component>
-  <component name="ProjectId" id="2sZPwTquSGtVmK40ypHm0HJHts3" />
+  <component name="ProjectId" id="2uckjGVfZl4CQz0MP6tIbkMTJf6" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Sprint__2__Refactoring__variable__and__method__names",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/MAU/Term 4/Sys 2/Group_9_Sys_2 - Copy",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Global Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.45747125",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "salma__tests",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.45747125"
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="startProject" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
-      <option name="VM_PARAMETERS" value="--module-path lib/windowsFX/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
+      <option name="VM_PARAMETERS" value="--module-path lib/javafx-sdk-23.0.2/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="" />
-      <created>1738660361750</created>
+      <changelist id="273991bc-4fd1-4675-be08-3613f5127356" name="Changes" comment="" />
+      <created>1742555389665</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1738660361750</updated>
-      <workItem from="1738660362898" duration="302000" />
-      <workItem from="1739187429913" duration="403000" />
-      <workItem from="1739187836446" duration="267000" />
-      <workItem from="1739188123221" duration="41000" />
-      <workItem from="1739188171283" duration="3000" />
-      <workItem from="1739194216168" duration="7000" />
-      <workItem from="1739880854091" duration="109000" />
-      <workItem from="1739966664902" duration="1467000" />
-      <workItem from="1740034356100" duration="5557000" />
+      <updated>1742555389665</updated>
     </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
 </project>

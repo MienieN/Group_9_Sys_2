@@ -20,13 +20,14 @@ import javafx.stage.StageStyle;
 
 public class NewFileController extends AnchorPane {
 	
-	private Stage stage;
+	public Stage stage;
 	private File workspace, newFile;
 	private boolean darkMode;
 	private double xOffset = 0, yOffset = 0;
 	@FXML private ImageView logo;
 	@FXML private AnchorPane header;
-	@FXML private ListView<String> filePath;
+	@FXML
+    public ListView<String> filePath;
 	@FXML private ComboBox<String> fileEnding;
 	@FXML private TextField textFieldName;
 	

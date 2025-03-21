@@ -15,6 +15,7 @@ import main.java.zenit.ui.MainController;
  * and launching the appropriate controllers.
  */
 public class Zenit extends Application {
+	private MainController mainController;
 	
 	public static final String OS = System.getProperty("os.name");
 	
@@ -30,18 +31,18 @@ public class Zenit extends Application {
 			setupController = new SetupController();
 			setupController.start();
 		}
-
-		if (OS.equals("Mac OS X")) {
-			new MacOSLauncher(stage);
-		} else if (OS.equals("Linux") || OS.startsWith("Windows")) {
-			new MainController(stage);
-		}
+		//Removed MacOs launcher
+			mainController = new MainController(stage);
 	}
 	
 	@Override
 	public void stop() {
 		Platform.exit();
 		System.exit(0);
+	}
+
+	public MainController getMainController(){
+		return mainController;
 	}
 	
 	public static void main(String[] args) { launch(args); }

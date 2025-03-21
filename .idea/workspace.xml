@@ -5,14 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/filesystem/JavaFileHandlerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/main/java/zenit/settingspanel/SettingsPanelControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/Zenit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/Zenit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/SettingsPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/SettingsPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" afterDir="false" />
     </list>
     <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="AnnotationType" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -46,9 +60,15 @@
   "keyToString": {
     "Application.TestUI.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "JUnit.SettingsPanelControllerTest.changeFontSize.executor": "Run",
+    "JUnit.SettingsPanelControllerTest.executor": "Run",
+    "Maven.zenit [clean,install].executor": "Run",
+    "Maven.zenit [test].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "OpenSettingsBug",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "Munther__testing__new",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Jonatan/Desktop/Zenit",
     "node.js.detected.package.eslint": "true",
@@ -59,11 +79,29 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.45747125",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="main.java.zenit.settingspanel" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="main.java.zenit.filesystem" />
+      <recent name="main.java.zenit.settingspanel" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install" />
+      <command value="mvn test" />
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.SettingsPanelControllerTest">
     <configuration name="TestUI" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
@@ -72,6 +110,51 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SettingsPanelControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.zenit.settingspanel.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.java.zenit.settingspanel" />
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.settingspanel.SettingsPanelControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SettingsPanelControllerTest.changeFontSize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="zenit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.zenit.settingspanel.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="main.java.zenit.settingspanel" />
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.settingspanel.SettingsPanelControllerTest" />
+      <option name="METHOD_NAME" value="changeFontSize" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SettingsPanelControllerTest" />
+        <item itemvalue="JUnit.SettingsPanelControllerTest.changeFontSize" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.24807.4" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.24807.4" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -90,6 +173,7 @@
       <workItem from="1739880854091" duration="109000" />
       <workItem from="1739966664902" duration="1467000" />
       <workItem from="1740034356100" duration="5557000" />
+      <workItem from="1742472998865" duration="8022000" />
     </task>
     <servers />
   </component>

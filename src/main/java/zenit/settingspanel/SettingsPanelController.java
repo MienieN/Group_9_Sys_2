@@ -228,7 +228,7 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 	 *
 	 * @param newFontSize the new font size to be set
 	 */
-	public void setNewFontSize(long newFontSize) {
+	public long setNewFontSize(long newFontSize) {
 		long size = newFontSize;
 		fldNewSize.textProperty().setValue(String.valueOf(size));
 		if(size > 100) {
@@ -239,6 +239,8 @@ public class SettingsPanelController extends AnchorPane implements ThemeCustomiz
 		}
 		sldrNewSize.setValue(size);
 		mainController.setFontSize((int)size);//this.codeArea.setFontSize((int)size);
+
+		return size;
 	}
 
 

@@ -160,6 +160,11 @@ public class MainController extends VBox implements ThemeCustomizable {
 		new SettingsPanelController(this, zenCodeAreasTextSize, zenCodeAreasFontFamily, consoleController);
 	}
 
+	public SettingsPanelController getSettingsPanel(){
+		return new SettingsPanelController(this, zenCodeAreasTextSize, zenCodeAreasFontFamily, consoleController);
+
+	}
+
 	public synchronized void setFontSize(int newFontSize) {
 		zenCodeAreasTextSize = newFontSize;
 		updateZenCodeAreasAppearance();

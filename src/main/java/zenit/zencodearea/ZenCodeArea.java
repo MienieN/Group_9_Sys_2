@@ -1,5 +1,8 @@
 package main.java.zenit.zencodearea;
 
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.concurrent.Task;
@@ -11,6 +14,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import main.java.zenit.ui.tree.InsertMenu;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -53,7 +58,7 @@ public class ZenCodeArea extends CodeArea {
 		+ "|(?<COMMENT>" + COMMENT_PATTERN + ")"
 	);
 
-	public ZenCodeArea() { this(14, "Times new Roman"); }
+	public ZenCodeArea() { this(14, "Times new Roman");}
 	
 	// YRJA: Refactoring this into multiple smaller methods to separate concerns.
 	public ZenCodeArea(int textSize, String font) {
@@ -61,6 +66,11 @@ public class ZenCodeArea extends CodeArea {
 		initializeMultiPlainChanges();
 		initializeExecutor();
 		setInitialStyle(textSize, font);
+	}
+
+	private String insertForLoop(){
+		return  "for (int i = 0; i < 'x'; i++){...} //Change 0, x and ++ if you want to alter the loop";
+
 	}
 
 	/**
@@ -206,5 +216,6 @@ public class ZenCodeArea extends CodeArea {
 	public void updateAppearance(String fontFamily, int size) {
 		//font = fontFamily;
 		setStyle("-fx-font-family: " + fontFamily + ";" + "-fx-font-size: " + size + ";");
-	}	
+	}
+
 }

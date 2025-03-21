@@ -407,7 +407,7 @@ public class FileController {
 	 * @return the updated source path as a string
 	 */
 	public String changeSourcePath(File directory, ProjectFile projectFile, boolean internal) {
-		return MetadataFileHandler.changeSourcepath(directory, projectFile, internal);
+		return MetadataFileHandler.changeSourcePath(directory, projectFile, internal);
 	}
 	
 	/**

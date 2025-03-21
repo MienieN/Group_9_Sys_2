@@ -493,6 +493,61 @@ public class MainController extends VBox implements ThemeCustomizable {
 			}
 		}
 	}
+
+	@FXML
+	public void cut() {
+		FileTab selectedTab = getSelectedTab();
+		if (selectedTab != null) {
+			ZenCodeArea zenCodeArea = selectedTab.getZenCodeArea();
+			if (zenCodeArea != null) {
+				zenCodeArea.cut();
+			}
+		}
+	}
+
+	@FXML
+	public void copy() {
+		FileTab selectedTab = getSelectedTab();
+		if (selectedTab != null) {
+			ZenCodeArea zenCodeArea = selectedTab.getZenCodeArea();
+			if (zenCodeArea != null) {
+				zenCodeArea.copy();
+			}
+		}
+	}
+
+	@FXML
+	public void paste() {
+		FileTab selectedTab = getSelectedTab();
+		if (selectedTab != null) {
+			ZenCodeArea zenCodeArea = selectedTab.getZenCodeArea();
+			if (zenCodeArea != null) {
+				zenCodeArea.paste();
+			}
+		}
+	}
+
+	@FXML
+	public void selectAll() {
+		FileTab selectedTab = getSelectedTab();
+		if (selectedTab != null) {
+			ZenCodeArea zenCodeArea = selectedTab.getZenCodeArea();
+			if (zenCodeArea != null) {
+				zenCodeArea.selectAll();
+			}
+		}
+	}
+
+	@FXML
+	public void unselectAll() {
+		FileTab selectedTab = getSelectedTab();
+		if (selectedTab != null) {
+			ZenCodeArea zenCodeArea = selectedTab.getZenCodeArea();
+			if (zenCodeArea != null) {
+				zenCodeArea.selectRange(zenCodeArea.getCaretPosition(), zenCodeArea.getCaretPosition());
+			}
+		}
+	}
 	
 	@FXML
 	public void delete(Event event) { deleteFileFromTreeView(); }

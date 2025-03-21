@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b677fe4a-76a7-4311-a39f-3396213a60e4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/ui/tree/TreeClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/ui/tree/TreeClickListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/zenit/zencodearea/ZenCodeArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/zencodearea/ZenCodeArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/CommandBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/javacodecompiler/JavaSourceCodeCompiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/launchers/MacOSLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/launchers/MacOSLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/searchinfile/SearchInFileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/searchinfile/SearchInFileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomCSSListItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomCSSListItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomCSSThemeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomCSSThemeHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/zenit/settingspanel/CustomColor.java" afterDir="false" />
     </list>
     <list id="8a8360ee-9114-464d-bbeb-fdc92d38dcf2" name="Changes by Yrjam" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +51,9 @@
     &quot;accountId&quot;: &quot;f10e583a-3bae-46bc-a406-7dfd74386b33&quot;
   }
 }</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 6
     }</component>
@@ -56,18 +67,20 @@
     "Application.InsertMenu.executor": "Run",
     "Application.TestUI.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "Insert",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/MAU/Term 4/Sys 2/Group_9_Sys_2 - Copy",
+    "last_opened_file_path": "C:/Users/Jonatan/Desktop/Zenit",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Global Libraries",
-    "project.structure.proportion": "0.0",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.45747125",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
@@ -92,6 +105,13 @@
       <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
       <module name="zenit" />
       <option name="VM_PARAMETERS" value="--module-path lib/javafx-sdk-23.0.2/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
+
+  <component name="RunManager">
+    <configuration name="TestUI" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.java.zenit.ui.TestUI" />
+      <module name="zenit" />
+      <option name="VM_PARAMETERS" value="--module-path lib/windowsfx/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.web --add-opens javafx.graphics/javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED -Dprism.allowhidpi=true" />
+ 
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -105,6 +125,7 @@
         <item itemvalue="Application.InsertMenu" />
       </list>
     </recent_temporary>
+
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

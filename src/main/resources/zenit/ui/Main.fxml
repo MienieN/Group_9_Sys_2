@@ -105,34 +105,34 @@
 				</Menu>
 				<Menu mnemonicParsing="false" text="Edit">
 					<items>
-						<MenuItem text="Undo">
+						<MenuItem text="Undo" onAction="#undo">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Z" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                      </accelerator></MenuItem>
-						<MenuItem text="Redo">
+						<MenuItem text="Redo" onAction="#redo">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Z" control="UP" meta="UP" shift="DOWN" shortcut="DOWN" />
                      </accelerator></MenuItem>
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem text="Cut">
+						<MenuItem text="Cut" onAction="#cut">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="X" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                      </accelerator></MenuItem>
-						<MenuItem text="Copy">
+						<MenuItem text="Copy" onAction="#copy">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                      </accelerator></MenuItem>
-						<MenuItem text="Paste">
+						<MenuItem text="Paste" onAction="#paste">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="V" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                      </accelerator></MenuItem>
 						<MenuItem disable="true" mnemonicParsing="false" text="Delete" visible="false" />
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem text="Select All">
+						<MenuItem text="Select All" onAction="#selectAll">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="A" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                      </accelerator></MenuItem>
-						<MenuItem mnemonicParsing="false" text="Unselect All" />
+						<MenuItem text="Unselect All" onAction="#unselectAll" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="View">

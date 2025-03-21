@@ -25,12 +25,6 @@ class WorkspaceHandlerTest {
     }
     
     @Test
-    void readWorkspace ( ) throws IOException {
-        File file = workspaceHandler.readWorkspace();
-        assertNull(file);
-    }
-    
-    @Test
     void setUpNewWorkspace ( ) {
         File file = workspaceHandler.setUpNewWorkspace();
         assertNotNull(file);

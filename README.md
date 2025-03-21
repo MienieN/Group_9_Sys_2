@@ -2,16 +2,22 @@
 Systemutveckling 2, term 4 group project. Improving an existing project and documentation.
 
 To run the program:
+- Open your IDE of choice
+- Choose "File->Import...->General->Existing projects into workspace"
+- "Next >".
+- Click "Browse..." and choose the newly unzipped folder named "Group_9_Sys_2"
+- Click "Open"
+- Click "Finish"
 
-• Open your IDE of choice
-• Choose "File->Import...->General->Existing projects into workspace"
-• Click "Next >".
-• Click "Browse..." and choose the newly unzipped folder namned "Zenit"
-• Click "Open"
-• Click "Finish"
-
-• add following in VM options inside 'run configurations' inside your IDE (Intellij = Next to the run button -> Edit configuration ->
--> Add new -> Application -> Modify options -> Add VM options):
+The following needs to be set up as run configurations in your IDE (the following is for Intellij IDEA):
+- On the left of the run button you will find a drop down menu, select it.
+- Click on "Edit Configurations..."
+- Click on the "+" in the top left corner and select "Application"
+- Name the configuration "TestUI"
+- Set the main class to "zenit.ui.TestUI"
+- Add VM options
+  - Set the VM options to the following:
+    - See below for the correct setup for your OS
 
 FOR WINDOWS:
 
